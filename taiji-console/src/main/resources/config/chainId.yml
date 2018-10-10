@@ -1,0 +1,9 @@
+# Region to chainId which is the first two characters in address mapping. This is used
+# to shard the blockchain so that transactions between the same region will be inner
+# chain and transaction between regions will be the inter chain which costs more.
+---
+Africa: '03'
+Asia: '02'
+Americas: '01'
+Europe: '03'
+Oceania: '02'
