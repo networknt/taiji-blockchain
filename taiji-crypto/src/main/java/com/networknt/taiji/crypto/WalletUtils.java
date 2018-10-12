@@ -8,6 +8,7 @@ import org.web3j.utils.Numeric;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -112,6 +113,12 @@ public class WalletUtils {
     public static Credentials loadCredentials(String password, File source)
             throws IOException, CipherException {
         WalletFile walletFile = objectMapper.readValue(source, WalletFile.class);
+        return Credentials.create(Wallet.decrypt(password, walletFile));
+    }
+
+    public static Credentials loadCredentials(String password, InputStream is)
+            throws IOException, CipherException {
+        WalletFile walletFile = objectMapper.readValue(is, WalletFile.class);
         return Credentials.create(Wallet.decrypt(password, walletFile));
     }
 

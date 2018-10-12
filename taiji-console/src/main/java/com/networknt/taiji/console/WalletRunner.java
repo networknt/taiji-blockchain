@@ -9,7 +9,7 @@ import static org.web3j.utils.Collection.tail;
 
 public class WalletRunner {
 
-    private static final String USAGE = "wallet create|update|send|fromkey";
+    private static final String USAGE = "wallet create|update|send|fromkey|innertransfer|intertransfer";
 
     public static void run(String[] args) {
         main(args);
@@ -31,6 +31,12 @@ public class WalletRunner {
                     break;
                 case "fromkey":
                     KeyImporter.main(tail(args));
+                    break;
+                case "innertransfer":
+                    InnerChainTransfer.main(tail(args));
+                    break;
+                case "intertransfer":
+                    InterChainTransfer.main(tail(args));
                     break;
                 default:
                     Console.exitError(USAGE);

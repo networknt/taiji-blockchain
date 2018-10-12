@@ -12,13 +12,19 @@ public class TransactionManager {
         List<byte[]> signedCreditEntries = rawTransaction.creditEntries.stream()
                 .map(c -> CreditEntryEncoder.signMessage(c, credentials))
                 .collect(Collectors.toList());
-        signedTransaction.setSignedCreditEntries(signedCreditEntries);
+        signedTransaction.setC(signedCreditEntries);
 
         List<byte[]> signedDebitEntries = rawTransaction.debitEntries.stream()
                 .map(d -> DebitEntryEncoder.signMessage(d, credentials))
                 .collect(Collectors.toList());
-        signedTransaction.setSignedDebitEntries(signedDebitEntries);
+        signedTransaction.setD(signedDebitEntries);
         return signedTransaction;
     }
 
+    public static SignedTransaction createSignedTransacton(List<byte[]> signedCreditEntries, List<byte[]> signedDebitEntries) {
+        SignedTransaction signedTransaction = new SignedTransaction();
+        signedTransaction.setC(signedCreditEntries);
+        signedTransaction.setD(signedDebitEntries);
+        return signedTransaction;
+    }
 }

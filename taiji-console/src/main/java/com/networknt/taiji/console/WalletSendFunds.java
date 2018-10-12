@@ -1,6 +1,6 @@
 package com.networknt.taiji.console;
 
-import com.networknt.taiji.client.GluonClient;
+import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
 import org.web3j.crypto.Credentials;
 import org.web3j.ens.EnsResolver;
@@ -53,7 +53,7 @@ public class WalletSendFunds extends WalletManager {
         rtx.addDebitEntry(debitEntry);
         SignedTransaction stx = TransactionManager.signTransaction(rtx, credentials);
 
-        TransactionReceipt transactionReceipt = GluonClient.postTx(stx);
+        TransactionReceipt transactionReceipt = TaijiClient.postTx(stx);
         console.printf("Funds have been successfully transferred from %s to %s%n"
                         + "RawTransaction hash: %s%nMined block number: %s%n",
                 credentials.getAddress(),

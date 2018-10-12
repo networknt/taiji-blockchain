@@ -8,6 +8,7 @@ import com.networknt.taiji.crypto.WalletUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 import static org.web3j.codegen.Console.exitError;
@@ -83,6 +84,19 @@ public class WalletManager {
 
         return destination;
     }
+
+    Credentials getCredentials(String password, InputStream walletStream) {
+        Credentials credentials = null;
+        try {
+            credentials = WalletUtils.loadCredentials(password, walletStream);
+        } catch (CipherException e) {
+            exitError("Wrong password for wallet file: " + e.getMessage());
+        } catch (IOException e) {
+            exitError("Unable to load wallet file from the stream:" + e.getMessage());
+        }
+        return credentials;
+    }
+
 
     Credentials getCredentials(File walletFile) {
         if (!walletFile.exists() || !walletFile.isFile()) {

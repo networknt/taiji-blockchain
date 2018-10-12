@@ -1,6 +1,7 @@
 plugins {
     base
     java
+    maven
 }
 
 java {
@@ -10,7 +11,7 @@ java {
 
 
 allprojects {
-    group = "com.networknt.blockchain"
+    group = "com.networknt"
     version = "1.0.0"
     repositories {
         mavenLocal() // mavenLocal must be added first.
