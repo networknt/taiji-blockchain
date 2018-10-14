@@ -13,33 +13,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Encode a credit entry and sign it.
+ * Encode a ledger entry and sign it.
  *
  * @author Steve Hu
  */
-public class CreditEntryEncoder {
+public class LedgerEntryEncoder {
 
-    public static byte[] signMessage(CreditEntry creditEntry, Credentials credentials) {
-        byte[] encodedCreditEntry = encode(creditEntry);
-        Sign.SignatureData signatureData = Sign.signMessage(encodedCreditEntry, credentials.getEcKeyPair());
-        return encode(creditEntry, signatureData);
+    public static byte[] signMessage(LedgerEntry entry, Credentials credentials) {
+        byte[] encodedEntry = encode(entry);
+        Sign.SignatureData signatureData = Sign.signMessage(encodedEntry, credentials.getEcKeyPair());
+        return encode(entry, signatureData);
     }
 
-    public static byte[] encode(CreditEntry creditEntry) {
-        return encode(creditEntry, null);
+    public static byte[] encode(LedgerEntry entry) {
+        return encode(entry, null);
     }
 
-    private static byte[] encode(CreditEntry creditEntry, Sign.SignatureData signatureData) {
-        List<RlpType> values = asRlpValues(creditEntry, signatureData);
+    private static byte[] encode(LedgerEntry entry, Sign.SignatureData signatureData) {
+        List<RlpType> values = asRlpValues(entry, signatureData);
         RlpList rlpList = new RlpList(values);
         return RlpEncoder.encode(rlpList);
     }
 
-    static List<RlpType> asRlpValues(CreditEntry creditEntry, Sign.SignatureData signatureData) {
+    static List<RlpType> asRlpValues(LedgerEntry entry, Sign.SignatureData signatureData) {
         List<RlpType> result = new ArrayList<>();
 
         // an empty to address (contract creation) should not be encoded as a numeric 0 value
-        String to = creditEntry.getToAddress();
+        String to = entry.getToAddress();
         if (to != null && to.length() > 0) {
             // addresses that start with zeros should be encoded with the zeros included, not
             // as numeric values
@@ -48,16 +48,9 @@ public class CreditEntryEncoder {
             result.add(RlpString.create(""));
         }
 
-        result.add(RlpString.create(creditEntry.getValue()));
+        result.add(RlpString.create(entry.getValue()));
 
-        String comment = creditEntry.getComment();
-        if(comment != null && comment.length() > 0) {
-            result.add(RlpString.create(comment));
-        } else {
-            result.add(RlpString.create(""));
-        }
-
-        String data = creditEntry.getData();
+        String data = entry.getData();
         if(data != null && data.length() > 0) {
             result.add(RlpString.create(Numeric.hexStringToByteArray(data)));
         } else {
@@ -71,4 +64,5 @@ public class CreditEntryEncoder {
         }
         return result;
     }
+
 }

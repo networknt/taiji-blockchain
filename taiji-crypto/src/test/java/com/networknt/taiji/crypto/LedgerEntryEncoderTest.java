@@ -13,33 +13,31 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class CreditEntryEncoderTest {
-
+public class LedgerEntryEncoderTest {
     @Test
     public void testSignMessage() {
-        byte[] signedMessage = CreditEntryEncoder.signMessage(
-                createCreditEntry(), SampleKeys.CREDENTIALS);
+        byte[] signedMessage = LedgerEntryEncoder.signMessage(
+                createLedgerEntry(), SampleKeys.CREDENTIALS);
         String hexMessage = Numeric.toHexString(signedMessage);
-        //System.out.println("hexMessage:" + hexMessage);
         assertThat(hexMessage,
-                is("0xf86384002dd5350198506c65617365206c656176652061742074686520646f6f72801ca022837d4d4326a757c2eb99a5d4bd99a463e42e6a47c75f7e6e0092c68ff7964aa04857a0737a944893dfb731426df5f388a162f0baf745b35d710f12630cdfd6c5"));
+                is("0xf84a84002dd53501801ca09d17720ec8a82fe00f267fae6261501598b80fa43dfff3dd3834259cae2a3c43a0138e8b7b2d2fdd455af124f9d453b7984be001e100bd215ed5d9be205cd1b4be"));
     }
 
     @Test
-    public void testCreditEntryAsRlpValues() {
-        List<RlpType> rlpStrings = CreditEntryEncoder.asRlpValues(createCreditEntry(),
+    public void testLedgerEntryAsRlpValues() {
+        List<RlpType> rlpStrings = LedgerEntryEncoder.asRlpValues(createLedgerEntry(),
                 new Sign.SignatureData((byte) 0, new byte[32], new byte[32]));
-        assertThat(rlpStrings.size(), is(7));
+        assertThat(rlpStrings.size(), is(6));
         for(int i = 0; i < rlpStrings.size(); i++) {
             System.out.println(((RlpString)rlpStrings.get(i)).asString());
         }
         assertThat(rlpStrings.get(0), equalTo(RlpString.create(Numeric.hexStringToByteArray("0x02dd535"))));
         assertThat(rlpStrings.get(1), equalTo(RlpString.create(BigInteger.ONE)));
-        assertThat(rlpStrings.get(2), equalTo(RlpString.create("Please leave at the door")));
+        assertThat(rlpStrings.get(2), equalTo(RlpString.create("")));
     }
 
-    private static CreditEntry createCreditEntry() {
-        return new CreditEntry("0x02dd535", BigInteger.ONE, "Please leave at the door");
+    private static LedgerEntry createLedgerEntry() {
+        return new LedgerEntry("0x02dd535", BigInteger.ONE, "");
     }
-
+    
 }

@@ -6,14 +6,14 @@ import org.web3j.crypto.Sign;
 import java.math.BigInteger;
 import java.security.SignatureException;
 
-public class SignedCreditEntry extends CreditEntry {
+public class SignedLedgerEntry extends LedgerEntry {
     private static final int LOWER_REAL_V = 27;
 
     private Sign.SignatureData signatureData;
 
-    public SignedCreditEntry(String to, BigInteger value, String comment, String data,
-        Sign.SignatureData signatureData) {
-        super(to, value, comment, data);
+    public SignedLedgerEntry(String to, BigInteger value, String data,
+                             Sign.SignatureData signatureData) {
+        super(to, value, data);
         this.signatureData = signatureData;
     }
 
@@ -22,12 +22,12 @@ public class SignedCreditEntry extends CreditEntry {
     }
 
     public String getFrom() throws SignatureException {
-        byte[] encodedCreditEntry = CreditEntryEncoder.encode(this);
+        byte[] encodedEntry = LedgerEntryEncoder.encode(this);
         byte v = signatureData.getV();
         byte[] r = signatureData.getR();
         byte[] s = signatureData.getS();
         Sign.SignatureData signatureDataV = new Sign.SignatureData(getRealV(v), r, s);
-        BigInteger key = Sign.signedMessageToKey(encodedCreditEntry, signatureDataV);
+        BigInteger key = Sign.signedMessageToKey(encodedEntry, signatureDataV);
         return "0x" + Keys.getAddress(key);
     }
 
@@ -49,5 +49,4 @@ public class SignedCreditEntry extends CreditEntry {
         }
         return (byte) (realV + inc);
     }
-
 }

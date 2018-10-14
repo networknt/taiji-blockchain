@@ -13,26 +13,28 @@ import java.util.Map;
  * @author Steve Hu
  */
 public class RawTransaction {
-    List<DebitEntry> debitEntries = new ArrayList<>();
-    List<CreditEntry> creditEntries = new ArrayList<>();
+    List<Map<String, LedgerEntry>> d = new ArrayList<>();
+    List<Map<String, LedgerEntry>> c = new ArrayList<>();
 
+    public RawTransaction() {}
 
-    public RawTransaction() {
+    public void addDebitEntry(String fromAddress, LedgerEntry debitEntry) {
+        Map<String, LedgerEntry> entryMap = new HashMap<>();
+        entryMap.put(fromAddress, debitEntry);
+        d.add(entryMap);
     }
 
-    public void addDebitEntry(DebitEntry debitEntry) {
-        debitEntries.add(debitEntry);
+    public void addCreditEntry(String toAddress, LedgerEntry creditEntry) {
+        Map<String, LedgerEntry> entryMap = new HashMap<>();
+        entryMap.put(toAddress, creditEntry);
+        c.add(entryMap);
     }
 
-    public void addCreditEntry(CreditEntry creditEntry) {
-        creditEntries.add(creditEntry);
+    public List<Map<String, LedgerEntry>> getD() {
+        return d;
     }
 
-    public List<DebitEntry> getDebitEntries() {
-        return debitEntries;
-    }
-
-    public List<CreditEntry> getCreditEntries() {
-        return creditEntries;
+    public List<Map<String, LedgerEntry>> getC() {
+        return c;
     }
 }

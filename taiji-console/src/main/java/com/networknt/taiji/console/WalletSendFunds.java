@@ -46,11 +46,10 @@ public class WalletSendFunds extends WalletManager {
         confirmTransfer(amountToTransfer, transferUnit, amountInWei, destinationAddress);
 
         // here we just create a simple transaction with one debit entry and one credit entry.
-        DebitEntry debitEntry = new DebitEntry(destinationAddress, amountInWei.toBigIntegerExact(), BigInteger.TEN, BigInteger.TEN);
-        CreditEntry creditEntry = new CreditEntry(destinationAddress, amountInWei.toBigIntegerExact());
+        LedgerEntry ledgerEntry = new LedgerEntry(destinationAddress, amountInWei.toBigIntegerExact());
         RawTransaction rtx = new RawTransaction();
-        rtx.addCreditEntry(creditEntry);
-        rtx.addDebitEntry(debitEntry);
+        rtx.addCreditEntry(destinationAddress, ledgerEntry);
+        rtx.addDebitEntry(credentials.getAddress(), ledgerEntry);
         SignedTransaction stx = TransactionManager.signTransaction(rtx, credentials);
 
         TransactionReceipt transactionReceipt = TaijiClient.postTx(stx);

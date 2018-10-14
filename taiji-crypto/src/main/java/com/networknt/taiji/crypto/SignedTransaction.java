@@ -1,7 +1,9 @@
 package com.networknt.taiji.crypto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class model a signed transaction which contains a list of debit entries
@@ -11,30 +13,35 @@ import java.util.List;
  * @author Steve Hu
  */
 public class SignedTransaction {
-    List<byte[]> d = new ArrayList<>();
-    List<byte[]> c = new ArrayList<>();
+    List<Map<String, byte[]>> d = new ArrayList<>();
+    List<Map<String, byte[]>> c = new ArrayList<>();
 
-    public void addSignedDebitEntry(byte[] signedDebitEntry) {
-        d.add(signedDebitEntry);
+    public void addSignedDebitEntry(String fromAddress, byte[] signedDebitEntry) {
+        Map<String, byte[]> entryMap = new HashMap<>();
+        entryMap.put(fromAddress, signedDebitEntry);
+        d.add(entryMap);
     }
 
-    public void addSignedCreditEntry(byte[] signedCreditEntry) {
-        c.add(signedCreditEntry);
+    public void addSignedCreditEntry(String toAddress, byte[] signedCreditEntry) {
+        Map<String, byte[]> entryMap = new HashMap<>();
+        entryMap.put(toAddress, signedCreditEntry);
+        c.add(entryMap);
     }
 
-    public List<byte[]> getD() {
+    public List<Map<String, byte[]>> getD() {
         return d;
     }
 
-    public void setD(List<byte[]> signedDebitEntries) {
+    public void setD(List<Map<String, byte[]>> signedDebitEntries) {
         this.d = signedDebitEntries;
     }
 
-    public List<byte[]> getC() {
+    public List<Map<String, byte[]>> getC() {
         return c;
     }
 
-    public void setC(List<byte[]> signedCreditEntries) {
+    public void setC(List<Map<String, byte[]>> signedCreditEntries) {
         this.c = signedCreditEntries;
     }
+
 }

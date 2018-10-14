@@ -8,15 +8,13 @@ import org.web3j.utils.Convert;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.web3j.codegen.Console.exitError;
 
 /**
  * Transfer one tjc within the america chain. It will randomly choose two account for
- * fund transfer so that it won't deplete one particular account.
+ * fund transfer so that it won't deplete one particular account very soon.
  *
  * @author Steve Hu
  */
@@ -26,7 +24,7 @@ public class InnerChainTransfer extends WalletManager {
     public static String wallet2 = "0142166cbfde09d46081196d9428cd44f9534a0a.json";
     public static String wallet3 = "014df86f7822498ebfaa501ed1dc8cfc39b7518b.json";
 
-    private static final String USAGE = "transfer <1-1|1-N|N-1> <times>";
+    private static final String USAGE = "transfer <1-1|1-N> <times>";
 
     public static void main(String[] args) {
         if (args.length != 2) {
@@ -47,16 +45,13 @@ public class InnerChainTransfer extends WalletManager {
         BigInteger value = amountInWei.toBigIntegerExact();
         switch(mode) {
             case "1-1":
-                oneToOne(credentialsList, value, i);
+                oneToOne(credentialsList, Convert.toWei("1", Convert.Unit.ETHER).toBigIntegerExact(), i);
                 break;
             case "1-N":
-                oneToN(credentialsList, value, i);
-                break;
-            case "N-1":
-                nToOne(credentialsList, value, i);
+                oneToN(credentialsList, Convert.toWei("2", Convert.Unit.ETHER).toBigIntegerExact(), i);
                 break;
             default:
-                exitError("Invalid transfer mode. Only 1-1 or 1-N or N-1 is supported");
+                exitError("Invalid transfer mode. Only 1-1 or 1-N is supported");
 
         }
     }
@@ -64,12 +59,11 @@ public class InnerChainTransfer extends WalletManager {
     private void oneToOne(List<Credentials> list, BigInteger value, int times) {
         for(int i = 0; i < times; i++) {
             Collections.shuffle(list);
-            // transfer from first account to the second account in the list.
-            DebitEntry debitEntry = new DebitEntry(list.get(1).getAddress(), value, BigInteger.TEN, BigInteger.TEN);
-            CreditEntry creditEntry = new CreditEntry(list.get(1).getAddress(), value);
+            // transfer from first account 0 to the second account 1 in the list.
+            LedgerEntry ledgerEntry = new LedgerEntry(list.get(1).getAddress(), value);
             RawTransaction rtx = new RawTransaction();
-            rtx.addCreditEntry(creditEntry);
-            rtx.addDebitEntry(debitEntry);
+            rtx.addCreditEntry(list.get(1).getAddress(), ledgerEntry);
+            rtx.addDebitEntry(list.get(0).getAddress(), ledgerEntry);
             SignedTransaction stx = TransactionManager.signTransaction(rtx, list.get(0));
             TransactionReceipt transactionReceipt = TaijiClient.postTx(stx);
         }
@@ -79,43 +73,17 @@ public class InnerChainTransfer extends WalletManager {
         for(int i = 0; i < times; i++) {
             Collections.shuffle(list);
             // transfer from the first account to second and third accounts.
-            DebitEntry debit1 = new DebitEntry(list.get(1).getAddress(), value, BigInteger.TEN, BigInteger.TEN);
-            CreditEntry credit1 = new CreditEntry(list.get(1).getAddress(), value);
+            LedgerEntry debit = new LedgerEntry(list.get(1).getAddress(), value);
 
-            DebitEntry debit2 = new DebitEntry(list.get(2).getAddress(), value, BigInteger.TEN, BigInteger.TEN);
-            CreditEntry credit2 = new CreditEntry(list.get(2).getAddress(), value);
+            LedgerEntry credit1 = new LedgerEntry(list.get(1).getAddress(), value.divide(new BigInteger("2")));
+            LedgerEntry credit2 = new LedgerEntry(list.get(2).getAddress(), value.divide(new BigInteger("2")));
 
             RawTransaction rtx = new RawTransaction();
-            rtx.addCreditEntry(credit1);
-            rtx.addCreditEntry(credit2);
-            rtx.addDebitEntry(debit1);
-            rtx.addDebitEntry(debit2);
+            rtx.addCreditEntry(list.get(1).getAddress(), credit1);
+            rtx.addCreditEntry(list.get(2).getAddress(), credit2);
+            rtx.addDebitEntry(list.get(0).getAddress(), debit);
             SignedTransaction stx = TransactionManager.signTransaction(rtx, list.get(0));
             TransactionReceipt transactionReceipt = TaijiClient.postTx(stx);
         }
     }
-
-    private void nToOne(List<Credentials> list, BigInteger value, int times) {
-        for(int i = 0; i < times; i++) {
-            Collections.shuffle(list);
-            // transfer first and second accounts to third account
-            DebitEntry debit1 = new DebitEntry(list.get(2).getAddress(), value, BigInteger.TEN, BigInteger.TEN);
-            CreditEntry credit1 = new CreditEntry(list.get(2).getAddress(), value);
-
-            DebitEntry debit2 = new DebitEntry(list.get(2).getAddress(), value, BigInteger.TEN, BigInteger.TEN);
-            CreditEntry credit2 = new CreditEntry(list.get(2).getAddress(), value);
-
-            List<byte[]> signedCreditEntries = new ArrayList<>();
-            signedCreditEntries.add(CreditEntryEncoder.signMessage(credit1, list.get(0)));
-            signedCreditEntries.add(CreditEntryEncoder.signMessage(credit2, list.get(1)));
-
-            List<byte[]> signedDebitEntries = new ArrayList<>();
-            signedDebitEntries.add(DebitEntryEncoder.signMessage(debit1, list.get(0)));
-            signedDebitEntries.add(DebitEntryEncoder.signMessage(debit2, list.get(1)));
-
-            SignedTransaction stx = TransactionManager.createSignedTransacton(signedCreditEntries, signedDebitEntries);
-            TransactionReceipt transactionReceipt = TaijiClient.postTx(stx);
-        }
-    }
-
 }

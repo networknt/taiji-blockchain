@@ -10,26 +10,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class DebitEntryDecoderTest {
-
+public class LedgerEntryDecoderTest {
     @Test
     public void testDecodingWithoutCommentData() throws Exception {
         String to = "0x0114f873b010081f3057963709a6b2462c1206cb";
         BigInteger value = BigInteger.valueOf(Long.MAX_VALUE);
-        BigInteger gasPrice = BigInteger.ONE;
-        BigInteger gasLimit = BigInteger.TEN;
-        DebitEntry debitEntry = new DebitEntry(to, value, gasPrice, gasLimit);
+        LedgerEntry ledgerEntry = new LedgerEntry(to, value);
 
-        byte[] encodedMessage = DebitEntryEncoder.encode(debitEntry);
+        byte[] encodedMessage = LedgerEntryEncoder.encode(ledgerEntry);
         String hexMessage = Numeric.toHexString(encodedMessage);
 
-        DebitEntry result = DebitEntryDecoder.decode(hexMessage);
+        LedgerEntry result = LedgerEntryDecoder.decode(hexMessage);
         assertNotNull(result);
         assertEquals(to, result.getToAddress());
         assertEquals(value, result.getValue());
-        assertEquals(gasPrice, result.getGasPrice());
-        assertEquals(gasLimit, result.getGasLimit());
-        assertEquals("", result.getComment());
         assertEquals("", result.getData());
     }
 
@@ -37,45 +31,39 @@ public class DebitEntryDecoderTest {
     public void testDecodingWithData() throws Exception {
         String to = "0x0114f873b010081f3057963709a6b2462c1206cb";
         BigInteger value = BigInteger.valueOf(Long.MAX_VALUE);
-        BigInteger gasPrice = BigInteger.ONE;
-        BigInteger gasLimit = BigInteger.TEN;
         String comment = "This is just a test";
-        DebitEntry debitEntry = new DebitEntry(to, value, gasPrice, gasLimit, comment);
+        LedgerEntry ledgerEntry = new LedgerEntry(to, value, comment);
 
-        byte[] encodedMessage = DebitEntryEncoder.encode(debitEntry);
+        byte[] encodedMessage = LedgerEntryEncoder.encode(ledgerEntry);
         String hexMessage = Numeric.toHexString(encodedMessage);
 
-        DebitEntry result = DebitEntryDecoder.decode(hexMessage);
+        LedgerEntry result = LedgerEntryDecoder.decode(hexMessage);
         assertNotNull(result);
         assertEquals(to, result.getToAddress());
         assertEquals(value, result.getValue());
-        assertEquals(Numeric.cleanHexPrefix(Numeric.toHexString("This is just a test".getBytes())), result.getComment());
     }
 
     @Test
     public void testDecodingSigned() throws Exception {
         String to = "0x0add5355";
         BigInteger value = BigInteger.valueOf(Long.MAX_VALUE);
-        BigInteger gasPrice = BigInteger.ONE;
-        BigInteger gasLimit = BigInteger.TEN;
-
-        DebitEntry debitEntry = new DebitEntry(to, value, gasPrice, gasLimit, "");
-        byte[] signedMessage = DebitEntryEncoder.signMessage(
-                debitEntry, SampleKeys.CREDENTIALS);
+        LedgerEntry ledgerEntry = new LedgerEntry(to, value, "");
+        byte[] signedMessage = LedgerEntryEncoder.signMessage(
+                ledgerEntry, SampleKeys.CREDENTIALS);
         String hexMessage = Numeric.toHexString(signedMessage);
 
-        DebitEntry result = DebitEntryDecoder.decode(hexMessage);
+        LedgerEntry result = LedgerEntryDecoder.decode(hexMessage);
         assertNotNull(result);
         assertEquals(to, result.getToAddress());
         assertEquals(value, result.getValue());
         assertEquals("", result.getData());
 
-        assertTrue(result instanceof SignedDebitEntry);
-        SignedDebitEntry signedResult = (SignedDebitEntry) result;
+        assertTrue(result instanceof SignedLedgerEntry);
+        SignedLedgerEntry signedResult = (SignedLedgerEntry) result;
         assertNotNull(signedResult.getSignatureData());
         Sign.SignatureData signatureData = signedResult.getSignatureData();
-        byte[] encodedDebitEntry = DebitEntryEncoder.encode(debitEntry);
-        BigInteger key = Sign.signedMessageToKey(encodedDebitEntry, signatureData);
+        byte[] encodedLedgerEntry = LedgerEntryEncoder.encode(ledgerEntry);
+        BigInteger key = Sign.signedMessageToKey(encodedLedgerEntry, signatureData);
         assertEquals(key, SampleKeys.PUBLIC_KEY);
         assertEquals(SampleKeys.ADDRESS, signedResult.getFrom());
         signedResult.verify(SampleKeys.ADDRESS);
@@ -85,11 +73,11 @@ public class DebitEntryDecoderTest {
     @Test
     public void testRSize31() throws Exception {
         //CHECKSTYLE:OFF
-        String hexDebitEntry = "0xf855840add5355887fffffffffffffff010a80801ba01e4558bf49b5898494ad3802f1f4f1bb3724ca7854a4bbc1d9a859959c92abffa01ebf243fbc49cd20605f22a8ddf1c77ccae33595d56fbfb7d99ff5645c6d3e1f";
+        String hexLedgerEntry = "0xf852840add5355887fffffffffffffff801ba054f6637de97d1ffc2a94f18db668e1af8e0c6f92eccea7d0007fd14d6e566563a004238ab261ffafd90f5083a312522825557f9e1f13a883d3d7c70b62da186f36";
         //CHECKSTYLE:ON
-        DebitEntry result = DebitEntryDecoder.decode(hexDebitEntry);
-        SignedDebitEntry signedResult = (SignedDebitEntry) result;
+        LedgerEntry result = LedgerEntryDecoder.decode(hexLedgerEntry);
+        SignedLedgerEntry signedResult = (SignedLedgerEntry) result;
         assertEquals("0xef678007d18427e6022059dbc264f27507cd1ffc", signedResult.getFrom());
     }
-
+    
 }
