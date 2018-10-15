@@ -58,8 +58,8 @@ public class TransactionManager {
         }
         List<Map<String, byte[]>> c = stx.getC();
         for(int i = 0; i < stx.getC().size(); i++) {
-            Map<String, byte[]> dmap = c.get(i);
-            Map.Entry<String,byte[]> entry = dmap.entrySet().iterator().next();
+            Map<String, byte[]> cmap = c.get(i);
+            Map.Entry<String,byte[]> entry = cmap.entrySet().iterator().next();
             String toAddress = entry.getKey();
             byte[] signedLedger = entry.getValue();
             SignedLedgerEntry sc = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
