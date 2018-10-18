@@ -19,17 +19,17 @@ import static org.web3j.codegen.Console.exitError;
 
 public class WalletSendFunds extends WalletManager {
 
-    private static final String USAGE = "send <walletfile> <destination-address>";
+    private static final String USAGE = "send <currency> <walletfile> <destination-address>";
 
     public static void main(String[] args) {
         if (args.length != 2) {
             exitError(USAGE);
         } else {
-            new WalletSendFunds().run(args[0], args[1]);
+            new WalletSendFunds().run(args[0], args[1], args[2]);
         }
     }
 
-    private void run(String walletFileLocation, String destinationAddress) {
+    private void run(String currency, String walletFileLocation, String destinationAddress) {
         File walletFile = new File(walletFileLocation);
         Credentials credentials = getCredentials(walletFile);
         console.printf("Wallet for address " + credentials.getAddress() + " loaded\n");
@@ -47,7 +47,7 @@ public class WalletSendFunds extends WalletManager {
 
         // here we just create a simple transaction with one debit entry and one credit entry.
         LedgerEntry ledgerEntry = new LedgerEntry(destinationAddress, amountInWei.toBigIntegerExact());
-        RawTransaction rtx = new RawTransaction();
+        RawTransaction rtx = new RawTransaction(currency);
         rtx.addCreditEntry(destinationAddress, ledgerEntry);
         rtx.addDebitEntry(credentials.getAddress(), ledgerEntry);
         SignedTransaction stx = TransactionManager.signTransaction(rtx, credentials);

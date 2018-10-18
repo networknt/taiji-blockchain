@@ -24,17 +24,17 @@ public class InnerChainTransfer extends WalletManager {
     public static String wallet2 = "0142166cbfde09d46081196d9428cd44f9534a0a.json";
     public static String wallet3 = "014df86f7822498ebfaa501ed1dc8cfc39b7518b.json";
 
-    private static final String USAGE = "transfer <1-1|1-N> <times>";
+    private static final String USAGE = "transfer <currency> <1-1|1-N> <times>";
 
     public static void main(String[] args) {
-        if (args.length != 2) {
+        if (args.length != 3) {
             exitError(USAGE);
         } else {
-            new InnerChainTransfer().run(args[0], args[1]);
+            new InnerChainTransfer().run(args[0], args[1], args[2]);
         }
     }
 
-    private void run(String mode, String times) {
+    private void run(String currency, String mode, String times) {
         // init credentials for three accounts.
         List<Credentials> credentialsList = new ArrayList<>();
         credentialsList.add(getCredentials(password, Config.getInstance().getInputStreamFromFile(wallet1)));
@@ -45,10 +45,10 @@ public class InnerChainTransfer extends WalletManager {
         BigInteger value = amountInWei.toBigIntegerExact();
         switch(mode) {
             case "1-1":
-                oneToOne(credentialsList, Convert.toWei("1", Convert.Unit.ETHER).toBigIntegerExact(), i);
+                oneToOne(credentialsList, currency, Convert.toWei("1", Convert.Unit.ETHER).toBigIntegerExact(), i);
                 break;
             case "1-N":
-                oneToN(credentialsList, Convert.toWei("2", Convert.Unit.ETHER).toBigIntegerExact(), i);
+                oneToN(credentialsList, currency, Convert.toWei("2", Convert.Unit.ETHER).toBigIntegerExact(), i);
                 break;
             default:
                 exitError("Invalid transfer mode. Only 1-1 or 1-N is supported");
@@ -56,12 +56,12 @@ public class InnerChainTransfer extends WalletManager {
         }
     }
 
-    private void oneToOne(List<Credentials> list, BigInteger value, int times) {
+    private void oneToOne(List<Credentials> list, String currency, BigInteger value, int times) {
         for(int i = 0; i < times; i++) {
             Collections.shuffle(list);
             // transfer from first account 0 to the second account 1 in the list.
             LedgerEntry ledgerEntry = new LedgerEntry(list.get(1).getAddress(), value);
-            RawTransaction rtx = new RawTransaction();
+            RawTransaction rtx = new RawTransaction(currency);
             rtx.addCreditEntry(list.get(1).getAddress(), ledgerEntry);
             rtx.addDebitEntry(list.get(0).getAddress(), ledgerEntry);
             SignedTransaction stx = TransactionManager.signTransaction(rtx, list.get(0));
@@ -69,7 +69,7 @@ public class InnerChainTransfer extends WalletManager {
         }
     }
 
-    private void oneToN(List<Credentials> list, BigInteger value, int times) {
+    private void oneToN(List<Credentials> list, String currency, BigInteger value, int times) {
         for(int i = 0; i < times; i++) {
             Collections.shuffle(list);
             // transfer from the first account to second and third accounts.
@@ -78,7 +78,7 @@ public class InnerChainTransfer extends WalletManager {
             LedgerEntry credit1 = new LedgerEntry(list.get(1).getAddress(), value.divide(new BigInteger("2")));
             LedgerEntry credit2 = new LedgerEntry(list.get(2).getAddress(), value.divide(new BigInteger("2")));
 
-            RawTransaction rtx = new RawTransaction();
+            RawTransaction rtx = new RawTransaction(currency);
             rtx.addCreditEntry(list.get(1).getAddress(), credit1);
             rtx.addCreditEntry(list.get(2).getAddress(), credit2);
             rtx.addDebitEntry(list.get(0).getAddress(), debit);

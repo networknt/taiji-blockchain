@@ -13,8 +13,17 @@ import java.util.Map;
  * @author Steve Hu
  */
 public class SignedTransaction {
+    String currency;
     List<Map<String, byte[]>> d = new ArrayList<>();
     List<Map<String, byte[]>> c = new ArrayList<>();
+
+    public SignedTransaction() {
+
+    }
+
+    public SignedTransaction(String currency) {
+        this.currency = currency;
+    }
 
     public void addSignedDebitEntry(String fromAddress, byte[] signedDebitEntry) {
         Map<String, byte[]> entryMap = new HashMap<>();
@@ -44,4 +53,11 @@ public class SignedTransaction {
         this.c = signedCreditEntries;
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 }

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class TransactionManager {
 
     public static SignedTransaction signTransaction(RawTransaction rawTransaction, Credentials credentials) {
-        SignedTransaction signedTransaction = new SignedTransaction();
+        SignedTransaction signedTransaction = new SignedTransaction(rawTransaction.getCurrency());
 
         List<Map<String, byte[]>> signedCreditEntries = rawTransaction.getC().stream()
                 .map(c -> SignLedgerEntry(c, credentials))
@@ -29,8 +29,8 @@ public class TransactionManager {
         return signedTransaction;
     }
 
-    public static SignedTransaction createSignedTransacton(List<Map<String, byte[]>> signedCreditEntries, List<Map<String, byte[]>> signedDebitEntries) {
-        SignedTransaction signedTransaction = new SignedTransaction();
+    public static SignedTransaction createSignedTransacton(String currency, List<Map<String, byte[]>> signedCreditEntries, List<Map<String, byte[]>> signedDebitEntries) {
+        SignedTransaction signedTransaction = new SignedTransaction(currency);
         signedTransaction.setC(signedCreditEntries);
         signedTransaction.setD(signedDebitEntries);
         return signedTransaction;

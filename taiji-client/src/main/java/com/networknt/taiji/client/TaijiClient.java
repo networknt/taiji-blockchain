@@ -8,7 +8,8 @@ public class TaijiClient {
 
     public static TransactionReceipt postTx(SignedTransaction stx) {
         try {
-            System.out.println("stx = " + Config.getInstance().getMapper().writeValueAsString(stx));
+            //System.out.println("stx = " + Config.getInstance().getMapper().writeValueAsString(stx));
+
         } catch (Exception e) {
             e.printStackTrace();
         }

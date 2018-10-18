@@ -13,10 +13,12 @@ import java.util.Map;
  * @author Steve Hu
  */
 public class RawTransaction {
+    String currency;
+
     List<Map<String, LedgerEntry>> d = new ArrayList<>();
     List<Map<String, LedgerEntry>> c = new ArrayList<>();
 
-    public RawTransaction() {}
+    public RawTransaction(String currency) {this.currency = currency; }
 
     public void addDebitEntry(String fromAddress, LedgerEntry debitEntry) {
         Map<String, LedgerEntry> entryMap = new HashMap<>();
@@ -36,5 +38,13 @@ public class RawTransaction {
 
     public List<Map<String, LedgerEntry>> getC() {
         return c;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }
