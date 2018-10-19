@@ -13,6 +13,7 @@ import java.util.Map;
  * @author Steve Hu
  */
 public class SignedTransaction {
+    Snapshot snapshot;
     String currency;
     List<Map<String, byte[]>> d = new ArrayList<>();
     List<Map<String, byte[]>> c = new ArrayList<>();
@@ -59,5 +60,13 @@ public class SignedTransaction {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public Snapshot getSnapshot() {
+        return snapshot;
+    }
+
+    public void setSnapshot(Snapshot snapshot) {
+        this.snapshot = snapshot;
     }
 }
