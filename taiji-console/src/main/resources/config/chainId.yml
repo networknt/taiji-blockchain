@@ -2,8 +2,8 @@
 # to shard the blockchain so that transactions between the same region will be inner
 # chain and transaction between regions will be the inter chain which costs more.
 ---
-Africa: '03'
-Asia: '02'
-Americas: '01'
-Europe: '03'
-Oceania: '02'
+Africa: '0002'
+Asia: '0001'
+Americas: '0000'
+Europe: '0002'
+Oceania: '0001'

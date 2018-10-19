@@ -44,14 +44,14 @@ public class WalletManager {
 
     String getChainId(String initialPrompt) {
         // TODO read it from the config file instead.
-        String[] values = {"01", "02", "03"};
+        String[] values = {"0000", "0001", "0002"};
         while (true) {
             String chainId = console.readLine(initialPrompt);
             boolean contains = Arrays.stream(values).anyMatch(chainId::equals);
             if (contains) {
                 return chainId;
             } else {
-                console.printf("Sorry, wrong value! It must be 01, 02 or 03.\n");
+                console.printf("Sorry, wrong value! It must be 0000, 0001 or 0002.\n");
             }
         }
     }

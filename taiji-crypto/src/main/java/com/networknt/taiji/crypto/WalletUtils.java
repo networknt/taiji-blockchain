@@ -127,11 +127,7 @@ public class WalletUtils {
     }
 
     private static String getWalletFileName(WalletFile walletFile) {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern(
-                "'UTC--'yyyy-MM-dd'T'HH-mm-ss.nVV'--'");
-        ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
-
-        return now.format(format) + walletFile.getAddress() + ".json";
+        return walletFile.getAddress() + ".json";
     }
 
     public static String getDefaultKeyDirectory() {
@@ -143,12 +139,12 @@ public class WalletUtils {
 
         if (osName.startsWith("mac")) {
             return String.format(
-                    "%s%sLibrary%sEthereum", System.getProperty("user.home"), File.separator,
+                    "%s%sLibrary%sTaiji", System.getProperty("user.home"), File.separator,
                     File.separator);
         } else if (osName.startsWith("win")) {
-            return String.format("%s%sEthereum", System.getenv("APPDATA"), File.separator);
+            return String.format("%s%sTaiji", System.getenv("APPDATA"), File.separator);
         } else {
-            return String.format("%s%s.ethereum", System.getProperty("user.home"), File.separator);
+            return String.format("%s%s.taiji", System.getProperty("user.home"), File.separator);
         }
     }
 

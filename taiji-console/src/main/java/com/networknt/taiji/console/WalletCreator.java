@@ -30,7 +30,7 @@ public class WalletCreator extends WalletManager {
 
     private void run() {
         String password = getPassword("Please enter a wallet file password: ");
-        String chainId = getChainId("Please choose your chainId: \nAmericas 01 \nAsia,Oceania 02\nEurope,Africa 03\n");
+        String chainId = getChainId("Please choose your chainId: \nAmericas 0000 \nAsia,Oceania 0001\nEurope,Africa 0002\n");
         String destinationDir = getDestinationDir();
         File destination = createDir(destinationDir);
 
