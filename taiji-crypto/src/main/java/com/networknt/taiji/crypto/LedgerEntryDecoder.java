@@ -1,12 +1,10 @@
 package com.networknt.taiji.crypto;
 
+import com.networknt.blockchain.rlp.RlpDecoder;
+import com.networknt.blockchain.rlp.RlpList;
+import com.networknt.blockchain.rlp.RlpString;
+import com.networknt.chain.utility.Numeric;
 import org.web3j.crypto.Sign;
-import org.web3j.rlp.RlpDecoder;
-import org.web3j.rlp.RlpList;
-import org.web3j.rlp.RlpString;
-import org.web3j.utils.Numeric;
-
-import java.math.BigInteger;
 
 /**
  * Decode a ledger entry
@@ -20,7 +18,7 @@ public class LedgerEntryDecoder {
         RlpList values = (RlpList) rlpList.getValues().get(0);
 
         String to = ((RlpString) values.getValues().get(0)).asString();
-        BigInteger value = ((RlpString) values.getValues().get(1)).asPositiveBigInteger();
+        Long value = ((RlpString) values.getValues().get(1)).asPositiveLong();
         String data = ((RlpString) values.getValues().get(2)).asString();
         if (values.getValues().size() > 3) {
             byte v = ((RlpString) values.getValues().get(3)).getBytes()[0];

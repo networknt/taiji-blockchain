@@ -1,8 +1,6 @@
 package com.networknt.taiji.crypto;
 
-import org.web3j.utils.Numeric;
-
-import java.math.BigInteger;
+import com.networknt.chain.utility.Numeric;
 
 /**
  * This is a generic ledger entry for both credit and debit. Both side have the
@@ -16,16 +14,16 @@ import java.math.BigInteger;
  */
 public class LedgerEntry {
     String toAddress;     // the credit address or account
-    BigInteger value;     // debit amount for the fromAddress
+    long value;           // debit amount for the fromAddress in shell
     String data;          // transaction data or smart contract data
 
-    public LedgerEntry(String toAddress, BigInteger value, String data) {
+    public LedgerEntry(String toAddress, long value, String data) {
         this.toAddress = toAddress;
         this.value = value;
         if(data != null) this.data = Numeric.cleanHexPrefix(data);
     }
 
-    public LedgerEntry(String toAddress, BigInteger value) {
+    public LedgerEntry(String toAddress, long value) {
         this(toAddress, value, "");
     }
 
@@ -37,11 +35,11 @@ public class LedgerEntry {
         this.toAddress = toAddress;
     }
 
-    public BigInteger getValue() {
+    public long getValue() {
         return value;
     }
 
-    public void setValue(BigInteger value) {
+    public void setValue(long value) {
         this.value = value;
     }
 
@@ -52,6 +50,4 @@ public class LedgerEntry {
     public void setData(String data) {
         this.data = data;
     }
-
-
 }

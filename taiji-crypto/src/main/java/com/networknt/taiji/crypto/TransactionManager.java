@@ -44,7 +44,7 @@ public class TransactionManager {
      */
     public static boolean verifyTransaction(SignedTransaction stx) throws SignatureException {
         // decode ledger entry list d and calculate the amount.
-        BigInteger balance = BigInteger.ZERO;
+        long balance = 0;
         List<Map<String, byte[]>> d = stx.getD();
         for(int i = 0; i < stx.getD().size(); i++) {
             Map<String, byte[]> dmap = d.get(i);
@@ -52,9 +52,8 @@ public class TransactionManager {
             String fromAddress = entry.getKey();
             byte[] signedLedger = entry.getValue();
             SignedLedgerEntry sd = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
-            Sign.SignatureData signatureData = sd.getSignatureData();
             sd.verify(fromAddress);
-            balance = balance.subtract(sd.value);
+            balance = balance - sd.value;
         }
         List<Map<String, byte[]>> c = stx.getC();
         for(int i = 0; i < stx.getC().size(); i++) {
@@ -70,9 +69,9 @@ public class TransactionManager {
             BigInteger key = Sign.signedMessageToKey(encoded, signatureData);
             String address = "0x" + Keys.getAddress(key);
             sc.verify(address);
-            balance = balance.add(sc.value);
+            balance = balance + sc.value;
         }
-        if(balance == BigInteger.ZERO) return true;
+        if(balance == 0) return true;
         else return false;
     }
 

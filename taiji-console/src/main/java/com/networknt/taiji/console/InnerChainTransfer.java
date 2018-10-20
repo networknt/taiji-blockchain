@@ -3,11 +3,9 @@ package com.networknt.taiji.console;
 import com.networknt.config.Config;
 import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
+import com.networknt.taiji.utility.Converter;
 import org.web3j.crypto.Credentials;
-import org.web3j.utils.Convert;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.*;
 
 import static org.web3j.codegen.Console.exitError;
@@ -41,14 +39,12 @@ public class InnerChainTransfer extends WalletManager {
         credentialsList.add(getCredentials(password, Config.getInstance().getInputStreamFromFile(wallet2)));
         credentialsList.add(getCredentials(password, Config.getInstance().getInputStreamFromFile(wallet3)));
         Integer i = Integer.valueOf(times);
-        BigDecimal amountInWei = Convert.toWei("1", Convert.Unit.ETHER);
-        BigInteger value = amountInWei.toBigIntegerExact();
         switch(mode) {
             case "1-1":
-                oneToOne(credentialsList, currency, Convert.toWei("1", Convert.Unit.ETHER).toBigIntegerExact(), i);
+                oneToOne(credentialsList, currency, Converter.toShell(1, Converter.Unit.TAIJI), i);
                 break;
             case "1-N":
-                oneToN(credentialsList, currency, Convert.toWei("2", Convert.Unit.ETHER).toBigIntegerExact(), i);
+                oneToN(credentialsList, currency, Converter.toShell(2, Converter.Unit.TAIJI), i);
                 break;
             default:
                 exitError("Invalid transfer mode. Only 1-1 or 1-N is supported");
@@ -56,7 +52,7 @@ public class InnerChainTransfer extends WalletManager {
         }
     }
 
-    private void oneToOne(List<Credentials> list, String currency, BigInteger value, int times) {
+    private void oneToOne(List<Credentials> list, String currency, long value, int times) {
         for(int i = 0; i < times; i++) {
             Collections.shuffle(list);
             // transfer from first account 0 to the second account 1 in the list.
@@ -69,14 +65,14 @@ public class InnerChainTransfer extends WalletManager {
         }
     }
 
-    private void oneToN(List<Credentials> list, String currency, BigInteger value, int times) {
+    private void oneToN(List<Credentials> list, String currency, long value, int times) {
         for(int i = 0; i < times; i++) {
             Collections.shuffle(list);
             // transfer from the first account to second and third accounts.
             LedgerEntry debit = new LedgerEntry(list.get(1).getAddress(), value);
 
-            LedgerEntry credit1 = new LedgerEntry(list.get(1).getAddress(), value.divide(new BigInteger("2")));
-            LedgerEntry credit2 = new LedgerEntry(list.get(2).getAddress(), value.divide(new BigInteger("2")));
+            LedgerEntry credit1 = new LedgerEntry(list.get(1).getAddress(), value/2);
+            LedgerEntry credit2 = new LedgerEntry(list.get(2).getAddress(), value/2);
 
             RawTransaction rtx = new RawTransaction(currency);
             rtx.addCreditEntry(list.get(1).getAddress(), credit1);

@@ -37,7 +37,7 @@ public class LedgerEntryEncoderTest {
     }
 
     private static LedgerEntry createLedgerEntry() {
-        return new LedgerEntry("0x02dd535", BigInteger.ONE, "");
+        return new LedgerEntry("0x02dd535", 1, "");
     }
     
 }

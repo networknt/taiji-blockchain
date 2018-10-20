@@ -14,7 +14,7 @@ public class LedgerEntryDecoderTest {
     @Test
     public void testDecodingWithoutCommentData() throws Exception {
         String to = "0x0114f873b010081f3057963709a6b2462c1206cb";
-        BigInteger value = BigInteger.valueOf(Long.MAX_VALUE);
+        long value = Long.MAX_VALUE;
         LedgerEntry ledgerEntry = new LedgerEntry(to, value);
 
         byte[] encodedMessage = LedgerEntryEncoder.encode(ledgerEntry);
@@ -30,7 +30,7 @@ public class LedgerEntryDecoderTest {
     @Test
     public void testDecodingWithData() throws Exception {
         String to = "0x0114f873b010081f3057963709a6b2462c1206cb";
-        BigInteger value = BigInteger.valueOf(Long.MAX_VALUE);
+        long value = Long.MAX_VALUE;
         String comment = "This is just a test";
         LedgerEntry ledgerEntry = new LedgerEntry(to, value, comment);
 
@@ -46,7 +46,7 @@ public class LedgerEntryDecoderTest {
     @Test
     public void testDecodingSigned() throws Exception {
         String to = "0x0add5355";
-        BigInteger value = BigInteger.valueOf(Long.MAX_VALUE);
+        long value = Long.MAX_VALUE;
         LedgerEntry ledgerEntry = new LedgerEntry(to, value, "");
         byte[] signedMessage = LedgerEntryEncoder.signMessage(
                 ledgerEntry, SampleKeys.CREDENTIALS);

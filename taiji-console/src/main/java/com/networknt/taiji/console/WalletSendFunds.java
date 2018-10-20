@@ -2,6 +2,7 @@ package com.networknt.taiji.console;
 
 import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
+import com.networknt.taiji.utility.Converter;
 import org.web3j.crypto.Credentials;
 import org.web3j.ens.EnsResolver;
 import org.web3j.protocol.Web3j;
@@ -39,14 +40,14 @@ public class WalletSendFunds extends WalletManager {
             exitError("Invalid destination address specified");
         }
 
-        BigDecimal amountToTransfer = getAmountToTransfer();
-        Convert.Unit transferUnit = getTransferUnit();
-        BigDecimal amountInWei = Convert.toWei(amountToTransfer, transferUnit);
+        long amountToTransfer = getAmountToTransfer();
+        Converter.Unit transferUnit = getTransferUnit();
+        long amountInShell = Converter.toShell(amountToTransfer, transferUnit);
 
-        confirmTransfer(amountToTransfer, transferUnit, amountInWei, destinationAddress);
+        confirmTransfer(amountToTransfer, transferUnit, amountInShell, destinationAddress);
 
         // here we just create a simple transaction with one debit entry and one credit entry.
-        LedgerEntry ledgerEntry = new LedgerEntry(destinationAddress, amountInWei.toBigIntegerExact());
+        LedgerEntry ledgerEntry = new LedgerEntry(destinationAddress, amountInShell);
         RawTransaction rtx = new RawTransaction(currency);
         rtx.addCreditEntry(destinationAddress, ledgerEntry);
         rtx.addDebitEntry(credentials.getAddress(), ledgerEntry);
@@ -59,40 +60,40 @@ public class WalletSendFunds extends WalletManager {
                 destinationAddress);
     }
 
-    private BigDecimal getAmountToTransfer() {
-        String amount = console.readLine("What amound would you like to transfer "
+    private Long getAmountToTransfer() {
+        String amount = console.readLine("What amount would you like to transfer "
                 + "(please enter a numeric value): ")
                 .trim();
         try {
-            return new BigDecimal(amount);
+            return new Long(amount);
         } catch (NumberFormatException e) {
             exitError("Invalid amount specified");
         }
         throw new RuntimeException("Application exit failure");
     }
 
-    private Convert.Unit getTransferUnit() {
-        String unit = console.readLine("Please specify the unit (ether, wei, ...) [ether]: ")
+    private Converter.Unit getTransferUnit() {
+        String unit = console.readLine("Please specify the unit (shell, kshell, mshell, taiji, ktaiji or mtaiji) [taiji]: ")
                 .trim();
 
-        Convert.Unit transferUnit;
+        Converter.Unit transferUnit;
         if (unit.equals("")) {
-            transferUnit = Convert.Unit.ETHER;
+            transferUnit = Converter.Unit.TAIJI;
         } else {
-            transferUnit = Convert.Unit.fromString(unit.toLowerCase());
+            transferUnit = Converter.Unit.fromString(unit.toLowerCase());
         }
 
         return transferUnit;
     }
 
     private void confirmTransfer(
-            BigDecimal amountToTransfer, Convert.Unit transferUnit, BigDecimal amountInWei,
+            long amountToTransfer, Converter.Unit transferUnit, long amountInShell,
             String destinationAddress) {
 
-        console.printf("Please confim that you wish to transfer %s %s (%s %s) to address %s%n",
-                amountToTransfer.stripTrailingZeros().toPlainString(), transferUnit,
-                amountInWei.stripTrailingZeros().toPlainString(),
-                Convert.Unit.WEI, destinationAddress);
+        console.printf("Please confirm that you wish to transfer %s %s (%s %s) to address %s%n",
+                amountToTransfer, transferUnit,
+                amountInShell,
+                Converter.Unit.SHELL, destinationAddress);
         String confirm = console.readLine("Please type 'yes' to proceed: ").trim();
         if (!confirm.toLowerCase().equals("yes")) {
             exitError("OK, some other time perhaps...");

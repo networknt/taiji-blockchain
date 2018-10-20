@@ -10,6 +10,7 @@ application {
 dependencies {
     compile(project(":taiji-crypto"))
     compile(project(":taiji-client"))
+    compile(project(":taiji-utility"))
     compile("org.slf4j:slf4j-api:1.7.25")
     compile("com.networknt:service:1.5.20")
     compile("org.web3j:console:3.6.0")

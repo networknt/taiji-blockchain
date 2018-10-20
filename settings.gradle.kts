@@ -1,1 +1,1 @@
-include("taiji-crypto", "taiji-core", "taiji-console", "taiji-client")
+include("chain-utility", "chain-rlp", "taiji-utility", "taiji-crypto", "taiji-core", "taiji-console", "taiji-client")
