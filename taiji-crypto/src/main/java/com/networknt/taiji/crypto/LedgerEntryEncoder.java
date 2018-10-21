@@ -1,13 +1,11 @@
 package com.networknt.taiji.crypto;
 
-import org.web3j.crypto.Credentials;
-import org.web3j.crypto.Sign;
-import org.web3j.rlp.RlpEncoder;
-import org.web3j.rlp.RlpList;
-import org.web3j.rlp.RlpString;
-import org.web3j.rlp.RlpType;
-import org.web3j.utils.Bytes;
-import org.web3j.utils.Numeric;
+import com.networknt.blockchain.rlp.RlpEncoder;
+import com.networknt.blockchain.rlp.RlpList;
+import com.networknt.blockchain.rlp.RlpString;
+import com.networknt.blockchain.rlp.RlpType;
+import com.networknt.chain.utility.Bytes;
+import com.networknt.chain.utility.Numeric;
 
 import java.util.ArrayList;
 import java.util.List;

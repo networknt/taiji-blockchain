@@ -1,8 +1,6 @@
 package com.networknt.taiji.crypto;
 
 import org.junit.Test;
-import org.web3j.crypto.ECKeyPair;
-import org.web3j.crypto.Keys;
 
 public class GenKeysTest {
     @Test
@@ -21,7 +19,4 @@ public class GenKeysTest {
         String sChecksum = Keys.toChecksumAddress(sAddress);
         System.out.println("sChecksum = " + sChecksum);
     }
-
-
-
 }

@@ -1,11 +1,7 @@
 package com.networknt.taiji.console;
 
-import org.web3j.codegen.Console;
-import org.web3j.console.KeyImporter;
-import org.web3j.console.WalletSendFunds;
-import org.web3j.console.WalletUpdater;
-
-import static org.web3j.utils.Collection.tail;
+import static com.networknt.chain.utility.Collection.tail;
+import static com.networknt.taiji.console.Cli.exitError;
 
 public class WalletRunner {
 
@@ -17,7 +13,7 @@ public class WalletRunner {
 
     public static void main(String[] args) {
         if (args.length < 1) {
-            Console.exitError(USAGE);
+            exitError(USAGE);
         } else {
             switch (args[0]) {
                 case "create":
@@ -39,7 +35,7 @@ public class WalletRunner {
                     InterChainTransfer.main(tail(args));
                     break;
                 default:
-                    Console.exitError(USAGE);
+                    exitError(USAGE);
             }
         }
     }

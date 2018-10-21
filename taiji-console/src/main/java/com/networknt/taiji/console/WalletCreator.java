@@ -1,8 +1,6 @@
 package com.networknt.taiji.console;
 
-import org.web3j.codegen.Console;
-import org.web3j.console.IODevice;
-import org.web3j.crypto.CipherException;
+import com.networknt.taiji.crypto.CipherException;
 import com.networknt.taiji.crypto.WalletUtils;
 
 import java.io.File;
@@ -10,6 +8,8 @@ import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+
+import static com.networknt.taiji.console.Cli.exitError;
 
 public class WalletCreator extends WalletManager {
 
@@ -40,7 +40,7 @@ public class WalletCreator extends WalletManager {
                     + " successfully created in: " + destinationDir + "\n");
         } catch (CipherException | IOException | InvalidAlgorithmParameterException
                 | NoSuchAlgorithmException | NoSuchProviderException e) {
-            Console.exitError(e);
+            exitError(e);
         }
     }
 

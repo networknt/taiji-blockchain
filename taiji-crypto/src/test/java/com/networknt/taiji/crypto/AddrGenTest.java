@@ -1,7 +1,6 @@
 package com.networknt.taiji.crypto;
 
 import org.junit.Test;
-import org.web3j.crypto.Credentials;
 
 public class AddrGenTest {
 

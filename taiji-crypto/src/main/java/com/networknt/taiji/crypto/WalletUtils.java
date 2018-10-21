@@ -2,8 +2,7 @@ package com.networknt.taiji.crypto;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.web3j.crypto.*;
-import org.web3j.utils.Numeric;
+import com.networknt.chain.utility.Numeric;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,13 +11,11 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 
-import static org.web3j.crypto.Hash.sha256;
-import static org.web3j.crypto.Keys.ADDRESS_LENGTH_IN_HEX;
-import static org.web3j.crypto.Keys.PRIVATE_KEY_LENGTH_IN_HEX;
+import static com.networknt.chain.utility.Hash.sha256;
+import static com.networknt.taiji.crypto.Keys.ADDRESS_LENGTH_IN_HEX;
+import static com.networknt.taiji.crypto.Keys.PRIVATE_KEY_LENGTH_IN_HEX;
+
 
 public class WalletUtils {
     private static final ObjectMapper objectMapper = new ObjectMapper();

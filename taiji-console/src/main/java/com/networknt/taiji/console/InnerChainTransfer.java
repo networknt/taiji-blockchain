@@ -4,11 +4,10 @@ import com.networknt.config.Config;
 import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.utility.Converter;
-import org.web3j.crypto.Credentials;
 
 import java.util.*;
 
-import static org.web3j.codegen.Console.exitError;
+import static com.networknt.taiji.console.Cli.exitError;
 
 /**
  * Transfer one tjc within the america chain. It will randomly choose two account for

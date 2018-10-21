@@ -4,13 +4,13 @@ import com.networknt.config.Config;
 import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.utility.Converter;
-import org.web3j.crypto.Credentials;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.web3j.codegen.Console.exitError;
+import static com.networknt.taiji.console.Cli.exitError;
+
 
 public class InterChainTransfer extends WalletManager {
     public static String password = "123456";

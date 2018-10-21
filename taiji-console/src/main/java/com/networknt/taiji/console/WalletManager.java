@@ -1,9 +1,7 @@
 package com.networknt.taiji.console;
 
-import org.web3j.console.ConsoleDevice;
-import org.web3j.console.IODevice;
-import org.web3j.crypto.CipherException;
-import org.web3j.crypto.Credentials;
+import com.networknt.taiji.crypto.CipherException;
+import com.networknt.taiji.crypto.Credentials;
 import com.networknt.taiji.crypto.WalletUtils;
 
 import java.io.File;
@@ -11,7 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import static org.web3j.codegen.Console.exitError;
+import static com.networknt.taiji.console.Cli.exitError;
+
 
 public class WalletManager {
     final IODevice console;

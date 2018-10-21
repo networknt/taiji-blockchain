@@ -1,10 +1,9 @@
 package com.networknt.taiji.crypto;
 
+import com.networknt.blockchain.rlp.RlpString;
+import com.networknt.blockchain.rlp.RlpType;
+import com.networknt.chain.utility.Numeric;
 import org.junit.Test;
-import org.web3j.crypto.Sign;
-import org.web3j.rlp.RlpString;
-import org.web3j.rlp.RlpType;
-import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
 import java.util.List;

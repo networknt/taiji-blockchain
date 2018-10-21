@@ -4,7 +4,6 @@ import com.networknt.blockchain.rlp.RlpDecoder;
 import com.networknt.blockchain.rlp.RlpList;
 import com.networknt.blockchain.rlp.RlpString;
 import com.networknt.chain.utility.Numeric;
-import org.web3j.crypto.Sign;
 
 /**
  * Decode a ledger entry

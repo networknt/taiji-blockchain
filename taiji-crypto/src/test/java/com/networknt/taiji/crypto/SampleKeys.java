@@ -1,8 +1,6 @@
 package com.networknt.taiji.crypto;
 
-import org.web3j.crypto.Credentials;
-import org.web3j.crypto.ECKeyPair;
-import org.web3j.utils.Numeric;
+import com.networknt.chain.utility.Numeric;
 
 import java.math.BigInteger;
 

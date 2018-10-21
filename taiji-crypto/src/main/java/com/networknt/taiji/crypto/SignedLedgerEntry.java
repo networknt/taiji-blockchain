@@ -1,8 +1,5 @@
 package com.networknt.taiji.crypto;
 
-import org.web3j.crypto.Keys;
-import org.web3j.crypto.Sign;
-
 import java.math.BigInteger;
 import java.security.SignatureException;
 

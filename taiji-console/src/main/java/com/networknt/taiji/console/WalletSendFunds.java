@@ -3,20 +3,11 @@ package com.networknt.taiji.console;
 import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.utility.Converter;
-import org.web3j.crypto.Credentials;
-import org.web3j.ens.EnsResolver;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.methods.response.Web3ClientVersion;
-import org.web3j.protocol.http.HttpService;
-import org.web3j.protocol.infura.InfuraHttpService;
-import org.web3j.utils.Convert;
 
 import java.io.File;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.concurrent.ExecutionException;
 
-import static org.web3j.codegen.Console.exitError;
+import static com.networknt.taiji.console.Cli.exitError;
 
 public class WalletSendFunds extends WalletManager {
 
@@ -35,8 +26,7 @@ public class WalletSendFunds extends WalletManager {
         Credentials credentials = getCredentials(walletFile);
         console.printf("Wallet for address " + credentials.getAddress() + " loaded\n");
 
-        if (!WalletUtils.isValidAddress(destinationAddress)
-                && !EnsResolver.isValidEnsName(destinationAddress)) {
+        if (!WalletUtils.isValidAddress(destinationAddress)) {
             exitError("Invalid destination address specified");
         }
 
@@ -99,36 +89,4 @@ public class WalletSendFunds extends WalletManager {
             exitError("OK, some other time perhaps...");
         }
     }
-
-    private Web3j getTaijiNode() {
-        String clientAddress = console.readLine(
-                "Please confirm address of running Ethereum client you wish to send "
-                        + "the transfer request to [" + HttpService.DEFAULT_URL + "]: ")
-                .trim();
-
-        Web3j web3j;
-        if (clientAddress.equals("")) {
-            web3j = Web3j.build(new HttpService());
-        } else if (clientAddress.contains("infura.io")) {
-            web3j = Web3j.build(new InfuraHttpService(clientAddress));
-        } else {
-            web3j = Web3j.build(new HttpService(clientAddress));
-        }
-
-        try {
-            Web3ClientVersion web3ClientVersion = web3j.web3ClientVersion().sendAsync().get();
-            if (web3ClientVersion.hasError()) {
-                exitError("Unable to process response from client: "
-                        + web3ClientVersion.getError());
-            } else {
-                console.printf("Connected successfully to client: %s%n",
-                        web3ClientVersion.getWeb3ClientVersion());
-                return web3j;
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            exitError("Problem encountered verifying client: " + e.getMessage());
-        }
-        throw new RuntimeException("Application exit failure");
-    }
-
 }
