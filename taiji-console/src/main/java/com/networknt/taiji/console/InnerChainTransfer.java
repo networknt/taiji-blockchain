@@ -7,7 +7,8 @@ import com.networknt.taiji.utility.Converter;
 
 import java.util.*;
 
-import static com.networknt.taiji.console.Cli.exitError;
+import static com.networknt.chain.utility.Console.exitError;
+
 
 /**
  * Transfer one tjc within the america chain. It will randomly choose two account for

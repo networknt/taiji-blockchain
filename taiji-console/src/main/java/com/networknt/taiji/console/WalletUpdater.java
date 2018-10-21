@@ -8,8 +8,7 @@ import com.networknt.taiji.crypto.WalletUtils;
 import java.io.File;
 import java.io.IOException;
 
-import static com.networknt.taiji.console.Cli.exitError;
-
+import static com.networknt.chain.utility.Console.exitError;
 
 /**
  * Simple class for creating a wallet file.

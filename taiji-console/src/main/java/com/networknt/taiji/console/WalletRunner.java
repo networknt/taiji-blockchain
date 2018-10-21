@@ -1,7 +1,7 @@
 package com.networknt.taiji.console;
 
 import static com.networknt.chain.utility.Collection.tail;
-import static com.networknt.taiji.console.Cli.exitError;
+import static com.networknt.chain.utility.Console.exitError;
 
 public class WalletRunner {
 

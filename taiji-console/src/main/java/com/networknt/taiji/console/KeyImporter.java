@@ -8,7 +8,7 @@ import com.networknt.taiji.crypto.WalletUtils;
 import java.io.File;
 import java.io.IOException;
 
-import static com.networknt.taiji.console.Cli.exitError;
+import static com.networknt.chain.utility.Console.exitError;
 import static com.networknt.taiji.crypto.Keys.PRIVATE_KEY_LENGTH_IN_HEX;
 
 /**

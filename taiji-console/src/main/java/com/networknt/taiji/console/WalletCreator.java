@@ -9,7 +9,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
-import static com.networknt.taiji.console.Cli.exitError;
+import static com.networknt.chain.utility.Console.exitError;
 
 public class WalletCreator extends WalletManager {
 

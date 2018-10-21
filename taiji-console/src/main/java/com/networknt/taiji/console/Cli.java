@@ -1,6 +1,7 @@
 package com.networknt.taiji.console;
 
 import static com.networknt.chain.utility.Collection.tail;
+import static com.networknt.chain.utility.Console.exitError;
 
 public class Cli {
     private static String USAGE = "Usage: taiji wallet";
@@ -29,19 +30,4 @@ public class Cli {
             }
         }
     }
-
-    public static void exitError(String message) {
-        System.err.println(message);
-        System.exit(1);
-    }
-
-    public static void exitError(Throwable throwable) {
-        exitError(throwable.getMessage());
-    }
-
-    public static void exitSuccess(String message) {
-        System.out.println(message);
-        System.exit(0);
-    }
-
 }

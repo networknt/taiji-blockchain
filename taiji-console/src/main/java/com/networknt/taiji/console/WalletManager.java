@@ -9,8 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import static com.networknt.taiji.console.Cli.exitError;
-
+import static com.networknt.chain.utility.Console.exitError;
 
 public class WalletManager {
     final IODevice console;

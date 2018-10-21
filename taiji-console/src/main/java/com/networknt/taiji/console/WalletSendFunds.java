@@ -5,9 +5,8 @@ import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.utility.Converter;
 
 import java.io.File;
-import java.util.concurrent.ExecutionException;
 
-import static com.networknt.taiji.console.Cli.exitError;
+import static com.networknt.chain.utility.Console.exitError;
 
 public class WalletSendFunds extends WalletManager {
 
