@@ -19,6 +19,7 @@ import static com.networknt.taiji.crypto.WalletUtils.isValidPrivateKey;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
+@Ignore
 public class WalletUtilsTest {
 
     private File tempDir;

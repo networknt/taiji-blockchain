@@ -2,6 +2,7 @@ package com.networknt.taiji.crypto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.chain.utility.Numeric;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
+@Ignore
 public class WalletTest {
 
     @Test
