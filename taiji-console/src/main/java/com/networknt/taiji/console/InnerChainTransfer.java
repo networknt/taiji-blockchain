@@ -18,9 +18,9 @@ import static com.networknt.chain.utility.Console.exitError;
  */
 public class InnerChainTransfer extends WalletManager {
     public static String password = "123456";
-    public static String wallet1 = "01b928ccc352743b98aba5ef919e0f8731db47d2.json";
-    public static String wallet2 = "0142166cbfde09d46081196d9428cd44f9534a0a.json";
-    public static String wallet3 = "014df86f7822498ebfaa501ed1dc8cfc39b7518b.json";
+    public static String wallet1 = "00009de083827de896eba47ee0dbc95da065310c.json";
+    public static String wallet2 = "0000179b029b298d72fbd1519f56e4267cb3b420.json";
+    public static String wallet3 = "00007208c97fffee67c1186686f272ecf17f29e9.json";
 
     private static final String USAGE = "transfer <currency> <1-1|1-N> <times>";
 
