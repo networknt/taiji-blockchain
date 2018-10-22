@@ -1,5 +1,7 @@
 package com.networknt.taiji.crypto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,10 +64,12 @@ public class SignedTransaction {
         this.currency = currency;
     }
 
+    @JsonIgnore
     public Snapshot getSnapshot() {
         return snapshot;
     }
 
+    @JsonIgnore
     public void setSnapshot(Snapshot snapshot) {
         this.snapshot = snapshot;
     }
