@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.lang.Math.abs;
+
 public class TransactionManager {
 
     public static SignedTransaction signTransaction(RawTransaction rawTransaction, Credentials credentials) {
@@ -40,8 +42,9 @@ public class TransactionManager {
      *
      * @return String error if not null
      */
-    public static String verifyTransaction(SignedTransaction stx, String bankId) {
-        String error = null;
+    public static TxVerifyResult verifyTransaction(SignedTransaction stx, String bankId) {
+        TxVerifyResult result = new TxVerifyResult();
+        result.setCurrency(stx.getCurrency());
         // decode ledger entry list d and calculate the amount.
         long balance = 0;
         List<Map<String, byte[]>> d = stx.getD();
@@ -50,19 +53,29 @@ public class TransactionManager {
             Map.Entry<String,byte[]> entry = dmap.entrySet().iterator().next();
             String fromAddress = entry.getKey();
             if(!fromAddress.startsWith(bankId)) {
-                error = "From address " + fromAddress + " is not owned by bankId " + bankId;
-                return error;
+                result.setError("From address " + fromAddress + " is not owned by bankId " + bankId);
+                return result;
             }
             byte[] signedLedger = entry.getValue();
             SignedLedgerEntry sd = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
             try {
                 sd.verify(fromAddress);
             } catch (SignatureException e) {
-                error = "Signature is not matched with from address " + fromAddress;
-                return error;
+                result.setError("Signature is not matched with from address " + fromAddress);
+                return result;
+            }
+            // make sure that the from address is the same.
+            if(result.getFromAddress() == null) {
+                result.setFromAddress(fromAddress);
+            } else {
+                if(!result.getFromAddress().equals(fromAddress)) {
+                    result.setError("The entire transaction must have only one debit address");
+                    return result;
+                }
             }
             balance = balance - sd.value;
         }
+        result.setDebitAmount(abs(balance));
         List<Map<String, byte[]>> c = stx.getC();
         for(int i = 0; i < stx.getC().size(); i++) {
             Map<String, byte[]> cmap = c.get(i);
@@ -78,17 +91,17 @@ public class TransactionManager {
                 String address = Keys.getAddress(key);
                 sc.verify(address);
             } catch (SignatureException e) {
-                error = "Signature is not matched in the signed message";
-                return error;
+                result.setError("Signature is not matched in the signed message");
+                return result;
             }
             balance = balance + sc.value;
         }
         if(balance != 0) {
-            error = "Debit and Credit entries are not balanced.";
-            return error;
+            result.setError("Debit and Credit entries are not balanced.");
+            return result;
         }
         // if there is no error, then error should be null here.
-        return error;
+        return result;
     }
 
     private static Map<String, byte[]> SignLedgerEntry(Map<String, LedgerEntry> ledgerEntryMap, Credentials credentials) {
