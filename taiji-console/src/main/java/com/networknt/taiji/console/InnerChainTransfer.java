@@ -1,6 +1,8 @@
 package com.networknt.taiji.console;
 
+import com.networknt.chain.utility.Console;
 import com.networknt.config.Config;
+import com.networknt.status.Status;
 import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.utility.Converter;
@@ -61,7 +63,20 @@ public class InnerChainTransfer extends WalletManager {
             rtx.addCreditEntry(list.get(1).getAddress(), ledgerEntry);
             rtx.addDebitEntry(list.get(0).getAddress(), ledgerEntry);
             SignedTransaction stx = TransactionManager.signTransaction(rtx, list.get(0));
-            TransactionReceipt transactionReceipt = TaijiClient.postTx(stx);
+            Status status = TaijiClient.postTx(list.get(0).getAddress().substring(0, 4), stx);
+            if(status != null && status.getStatusCode() == 200) {
+                Console.exitSuccess((String.format("Funds have been successfully transferred %s from %s to %s with status %s%n",
+                        value,
+                        list.get(0).getAddress(),
+                        list.get(1).getAddress(),
+                        status.toString())));
+            } else {
+                if(status == null) {
+                    Console.exitError("Nothing returned from the API call, check connectivity");
+                } else {
+                    Console.exitError(status.toString());
+                }
+            }
         }
     }
 
@@ -69,7 +84,8 @@ public class InnerChainTransfer extends WalletManager {
         for(int i = 0; i < times; i++) {
             Collections.shuffle(list);
             // transfer from the first account to second and third accounts.
-            LedgerEntry debit = new LedgerEntry(list.get(1).getAddress(), value);
+            LedgerEntry debit1 = new LedgerEntry(list.get(1).getAddress(), value/2);
+            LedgerEntry debit2 = new LedgerEntry(list.get(2).getAddress(), value/2);
 
             LedgerEntry credit1 = new LedgerEntry(list.get(1).getAddress(), value/2);
             LedgerEntry credit2 = new LedgerEntry(list.get(2).getAddress(), value/2);
@@ -77,9 +93,23 @@ public class InnerChainTransfer extends WalletManager {
             RawTransaction rtx = new RawTransaction(currency);
             rtx.addCreditEntry(list.get(1).getAddress(), credit1);
             rtx.addCreditEntry(list.get(2).getAddress(), credit2);
-            rtx.addDebitEntry(list.get(0).getAddress(), debit);
+            rtx.addDebitEntry(list.get(0).getAddress(), debit1);
+            rtx.addDebitEntry(list.get(0).getAddress(), debit2);
             SignedTransaction stx = TransactionManager.signTransaction(rtx, list.get(0));
-            TransactionReceipt transactionReceipt = TaijiClient.postTx(stx);
+            Status status = TaijiClient.postTx(list.get(0).getAddress().substring(0, 4), stx);
+            if(status != null && status.getStatusCode() == 200) {
+                Console.exitSuccess((String.format("Funds have been successfully transferred %s from %s to %s with status %s%n",
+                        value,
+                        list.get(0).getAddress(),
+                        list.get(1).getAddress() + " and " + list.get(2).getAddress(),
+                        status.toString())));
+            } else {
+                if(status == null) {
+                    Console.exitError("Nothing returned from the API call, check connectivity");
+                } else {
+                    Console.exitError(status.toString());
+                }
+            }
         }
     }
 }

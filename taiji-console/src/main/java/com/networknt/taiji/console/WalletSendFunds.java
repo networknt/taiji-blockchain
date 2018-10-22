@@ -1,5 +1,7 @@
 package com.networknt.taiji.console;
 
+import com.networknt.chain.utility.Console;
+import com.networknt.status.Status;
 import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.utility.Converter;
@@ -42,11 +44,20 @@ public class WalletSendFunds extends WalletManager {
         rtx.addDebitEntry(credentials.getAddress(), ledgerEntry);
         SignedTransaction stx = TransactionManager.signTransaction(rtx, credentials);
 
-        TransactionReceipt transactionReceipt = TaijiClient.postTx(stx);
-        console.printf("Funds have been successfully transferred from %s to %s%n"
-                        + "RawTransaction hash: %s%nMined block number: %s%n",
-                credentials.getAddress(),
-                destinationAddress);
+        Status status = TaijiClient.postTx(credentials.getAddress().substring(0, 4), stx);
+        if(status != null && status.getStatusCode() == 200) {
+            Console.exitSuccess((String.format("Funds have been successfully transferred %s from %s to %s with status %s%n",
+                    amountInShell,
+                    credentials.getAddress(),
+                    destinationAddress,
+                    status.toString())));
+        } else {
+            if(status == null) {
+                Console.exitError("Nothing returned from the API call, check connectivity");
+            } else {
+                Console.exitError(status.toString());
+            }
+        }
     }
 
     private Long getAmountToTransfer() {
