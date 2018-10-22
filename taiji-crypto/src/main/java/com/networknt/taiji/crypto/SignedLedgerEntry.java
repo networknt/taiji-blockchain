@@ -25,7 +25,7 @@ public class SignedLedgerEntry extends LedgerEntry {
         byte[] s = signatureData.getS();
         Sign.SignatureData signatureDataV = new Sign.SignatureData(getRealV(v), r, s);
         BigInteger key = Sign.signedMessageToKey(encodedEntry, signatureDataV);
-        return "0x" + Keys.getAddress(key);
+        return Keys.getAddress(key);
     }
 
     public void verify(String from) throws SignatureException {

@@ -66,19 +66,19 @@ public class HashTest {
     @Test
     public void testSha3HashHex() {
         assertThat(Hash.sha3(""),
-                is("0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"));
+                is("c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"));
 
         assertThat(Hash.sha3("68656c6c6f20776f726c64"),
-                is("0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"));
+                is("47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"));
     }
 
     @Test
     public void testSha3String() {
         assertThat(Hash.sha3String(""),
-                is("0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"));
+                is("c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"));
 
         assertThat(Hash.sha3String("EVWithdraw(address,uint256,bytes32)"),
-                is("0x953d0c27f84a9649b0e121099ffa9aeb7ed83e65eaed41d3627f895790c72d41"));
+                is("953d0c27f84a9649b0e121099ffa9aeb7ed83e65eaed41d3627f895790c72d41"));
     }
 
     @Test

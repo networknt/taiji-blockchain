@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class LedgerEntryDecoderTest {
     @Test
     public void testDecodingWithoutCommentData() throws Exception {
-        String to = "0x0114f873b010081f3057963709a6b2462c1206cb";
+        String to = "0114f873b010081f3057963709a6b2462c1206cb";
         long value = Long.MAX_VALUE;
         LedgerEntry ledgerEntry = new LedgerEntry(to, value);
 
@@ -28,7 +28,7 @@ public class LedgerEntryDecoderTest {
 
     @Test
     public void testDecodingWithData() throws Exception {
-        String to = "0x0114f873b010081f3057963709a6b2462c1206cb";
+        String to = "0114f873b010081f3057963709a6b2462c1206cb";
         long value = Long.MAX_VALUE;
         String comment = "This is just a test";
         LedgerEntry ledgerEntry = new LedgerEntry(to, value, comment);
@@ -44,7 +44,7 @@ public class LedgerEntryDecoderTest {
 
     @Test
     public void testDecodingSigned() throws Exception {
-        String to = "0x0add5355";
+        String to = "0add5355";
         long value = Long.MAX_VALUE;
         LedgerEntry ledgerEntry = new LedgerEntry(to, value, "");
         byte[] signedMessage = LedgerEntryEncoder.signMessage(
@@ -76,7 +76,7 @@ public class LedgerEntryDecoderTest {
         //CHECKSTYLE:ON
         LedgerEntry result = LedgerEntryDecoder.decode(hexLedgerEntry);
         SignedLedgerEntry signedResult = (SignedLedgerEntry) result;
-        assertEquals("0xef678007d18427e6022059dbc264f27507cd1ffc", signedResult.getFrom());
+        assertEquals("ef678007d18427e6022059dbc264f27507cd1ffc", signedResult.getFrom());
     }
     
 }

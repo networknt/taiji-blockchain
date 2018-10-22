@@ -35,11 +35,13 @@ public class TransactionManager {
 
     /**
      * Verify each entry signature and the balance of the entire transaction. Also
-     * ensure that the from account has enough fee to execute the transaction.
+     * ensure that the from account has enough fee and amount to execute the transaction.
+     * Also, it needs to be sure that the address is owned by this bankId.
      *
-     * @return true if valid.
+     * @return String error if not null
      */
-    public static boolean verifyTransaction(SignedTransaction stx) throws SignatureException {
+    public static String verifyTransaction(SignedTransaction stx, String bankId) {
+        String error = null;
         // decode ledger entry list d and calculate the amount.
         long balance = 0;
         List<Map<String, byte[]>> d = stx.getD();
@@ -47,29 +49,46 @@ public class TransactionManager {
             Map<String, byte[]> dmap = d.get(i);
             Map.Entry<String,byte[]> entry = dmap.entrySet().iterator().next();
             String fromAddress = entry.getKey();
+            if(!fromAddress.startsWith(bankId)) {
+                error = "From address " + fromAddress + " is not owned by bankId " + bankId;
+                return error;
+            }
             byte[] signedLedger = entry.getValue();
             SignedLedgerEntry sd = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
-            sd.verify(fromAddress);
+            try {
+                sd.verify(fromAddress);
+            } catch (SignatureException e) {
+                error = "Signature is not matched with from address " + fromAddress;
+                return error;
+            }
             balance = balance - sd.value;
         }
         List<Map<String, byte[]>> c = stx.getC();
         for(int i = 0; i < stx.getC().size(); i++) {
             Map<String, byte[]> cmap = c.get(i);
             Map.Entry<String,byte[]> entry = cmap.entrySet().iterator().next();
-            String toAddress = entry.getKey();
             byte[] signedLedger = entry.getValue();
             SignedLedgerEntry sc = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
             Sign.SignatureData signatureData = sc.getSignatureData();
             LedgerEntry ce = new LedgerEntry(sc.toAddress, sc.value, sc.data);
             byte[] encoded = LedgerEntryEncoder.encode(ce);
             // get public key from the signed message.
-            BigInteger key = Sign.signedMessageToKey(encoded, signatureData);
-            String address = "0x" + Keys.getAddress(key);
-            sc.verify(address);
+            try {
+                BigInteger key = Sign.signedMessageToKey(encoded, signatureData);
+                String address = Keys.getAddress(key);
+                sc.verify(address);
+            } catch (SignatureException e) {
+                error = "Signature is not matched in the signed message";
+                return error;
+            }
             balance = balance + sc.value;
         }
-        if(balance == 0) return true;
-        else return false;
+        if(balance != 0) {
+            error = "Debit and Credit entries are not balanced.";
+            return error;
+        }
+        // if there is no error, then error should be null here.
+        return error;
     }
 
     private static Map<String, byte[]> SignLedgerEntry(Map<String, LedgerEntry> ledgerEntryMap, Credentials credentials) {

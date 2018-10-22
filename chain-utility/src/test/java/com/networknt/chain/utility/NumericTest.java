@@ -27,7 +27,7 @@ public class NumericTest {
             Numeric.asByte(0xe, 0xf)
     };
 
-    private static final String HEX_RANGE_STRING = "0x0123456789abcdef";
+    private static final String HEX_RANGE_STRING = "0123456789abcdef";
 
     @Test
     public void testQuantityEncodeLeadingZero() {
@@ -149,8 +149,8 @@ public class NumericTest {
 
     @Test
     public void testToHexString() {
-        assertThat(Numeric.toHexString(new byte[] {}), is("0x"));
-        assertThat(Numeric.toHexString(new byte[] { 0x1 }), is("0x01"));
+        assertThat(Numeric.toHexString(new byte[] {}), is(""));
+        assertThat(Numeric.toHexString(new byte[] { 0x1 }), is("01"));
         assertThat(Numeric.toHexString(HEX_RANGE_ARRAY), is(HEX_RANGE_STRING));
     }
 

@@ -17,7 +17,7 @@ public class LedgerEntryEncoderTest {
     public void testSignMessage() {
         byte[] signedMessage = LedgerEntryEncoder.signMessage(
                 createLedgerEntry(), SampleKeys.CREDENTIALS);
-        String hexMessage = Numeric.toHexString(signedMessage);
+        String hexMessage = Numeric.toHexStringWithPrefix(signedMessage);
         assertThat(hexMessage,
                 is("0xf84a84002dd53501801ca09d17720ec8a82fe00f267fae6261501598b80fa43dfff3dd3834259cae2a3c43a0138e8b7b2d2fdd455af124f9d453b7984be001e100bd215ed5d9be205cd1b4be"));
     }

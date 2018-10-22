@@ -209,6 +209,10 @@ public final class Numeric {
     }
 
     public static String toHexString(byte[] input) {
+        return toHexString(input, 0, input.length, false);
+    }
+
+    public static String toHexStringWithPrefix(byte[] input) {
         return toHexString(input, 0, input.length, true);
     }
 
