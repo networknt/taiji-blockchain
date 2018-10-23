@@ -25,11 +25,7 @@ public interface Snapshot {
      */
     void setBalance(String address, String currency, Long balance);
 
-    Map<String, Long> getSnapshot(String address);
+    Map<String, Long> getCurrencyMap(String address);
 
-    void setSnapshot(String address, Map<String, Long> snapshot);
-
-    byte[] serializeSnapshot(Map<String, Long> snapshot);
-
-    Map<String, Long> deserializeSnapshot(byte[] snapshot);
+    void setCurrencyMap(String address, Map<String, Long> currencyMap);
 }

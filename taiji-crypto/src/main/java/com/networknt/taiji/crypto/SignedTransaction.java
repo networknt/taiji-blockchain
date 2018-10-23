@@ -15,8 +15,8 @@ import java.util.Map;
  * @author Steve Hu
  */
 public class SignedTransaction {
-    Snapshot snapshot;
     String currency;
+    Map<String, Map<String, Long>> currencyMaps;
     List<Map<String, byte[]>> d = new ArrayList<>();
     List<Map<String, byte[]>> c = new ArrayList<>();
 
@@ -65,12 +65,12 @@ public class SignedTransaction {
     }
 
     @JsonIgnore
-    public Snapshot getSnapshot() {
-        return snapshot;
+    public Map<String, Map<String, Long>> getCurrencyMaps() {
+        return currencyMaps;
     }
 
     @JsonIgnore
-    public void setSnapshot(Snapshot snapshot) {
-        this.snapshot = snapshot;
+    public void setCurrencyMaps(Map<String, Map<String, Long>> currencyMaps) {
+        this.currencyMaps = currencyMaps;
     }
 }

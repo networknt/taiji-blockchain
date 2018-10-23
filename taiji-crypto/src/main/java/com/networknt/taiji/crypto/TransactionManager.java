@@ -4,6 +4,8 @@ import com.networknt.chain.utility.Numeric;
 
 import java.math.BigInteger;
 import java.security.SignatureException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -75,7 +77,10 @@ public class TransactionManager {
             }
             balance = balance - sd.value;
         }
+        // debit amount is the total of debit entries.
         result.setDebitAmount(abs(balance));
+
+        List<Map<String, Long>> credits = new ArrayList<>();
         List<Map<String, byte[]>> c = stx.getC();
         for(int i = 0; i < stx.getC().size(); i++) {
             Map<String, byte[]> cmap = c.get(i);
@@ -94,13 +99,18 @@ public class TransactionManager {
                 result.setError("Signature is not matched in the signed message");
                 return result;
             }
+            // snapshot credit entry
+            Map<String, Long> addressAmount = new HashMap<>();
+            addressAmount.put(sc.toAddress, sc.value);
+            credits.add(addressAmount);
+
             balance = balance + sc.value;
         }
         if(balance != 0) {
             result.setError("Debit and Credit entries are not balanced.");
             return result;
         }
-        // if there is no error, then error should be null here.
+        result.setCredits(credits);
         return result;
     }
 
