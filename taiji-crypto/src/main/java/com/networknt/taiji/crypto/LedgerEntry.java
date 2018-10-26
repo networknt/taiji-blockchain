@@ -14,6 +14,7 @@ import com.networknt.chain.utility.Numeric;
  */
 public class LedgerEntry {
     long id;              // generated ledger id once it is on the chain
+    long time;            // timestamp of the ledger when it is put on the chain
     String toAddress;     // the credit address or account
     long value;           // debit amount for the fromAddress in shell
     String data;          // transaction data or smart contract data
@@ -34,6 +35,14 @@ public class LedgerEntry {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public String getToAddress() {
