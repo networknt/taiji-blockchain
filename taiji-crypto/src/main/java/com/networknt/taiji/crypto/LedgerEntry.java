@@ -19,6 +19,9 @@ public class LedgerEntry {
     long value;           // debit amount for the fromAddress in shell
     String data;          // transaction data or smart contract data
 
+    public LedgerEntry() {
+    }
+
     public LedgerEntry(String toAddress, long value, String data) {
         this.toAddress = toAddress;
         this.value = value;

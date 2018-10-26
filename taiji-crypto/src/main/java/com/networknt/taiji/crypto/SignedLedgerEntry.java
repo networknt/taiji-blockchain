@@ -1,5 +1,7 @@
 package com.networknt.taiji.crypto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigInteger;
 import java.security.SignatureException;
 
@@ -14,6 +16,7 @@ public class SignedLedgerEntry extends LedgerEntry {
         this.signatureData = signatureData;
     }
 
+    @JsonIgnore
     public Sign.SignatureData getSignatureData() {
         return signatureData;
     }
@@ -45,5 +48,13 @@ public class SignedLedgerEntry extends LedgerEntry {
             inc = 1;
         }
         return (byte) (realV + inc);
+    }
+
+    public SignedLedgerEntry() {
+    }
+
+    @JsonIgnore
+    public void setFrom(String from) {
+
     }
 }
