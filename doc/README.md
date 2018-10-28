@@ -37,4 +37,43 @@ All Taiji coins are generated and owned by the following entities:
 The percentage is 50%, %15 and %35 for above entities. 
 
 
+### Mining
+
+Bitcoin is using proof-of-work to award miners, but at the same time, it burns a lot of electricity. Eventually, the mining power concentrated at several big companies.  It is not the way to distribute the control to more entities. 
+
+Taiji chain is based on the private blockchain technology from Network New Technologies Inc., and it links all partners with a fully distributed public chain. Partner nodes are not miners but managers for their customers. They make money based on the transaction fees. The more people attracted to their node, the more transactions they will handle, and the more fees will be earned. Each partner has a separate chain of their own, and all chains between partners are linked together. 
+
+All available coins 92.233 billion are distributed to 10 head addresses in Genesis block. These will be distributed to miners based on the proof of work protocol.  It is the real work that includes contributing to the open source projects in https://github.com/networknt. In the beginning, all contributions will be evaluated by the core team members and decide how much Taiji should be paid. You don't need to wait until the mainnet is up and running. When using the testnet, we record distributions in distribution.txt in https://github.com/taiji-chain/contribution repository. Every contribution will have a record in the issue of this repository for tracking purpose during this transition period. 
+
+
+### Voting
+
+Once the mainnet is up and running, we are going to build a voting application for the community to evaluate proof of work by members. Once a piece of work is submitted to the voting system, all members are eligible for voting a number on it for a period of time. Until the result is revealed, nobody knows other people's numbers. The voting is calculated based on the weight of the stake. Any numbers that are very close to the final result will be rewarded. It is a way to encourage the community to give correct valuation for any piece of work submitted by members. 
+
+
+### Auction
+
+Voting is usually for volunteer task. There are some big-ticket projects available within the community, and we can build an application to auction out these projects for the community members to work on. Once the work is done and approved by members with voting, the auctioned amount will be paid. 
+
+
+### Lottery
+
+Once the mainnet is up and running, we are going to build a lottery application for members to have fun. People can buy lottery tickets with a number in the contract. On the day the lottery is opened, all tickets with the right number will split the amount from all ticket minus a little bit fee to cover the cost. 
+
+
+### Distributed Organization
+
+The taiji chain connects all community members to form a highly distributed organization. Everybody is working for the community and get paid by the community. 
+
+### Multiple currencies
+
+With the distributed blockchain, we can have multiple currencies deployed on it. And every currency can be scaled with multiple subchains. The partner nodes can be acted as a bank in the traditional financial system, and currency exchange can happen there. If a real bank is involved, then fiat currency can be moved to the chain for payment and exchange. 
+
+### Smart contract
+
+webassembly based smart contracts
+
+
+
+
 
