@@ -50,7 +50,7 @@ public class TaijiClient {
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
             connection.sendRequest(request, client.createClientCallback(reference, latch, requestBody));
-            latch.await(1000, TimeUnit.MILLISECONDS);
+            latch.await();
             int statusCode = reference.get().getResponseCode();
             String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
             if(statusCode != 200) {
@@ -84,7 +84,7 @@ public class TaijiClient {
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
             connection.sendRequest(request, client.createClientCallback(reference, latch, requestBody));
-            latch.await(1000, TimeUnit.MILLISECONDS);
+            latch.await();
             int statusCode = reference.get().getResponseCode();
             String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
             if(statusCode != 200) {
