@@ -5,6 +5,9 @@ import com.networknt.client.Http2Client;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ApiException;
+import com.networknt.monad.Failure;
+import com.networknt.monad.Result;
+import com.networknt.monad.Success;
 import com.networknt.service.SingletonServiceFactory;
 import com.networknt.status.Status;
 import com.networknt.taiji.crypto.SignedTransaction;
@@ -44,6 +47,8 @@ public class TaijiClient {
     // Get the singleton Http2Client instance
     static Http2Client client = Http2Client.getInstance();
 
+    static final String SUCCESS_OK = "SUC10200";
+    static final String GENERIC_EXCEPTION = "ERR10014";
     /**
      * This is the API to write a single transaction to the Taiji blockchain.
      *
@@ -75,11 +80,11 @@ public class TaijiClient {
             if(statusCode != 200) {
                 status = Config.getInstance().getMapper().readValue(body, Status.class);
             } else {
-                status = new Status();
-                status.setStatusCode(200);
+                status = new Status(SUCCESS_OK);
             }
         } catch (Exception e) {
             logger.error("Exception:", e);
+            status = new Status(GENERIC_EXCEPTION, e.getMessage());
         }
         return status;
     }
@@ -116,11 +121,11 @@ public class TaijiClient {
             if(statusCode != 200) {
                 status = Config.getInstance().getMapper().readValue(body, Status.class);
             } else {
-                status = new Status();
-                status.setStatusCode(200);
+                status = new Status(SUCCESS_OK);
             }
         } catch (Exception e) {
             logger.error("Exception:", e);
+            status = new Status(GENERIC_EXCEPTION, e.getMessage());
         }
         return status;
     }
@@ -129,12 +134,11 @@ public class TaijiClient {
      * Get the balance snapshot for the address from the chain-reader.
      *
      * @param address currency address
-     * @return Map of current and balance
-     * @throws ApiException wrap up any exception status in this ApiException
+     * @return Result<Map<String, Long>> of currency and balance
      */
 
-    public static Map<String, Long> getSnapshot(String address) throws ApiException {
-        Map<String, Long> currencyMap = null;
+    public static Result<Map<String, Long>> getSnapshot(String address) {
+        Result<Map<String, Long>> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", readerServiceId, address.substring(0, 4), null);
         try {
@@ -152,14 +156,17 @@ public class TaijiClient {
             String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
             if(statusCode != 200) {
                 Status status = Config.getInstance().getMapper().readValue(body, Status.class);
-                throw new ApiException(status);
+                result = Failure.of(status);
             } else {
-                currencyMap = Config.getInstance().getMapper().readValue(body, new TypeReference<HashMap<String,Long>>() {});
+                Map<String, Long> currencyMap = Config.getInstance().getMapper().readValue(body, new TypeReference<HashMap<String,Long>>() {});
+                result = Success.of(currencyMap);
             }
         } catch (Exception e) {
             logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
         }
-        return currencyMap;
+        return result;
     }
 
 }
