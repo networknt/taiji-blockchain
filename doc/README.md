@@ -74,6 +74,20 @@ With the distributed blockchain, we can have multiple currencies deployed on it.
 webassembly based smart contracts
 
 
+### Credentials
+
+Loading encrypted credentials from the JSON file is very slow and CPU intensive. For most cases, an application should have only one or several addresses. It is recommended to cache it once it is loaded.
+
+### Address validation
+
+We need to come up a schema which enable the address validation so that invalid addresses will be rejected. On the testnet, people can just type any random numbers and trasfer the fund to it without retrieving it. 
+
+### Token support
+
+Need to support ERC20 tokens with built-in contract. 
+
+### 
+
 
 
 

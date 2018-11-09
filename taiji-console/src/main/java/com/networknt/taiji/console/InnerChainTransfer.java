@@ -20,9 +20,9 @@ import static com.networknt.chain.utility.Console.exitError;
  */
 public class InnerChainTransfer extends WalletManager {
     public static String password = "123456";
-    public static String wallet1 = "00009de083827de896eba47ee0dbc95da065310c.json";
-    public static String wallet2 = "0000179b029b298d72fbd1519f56e4267cb3b420.json";
-    public static String wallet3 = "00007208c97fffee67c1186686f272ecf17f29e9.json";
+    public static String wallet1 = "00000A3A878440702AbC03d4424d979fc67e2bBa.json";
+    public static String wallet2 = "000050f134b8B0Db3D9Cc3F6cB262D4d4445Ee28.json";
+    public static String wallet3 = "0000344d315050CA9B0938B6511EC342705a1f9c.json";
 
     private static final String USAGE = "transfer <currency> <1-1|1-N> <times>";
 
@@ -63,6 +63,7 @@ public class InnerChainTransfer extends WalletManager {
             rtx.addCreditEntry(list.get(1).getAddress(), ledgerEntry);
             rtx.addDebitEntry(list.get(0).getAddress(), ledgerEntry);
             SignedTransaction stx = TransactionManager.signTransaction(rtx, list.get(0));
+            try {System.out.println(Config.getInstance().getMapper().writeValueAsString(stx)); } catch (Exception e) {}
             Status status = TaijiClient.postTx(list.get(0).getAddress().substring(0, 4), stx);
             if(status != null && status.getStatusCode() == 200) {
                 Console.exitSuccess((String.format("Funds have been successfully transferred %s from %s to %s with status %s%n",

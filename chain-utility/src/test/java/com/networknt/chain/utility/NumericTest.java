@@ -236,4 +236,15 @@ public class NumericTest {
         long l2 = Numeric.toLong(b);
         Assert.assertEquals(l1, l2);
     }
+
+    @Test
+    public void testAddressSedes() {
+        String address = "00000A3A878440702AbC03d4424d979fc67e2bBa";
+        byte[] bytes = Numeric.hexStringToByteArray(address);
+        String newAddress = Numeric.toHexString(bytes);
+        // The reversed address is all lower case and need to apply toChecksum
+        Assert.assertNotEquals(address, newAddress);
+        // They should be equal if ignore the case.
+        Assert.assertTrue(address.equalsIgnoreCase(newAddress));
+    }
 }

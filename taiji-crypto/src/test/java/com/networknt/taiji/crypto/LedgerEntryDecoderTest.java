@@ -76,7 +76,7 @@ public class LedgerEntryDecoderTest {
         //CHECKSTYLE:ON
         LedgerEntry result = LedgerEntryDecoder.decode(hexLedgerEntry);
         SignedLedgerEntry signedResult = (SignedLedgerEntry) result;
-        assertEquals("ef678007d18427e6022059dbc264f27507cd1ffc", signedResult.getFrom());
+        assertEquals("ef678007D18427E6022059Dbc264f27507CD1ffC", signedResult.getFrom());
     }
     
 }

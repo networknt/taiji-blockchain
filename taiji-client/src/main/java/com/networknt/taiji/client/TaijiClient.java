@@ -63,6 +63,7 @@ public class TaijiClient {
         try {
             String requestBody = Config.getInstance().getMapper().writeValueAsString(stx);
             logger.debug("requestBody = " + requestBody);
+            System.out.println(requestBody);
             // This is a connection that is shared by multiple requests and won't close until the app exits.
             ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
