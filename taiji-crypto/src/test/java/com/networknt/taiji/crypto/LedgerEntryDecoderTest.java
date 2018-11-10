@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class LedgerEntryDecoderTest {
     @Test
     public void testDecodingWithoutCommentData() throws Exception {
-        String to = "0114f873b010081f3057963709a6b2462c1206cb";
+        String to = "0114f873B010081f3057963709a6b2462c1206cB";
         long value = Long.MAX_VALUE;
         LedgerEntry ledgerEntry = new LedgerEntry(to, value);
 
@@ -28,7 +28,7 @@ public class LedgerEntryDecoderTest {
 
     @Test
     public void testDecodingWithData() throws Exception {
-        String to = "0114f873b010081f3057963709a6b2462c1206cb";
+        String to = "0114f873B010081f3057963709a6b2462c1206cB";
         long value = Long.MAX_VALUE;
         String comment = "This is just a test";
         LedgerEntry ledgerEntry = new LedgerEntry(to, value, comment);
@@ -44,7 +44,7 @@ public class LedgerEntryDecoderTest {
 
     @Test
     public void testDecodingSigned() throws Exception {
-        String to = "0add5355";
+        String to = "0ADD5355";
         long value = Long.MAX_VALUE;
         LedgerEntry ledgerEntry = new LedgerEntry(to, value, "");
         byte[] signedMessage = LedgerEntryEncoder.signMessage(

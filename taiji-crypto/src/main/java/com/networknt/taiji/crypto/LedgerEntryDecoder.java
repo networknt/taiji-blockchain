@@ -16,7 +16,8 @@ public class LedgerEntryDecoder {
         RlpList rlpList = RlpDecoder.decode(entry);
         RlpList values = (RlpList) rlpList.getValues().get(0);
 
-        String to = ((RlpString) values.getValues().get(0)).asString();
+        // the decoded result for to address is all lower case, need to convert to checksum.
+        String to = Keys.toChecksumAddress(((RlpString) values.getValues().get(0)).asString());
         Long value = ((RlpString) values.getValues().get(1)).asPositiveLong();
         String data = ((RlpString) values.getValues().get(2)).asString();
         if (values.getValues().size() > 3) {
@@ -31,5 +32,4 @@ public class LedgerEntryDecoder {
             return new LedgerEntry(to, value, data);
         }
     }
-
 }
