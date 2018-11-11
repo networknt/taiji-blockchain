@@ -87,6 +87,11 @@ public class TransactionManager {
             Map.Entry<String,byte[]> entry = cmap.entrySet().iterator().next();
             byte[] signedLedger = entry.getValue();
             SignedLedgerEntry sc = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
+            // validate the toAddress with checksum to prevent sending money to an invalid address.
+            if(!validateToAddress(sc.toAddress)) {
+                result.setError("Invalid to address " + sc.toAddress);
+                return result;
+            }
             Sign.SignatureData signatureData = sc.getSignatureData();
             LedgerEntry ce = new LedgerEntry(sc.toAddress, sc.value, sc.data);
             byte[] encoded = LedgerEntryEncoder.encode(ce);
@@ -124,5 +129,29 @@ public class TransactionManager {
             .stream()
             .collect(Collectors.toMap((entry) -> entry.getKey(),
                      (entry) -> function.apply(entry.getValue())));
+    }
+
+    private static boolean validateToAddress(String toAddress) {
+        // the length of the address must be 40.
+        if(toAddress == null) return false;
+        if(toAddress.length() != 40) return false;
+        // if all digits, return false.
+        if(isNum(toAddress)) return false;
+        // checksum
+        if(toAddress.equals(Keys.toChecksumAddress(toAddress.toLowerCase()))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean isNum(String s) {
+        boolean b = true;
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            b = '0' <= c && c <= '9';
+            if(!b) break;
+        }
+        return b;
     }
 }
