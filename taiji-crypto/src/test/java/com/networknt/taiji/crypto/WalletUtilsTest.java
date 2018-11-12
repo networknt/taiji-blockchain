@@ -108,28 +108,6 @@ public class WalletUtilsTest {
                         "6ca4203d715e693279d6cd9742ad2fb7a3f6f4abe27a64da92e0a70ae5d859c9")));
     }
 
-    @Test
-    public void testGetDefaultKeyDirectory() {
-        assertTrue(WalletUtils.getDefaultKeyDirectory("Mac OS X")
-                .endsWith(String.format("%sLibrary%sTaiji", File.separator, File.separator)));
-        assertTrue(WalletUtils.getDefaultKeyDirectory("Windows")
-                .endsWith(String.format("%sTaiji", File.separator)));
-        assertTrue(WalletUtils.getDefaultKeyDirectory("Linux")
-                .endsWith(String.format("%s.taiji", File.separator)));
-    }
-
-    @Test
-    public void testGetTestnetKeyDirectory() {
-        assertTrue(WalletUtils.getMainnetKeyDirectory()
-                .endsWith(String.format("%skeystore", File.separator)));
-        assertTrue(WalletUtils.getTestnetKeyDirectory()
-                .endsWith(String.format("%stestnet%skeystore", File.separator, File.separator)));
-        assertTrue(WalletUtils.getRinkebyKeyDirectory()
-                .endsWith(String.format("%srinkeby%skeystore", File.separator, File.separator)));
-        
-    }
- 
-    
     private static File createTempDir() throws Exception {
         return Files.createTempDirectory(
                 WalletUtilsTest.class.getSimpleName() + "-testkeys").toFile();

@@ -1,5 +1,6 @@
 package com.networknt.taiji.console;
 
+import com.networknt.config.Config;
 import com.networknt.taiji.crypto.CipherException;
 import com.networknt.taiji.crypto.Credentials;
 import com.networknt.taiji.crypto.WalletUtils;
@@ -55,7 +56,7 @@ public class WalletManager {
     }
 
     String getDestinationDir() {
-        String defaultDir = WalletUtils.getTestnetKeyDirectory();
+        String defaultDir = WalletUtils.getDefaultKeyDirectory();
         String destinationDir = console.readLine(
                 "Please enter a destination directory location [" + defaultDir + "]: ");
         if (destinationDir.equals("")) {
@@ -114,6 +115,22 @@ public class WalletManager {
                 console.printf("Invalid password specified\n");
             } catch (IOException e) {
                 exitError("Unable to load wallet file: " + walletFile + "\n" + e.getMessage());
+            }
+        }
+    }
+
+    Credentials loadWalletFromAddress(String address) {
+        InputStream is = Config.getInstance().getInputStreamFromFile(address + ".json");
+        while (true) {
+            char[] password = console.readPassword(
+                    "Please enter your existing wallet file password: ");
+            String currentPassword = new String(password);
+            try {
+                return WalletUtils.loadCredentials(currentPassword, is);
+            } catch (CipherException e) {
+                console.printf("Invalid password specified\n");
+            } catch (IOException e) {
+                exitError("Unable to load wallet file for address : " + address + "\n" + e.getMessage());
             }
         }
     }

@@ -7,27 +7,29 @@ import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.utility.Converter;
 
 import java.io.File;
+import java.io.InputStream;
 
 import static com.networknt.chain.utility.Console.exitError;
 
 public class WalletSendFunds extends WalletManager {
 
-    private static final String USAGE = "send <currency> <walletfile> <destination-address>";
+    private static final String USAGE = "send <currency> <fromAddress> <toAddress>";
 
     public static void main(String[] args) {
-        if (args.length != 2) {
-            exitError(USAGE);
-        } else {
-            new WalletSendFunds().run(args[0], args[1], args[2]);
-        }
+        new WalletSendFunds().run();
     }
 
-    private void run(String currency, String walletFileLocation, String destinationAddress) {
-        File walletFile = new File(walletFileLocation);
-        Credentials credentials = getCredentials(walletFile);
+    private void run() {
+        String currency = getCurrencyToTransfer();
+
+        String fromAddress = getFromAddress();
+
+        String toAddress = getToAddress();
+
+        Credentials credentials = loadWalletFromAddress(fromAddress);
         console.printf("Wallet for address " + credentials.getAddress() + " loaded\n");
 
-        if (!WalletUtils.isValidAddress(destinationAddress)) {
+        if (!WalletUtils.isValidAddress(toAddress)) {
             exitError("Invalid destination address specified");
         }
 
@@ -35,12 +37,12 @@ public class WalletSendFunds extends WalletManager {
         Converter.Unit transferUnit = getTransferUnit();
         long amountInShell = Converter.toShell(amountToTransfer, transferUnit);
 
-        confirmTransfer(amountToTransfer, transferUnit, amountInShell, destinationAddress);
+        confirmTransfer(amountToTransfer, transferUnit, amountInShell, toAddress);
 
         // here we just create a simple transaction with one debit entry and one credit entry.
-        LedgerEntry ledgerEntry = new LedgerEntry(destinationAddress, amountInShell);
+        LedgerEntry ledgerEntry = new LedgerEntry(toAddress, amountInShell);
         RawTransaction rtx = new RawTransaction(currency);
-        rtx.addCreditEntry(destinationAddress, ledgerEntry);
+        rtx.addCreditEntry(toAddress, ledgerEntry);
         rtx.addDebitEntry(credentials.getAddress(), ledgerEntry);
         SignedTransaction stx = TransactionManager.signTransaction(rtx, credentials);
 
@@ -49,7 +51,7 @@ public class WalletSendFunds extends WalletManager {
             Console.exitSuccess((String.format("Funds have been successfully transferred %s from %s to %s with status %s%n",
                     amountInShell,
                     credentials.getAddress(),
-                    destinationAddress,
+                    toAddress,
                     status.toString())));
         } else {
             if(status == null) {
@@ -58,6 +60,37 @@ public class WalletSendFunds extends WalletManager {
                 Console.exitError(status.toString());
             }
         }
+    }
+
+    private String getCurrencyToTransfer() {
+        String currency = console.readLine("What currency or token would you like to transfer [taiji]: ")
+                .trim();
+        if(currency.equals("")) {
+            currency = "taiji";
+        } else {
+            if(!currency.equals("taiji")) {
+                exitError("Unsupported currency or token.");
+            }
+        }
+        return currency;
+    }
+
+    private String getFromAddress() {
+        String fromAddress = console.readLine("What address (source address) to transfer from: ")
+                .trim();
+        if(fromAddress.equals("")) {
+            exitError("You need to enter a real source address.");
+        }
+        return fromAddress;
+    }
+
+    private String getToAddress() {
+        String toAddress = console.readLine("What address (destination address) to transfer to: ")
+                .trim();
+        if(toAddress.equals("")) {
+            exitError("You need to enter a real destination address.");
+        }
+        return toAddress;
     }
 
     private Long getAmountToTransfer() {

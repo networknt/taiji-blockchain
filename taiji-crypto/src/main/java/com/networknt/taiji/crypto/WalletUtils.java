@@ -13,6 +13,7 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 
 import static com.networknt.chain.utility.Hash.sha256;
+import static com.networknt.config.Config.LIGHT_4J_CONFIG_DIR;
 import static com.networknt.taiji.crypto.Keys.ADDRESS_LENGTH_IN_HEX;
 import static com.networknt.taiji.crypto.Keys.PRIVATE_KEY_LENGTH_IN_HEX;
 
@@ -128,39 +129,7 @@ public class WalletUtils {
     }
 
     public static String getDefaultKeyDirectory() {
-        return getDefaultKeyDirectory(System.getProperty("os.name"));
-    }
-
-    static String getDefaultKeyDirectory(String osName1) {
-        String osName = osName1.toLowerCase();
-
-        if (osName.startsWith("mac")) {
-            return String.format(
-                    "%s%sLibrary%sTaiji", System.getProperty("user.home"), File.separator,
-                    File.separator);
-        } else if (osName.startsWith("win")) {
-            return String.format("%s%sTaiji", System.getenv("APPDATA"), File.separator);
-        } else {
-            return String.format("%s%s.taiji", System.getProperty("user.home"), File.separator);
-        }
-    }
-
-    public static String getTestnetKeyDirectory() {
-        return String.format(
-                "%s%stestnet%skeystore", getDefaultKeyDirectory(), File.separator, File.separator);
-    }
-
-    public static String getMainnetKeyDirectory() {
-        return String.format("%s%skeystore", getDefaultKeyDirectory(), File.separator);
-    }
-
-    /**
-     * Get keystore destination directory for a Rinkeby network.
-     * @return a String containing destination directory
-     */
-    public static String getRinkebyKeyDirectory() {
-        return String.format(
-                "%s%srinkeby%skeystore", getDefaultKeyDirectory(), File.separator, File.separator);
+        return System.getProperty(LIGHT_4J_CONFIG_DIR);
     }
 
     public static boolean isValidPrivateKey(String privateKey) {

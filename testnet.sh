@@ -24,7 +24,7 @@ showHelp() {
 
 calljava() {
     echo "Running the command line with command $COMMAND"
-    java -jar -Dlight-4j-config-dir=config/testnet:$HOME/.taiji/testnet/keystore taiji-console/build/libs/taiji-console-fat-1.0.0.jar $APPLICATION $COMMAND
+    java -jar -Dlight-4j-config-dir=config/testnet taiji-console/build/libs/taiji-console-fat-1.0.0.jar $APPLICATION $COMMAND
 }
 
 if [ -z $COMMAND ]; then
