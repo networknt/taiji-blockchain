@@ -88,7 +88,7 @@ public class TransactionManager {
             byte[] signedLedger = entry.getValue();
             SignedLedgerEntry sc = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
             // validate the toAddress with checksum to prevent sending money to an invalid address.
-            if(!validateToAddress(sc.toAddress)) {
+            if(!Keys.validateToAddress(sc.toAddress)) {
                 result.setError("Invalid to address " + sc.toAddress);
                 return result;
             }
@@ -129,29 +129,5 @@ public class TransactionManager {
             .stream()
             .collect(Collectors.toMap((entry) -> entry.getKey(),
                      (entry) -> function.apply(entry.getValue())));
-    }
-
-    private static boolean validateToAddress(String toAddress) {
-        // the length of the address must be 40.
-        if(toAddress == null) return false;
-        if(toAddress.length() != 40) return false;
-        // if all digits, return false.
-        if(isNum(toAddress)) return false;
-        // checksum
-        if(toAddress.equals(Keys.toChecksumAddress(toAddress.toLowerCase()))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private static boolean isNum(String s) {
-        boolean b = true;
-        for(int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            b = '0' <= c && c <= '9';
-            if(!b) break;
-        }
-        return b;
     }
 }

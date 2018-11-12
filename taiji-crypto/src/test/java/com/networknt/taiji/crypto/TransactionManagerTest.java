@@ -24,28 +24,4 @@ public class TransactionManagerTest {
         TxVerifyResult result = TransactionManager.verifyTransaction(stx, "0001");
         Assert.assertNotNull(result.getError());
     }
-
-    /*
-    @Test
-    public void testIsNum() {
-        String s = "0093903490832403290990234";
-        Assert.assertTrue(TransactionManager.isNum(s));
-
-        s = "0390432490328493a9324832904832";
-        Assert.assertFalse(TransactionManager.isNum(s));
-    }
-
-    @Test
-    public void testValidateAddress() {
-        String a = "2390490324-03294023940324";
-        Assert.assertFalse(TransactionManager.validateToAddress(a));
-        a = "9032843920843920843902849032840943204303";
-        Assert.assertFalse(TransactionManager.validateToAddress(a));
-        a = "0000344D315050CA9B0938B6511EC342705a1f9c";
-        Assert.assertFalse(TransactionManager.validateToAddress(a));
-
-        a = "0000344d315050CA9B0938B6511EC342705a1f9c";
-        Assert.assertTrue(TransactionManager.validateToAddress(a));
-    }
-    */
 }
