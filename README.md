@@ -1,5 +1,9 @@
-# light-blockchain-4j
-light blockchain end user and merchant components
+# taiji-blockchain
+taiji blockchain core, plugins and client
+
+[Developer Chat](https://gitter.im/networknt/taiji-blockchain) |
+[Documentation](https://doc.taiji.io) |
+[Contribution Guide](CONTRIBUTING.md) |
 
 ### Introduction
 
