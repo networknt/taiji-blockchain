@@ -19,7 +19,7 @@ public class LedgerEntryDecoder {
         // the decoded result for to address is all lower case, need to convert to checksum.
         String to = Keys.toChecksumAddress(((RlpString) values.getValues().get(0)).asString());
         Long value = ((RlpString) values.getValues().get(1)).asPositiveLong();
-        String data = ((RlpString) values.getValues().get(2)).asString();
+        byte[] data = ((RlpString) values.getValues().get(2)).getBytes();
         if (values.getValues().size() > 3) {
             byte v = ((RlpString) values.getValues().get(3)).getBytes()[0];
             byte[] r = Numeric.toBytesPadded(

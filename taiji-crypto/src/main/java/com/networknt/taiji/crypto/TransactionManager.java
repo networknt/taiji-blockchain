@@ -18,15 +18,18 @@ public class TransactionManager {
     public static SignedTransaction signTransaction(RawTransaction rawTransaction, Credentials credentials) {
         SignedTransaction signedTransaction = new SignedTransaction(rawTransaction.getCurrency());
 
-        List<Map<String, byte[]>> signedCreditEntries = rawTransaction.getC().stream()
-                .map(c -> SignLedgerEntry(c, credentials))
-                .collect(Collectors.toList());
-        signedTransaction.setC(signedCreditEntries);
-
-        List<Map<String, byte[]>> signedDebitEntries = rawTransaction.getD().stream()
-                .map(d -> SignLedgerEntry(d, credentials))
-                .collect(Collectors.toList());
-        signedTransaction.setD(signedDebitEntries);
+        if(rawTransaction.getC() != null) {
+            List<Map<String, byte[]>> signedCreditEntries = rawTransaction.getC().stream()
+                    .map(c -> SignLedgerEntry(c, credentials))
+                    .collect(Collectors.toList());
+            signedTransaction.setC(signedCreditEntries);
+        }
+        if(rawTransaction.getD() != null) {
+            List<Map<String, byte[]>> signedDebitEntries = rawTransaction.getD().stream()
+                    .map(d -> SignLedgerEntry(d, credentials))
+                    .collect(Collectors.toList());
+            signedTransaction.setD(signedDebitEntries);
+        }
         return signedTransaction;
     }
 
@@ -82,11 +85,25 @@ public class TransactionManager {
 
         List<Map<String, Long>> credits = new ArrayList<>();
         List<Map<String, byte[]>> c = stx.getC();
+        List<Map<String, byte[]>> events = null;
         for(int i = 0; i < stx.getC().size(); i++) {
             Map<String, byte[]> cmap = c.get(i);
             Map.Entry<String,byte[]> entry = cmap.entrySet().iterator().next();
             byte[] signedLedger = entry.getValue();
             SignedLedgerEntry sc = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
+            // if sc value is 0, then the data cannot be empty as it is an event.
+            if(sc.value == 0) {
+                if(sc.data == null) {
+                    result.setError("value is zero but there is no event data for address " + sc.toAddress);
+                    return result;
+                } else {
+                    // collect all the events in the credit entries.
+                    if(events == null) events = new ArrayList<>();
+                    Map<String, byte[]> event = new HashMap<>();
+                    event.put(sc.toAddress, sc.data);
+                    events.add(event);
+                }
+            }
             // validate the toAddress with checksum to prevent sending money to an invalid address.
             if(!Keys.validateToAddress(sc.toAddress)) {
                 result.setError("Invalid to address " + sc.toAddress);
@@ -116,6 +133,7 @@ public class TransactionManager {
             return result;
         }
         result.setCredits(credits);
+        if(events != null) result.setEvents(events);
         return result;
     }
 

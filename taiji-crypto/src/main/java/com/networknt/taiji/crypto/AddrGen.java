@@ -39,4 +39,21 @@ public class AddrGen {
         }
     }
 
+    /**
+     * Generate an address belongs to a chain
+     *
+     * @param chainId The first four digits of an address
+     * @return
+     */
+    public static String generateAddress(String chainId)
+            throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
+        while(true) {
+            ECKeyPair pair = Keys.createEcKeyPair();
+            String address = Keys.getAddress(pair);
+            if(address.startsWith(chainId)) {
+                return Keys.toChecksumAddress(address);
+            }
+        }
+    }
+
 }

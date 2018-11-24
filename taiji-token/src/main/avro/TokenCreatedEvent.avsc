@@ -1,0 +1,31 @@
+{
+  "type": "record",
+  "name": "TokenCreatedEvent",
+  "namespace": "com.networknt.taiji.token",
+  "fields": [
+    {
+      "name": "ownerAddress",
+      "type": "string"
+    },
+    {
+      "name": "tokenAddress",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "symbol",
+      "type": "string"
+    },
+    {
+      "name": "total",
+      "type": "long"
+    },
+    {
+      "name": "decimals",
+      "type": "int"
+    }
+  ]
+}

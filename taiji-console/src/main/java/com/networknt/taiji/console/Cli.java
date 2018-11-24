@@ -25,6 +25,9 @@ public class Cli {
                 case "wallet":
                     WalletRunner.run(tail(args));
                     break;
+                case "token":
+                    TokenRunner.run(tail(args));
+                    break;
                 default:
                     exitError(USAGE);
             }

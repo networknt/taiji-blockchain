@@ -1,0 +1,44 @@
+{
+  "type": "record",
+  "name": "BlockchainEvent",
+  "namespace": "com.networknt.taiji.event",
+  "fields": [
+    {
+      "name": "EventId",
+      "type": {
+        "type": "record",
+        "name": "EventId",
+        "namespace": "com.networknt.taiji.event",
+        "fields": [
+          {
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "name": "nonce",
+            "type": "long"
+          }
+        ]
+      }
+    },
+    {
+      "name": "entityAddress",
+      "type": "string"
+    },
+    {
+      "name": "entityType",
+      "type": "string"
+    },
+    {
+      "name": "eventType",
+      "type": "string"
+    },
+    {
+      "name": "eventData",
+      "type": [
+        "null",
+        "bytes"
+      ]
+    }
+  ]
+}

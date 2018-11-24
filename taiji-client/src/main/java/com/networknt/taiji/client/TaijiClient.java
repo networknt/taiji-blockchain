@@ -10,6 +10,7 @@ import com.networknt.monad.Result;
 import com.networknt.monad.Success;
 import com.networknt.service.SingletonServiceFactory;
 import com.networknt.status.Status;
+import com.networknt.taiji.crypto.Fee;
 import com.networknt.taiji.crypto.SignedLedgerEntry;
 import com.networknt.taiji.crypto.SignedTransaction;
 import com.networknt.taiji.crypto.TransactionReceipt;
@@ -201,6 +202,44 @@ public class TaijiClient {
             } else {
                 List<SignedLedgerEntry> entries = Config.getInstance().getMapper().readValue(body, new TypeReference<List<SignedLedgerEntry>>() {});
                 result = Success.of(entries);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
+    /**
+     * Get fee structure for a specific currency
+     *
+     * @param currency currency symbol only taiji is supported now.
+     * @return Result<List<SignedLedgerEntry>> of currency and balance
+     */
+    public static Result<Fee> getFee(String address, String currency) {
+        Result<Fee> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", readerServiceId, address.substring(0, 4), null);
+        try {
+            // This is a connection that is shared by multiple requests and won't close until the app exits.
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/fee/" + currency);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                Fee fee = Config.getInstance().getMapper().readValue(body, Fee.class);
+                result = Success.of(fee);
             }
         } catch (Exception e) {
             logger.error("Exception:", e);

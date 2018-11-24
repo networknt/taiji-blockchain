@@ -13,4 +13,16 @@ public class AddrGenTest {
         Credentials c03 = AddrGen.generateCredentials("03");
         System.out.println(c03.getAddress());
     }
+
+    @Test
+    public void testGenerateAddress() throws Exception {
+        String address = AddrGen.generateAddress("0000");
+        System.out.println("0000 " + address);
+
+        address = AddrGen.generateAddress("0001");
+        System.out.println("0001 " + address);
+
+        address = AddrGen.generateAddress("0002");
+        System.out.println("0002 " + address);
+    }
 }

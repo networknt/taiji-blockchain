@@ -17,19 +17,19 @@ public class LedgerEntry {
     long time;            // timestamp of the ledger when it is put on the chain
     String toAddress;     // the credit address or account
     long value;           // debit amount for the fromAddress in shell
-    String data;          // transaction data or smart contract data
+    byte[] data;          // transaction data or smart contract data in avro encoding
 
     public LedgerEntry() {
     }
 
-    public LedgerEntry(String toAddress, long value, String data) {
+    public LedgerEntry(String toAddress, long value, byte[] data) {
         this.toAddress = toAddress;
         this.value = value;
-        if(data != null) this.data = Numeric.cleanHexPrefix(data);
+        if(data != null) this.data = data;
     }
 
     public LedgerEntry(String toAddress, long value) {
-        this(toAddress, value, "");
+        this(toAddress, value, new byte[0]);
     }
 
     public long getId() {
@@ -64,11 +64,11 @@ public class LedgerEntry {
         this.value = value;
     }
 
-    public String getData() {
+    public byte[] getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(byte[] data) {
         this.data = data;
     }
 }

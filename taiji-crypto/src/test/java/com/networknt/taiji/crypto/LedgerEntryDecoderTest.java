@@ -23,14 +23,14 @@ public class LedgerEntryDecoderTest {
         assertNotNull(result);
         assertEquals(to, result.getToAddress());
         assertEquals(value, result.getValue());
-        assertEquals("", result.getData());
+        assertEquals("", Numeric.toHexString(result.getData()));
     }
 
     @Test
     public void testDecodingWithData() throws Exception {
         String to = "0114f873B010081f3057963709a6b2462c1206cB";
         long value = Long.MAX_VALUE;
-        String comment = "This is just a test";
+        byte[] comment = "This is just a test".getBytes();
         LedgerEntry ledgerEntry = new LedgerEntry(to, value, comment);
 
         byte[] encodedMessage = LedgerEntryEncoder.encode(ledgerEntry);
@@ -46,7 +46,7 @@ public class LedgerEntryDecoderTest {
     public void testDecodingSigned() throws Exception {
         String to = "0ADD5355";
         long value = Long.MAX_VALUE;
-        LedgerEntry ledgerEntry = new LedgerEntry(to, value, "");
+        LedgerEntry ledgerEntry = new LedgerEntry(to, value, new byte[0]);
         byte[] signedMessage = LedgerEntryEncoder.signMessage(
                 ledgerEntry, SampleKeys.CREDENTIALS);
         String hexMessage = Numeric.toHexString(signedMessage);
@@ -55,7 +55,7 @@ public class LedgerEntryDecoderTest {
         assertNotNull(result);
         assertEquals(to, result.getToAddress());
         assertEquals(value, result.getValue());
-        assertEquals("", result.getData());
+        assertEquals("", Numeric.toHexString(result.getData()));
 
         assertTrue(result instanceof SignedLedgerEntry);
         SignedLedgerEntry signedResult = (SignedLedgerEntry) result;

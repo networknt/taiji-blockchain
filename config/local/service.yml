@@ -7,6 +7,7 @@ singletons:
       path: direct
       parameters:
         com.networknt.chainwriter-1.0.0: https://localhost:8443
+        com.networknt.chainreader-1.0.0: https://localhost:8444
 - com.networknt.registry.Registry:
   - com.networknt.registry.support.DirectRegistry
 - com.networknt.balance.LoadBalance:

@@ -10,7 +10,7 @@ public class SignedLedgerEntry extends LedgerEntry {
 
     private Sign.SignatureData signatureData;
 
-    public SignedLedgerEntry(String to, long value, String data,
+    public SignedLedgerEntry(String to, long value, byte[] data,
                              Sign.SignatureData signatureData) {
         super(to, value, data);
         this.signatureData = signatureData;

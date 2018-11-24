@@ -15,6 +15,7 @@ public class TxVerifyResult {
     String fromAddress;
     long debitAmount;
     List<Map<String, Long>> credits; // a list of address to amount mappings for credit entries
+    List<Map<String, byte[]>> events;
 
     public TxVerifyResult() {
     }
@@ -57,5 +58,13 @@ public class TxVerifyResult {
 
     public void setCredits(List<Map<String, Long>> credits) {
         this.credits = credits;
+    }
+
+    public List<Map<String, byte[]>> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Map<String, byte[]>> events) {
+        this.events = events;
     }
 }

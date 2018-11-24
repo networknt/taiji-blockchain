@@ -36,7 +36,7 @@ public class LedgerEntryEncoderTest {
     }
 
     private static LedgerEntry createLedgerEntry() {
-        return new LedgerEntry("0x02dd535", 1, "");
+        return new LedgerEntry("0x02dd535", 1, new byte[0]);
     }
     
 }

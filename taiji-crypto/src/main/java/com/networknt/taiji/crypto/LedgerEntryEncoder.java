@@ -48,9 +48,9 @@ public class LedgerEntryEncoder {
 
         result.add(RlpString.create(entry.getValue()));
 
-        String data = entry.getData();
-        if(data != null && data.length() > 0) {
-            result.add(RlpString.create(Numeric.hexStringToByteArray(data)));
+        byte[] data = entry.getData();
+        if(data != null && data.length > 0) {
+            result.add(RlpString.create(data));
         } else {
             result.add(RlpString.create(""));
         }

@@ -7,10 +7,16 @@ application {
     mainClassName = "com.networknt.taiji.console.Cli"
 }
 
+repositories {
+    maven(url = "https://packages.confluent.io/maven/")
+}
+
 dependencies {
     compile(project(":taiji-crypto"))
     compile(project(":taiji-client"))
     compile(project(":taiji-utility"))
+    compile(project(":taiji-token"))
+    compile(project(":avro-serializer"))
     compile("org.slf4j:slf4j-api:1.7.25")
     compile("com.networknt:service:1.5.22")
     compile("com.fasterxml.jackson.core:jackson-databind:2.9.5")
