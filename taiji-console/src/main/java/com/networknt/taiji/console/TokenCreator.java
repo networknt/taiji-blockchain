@@ -6,11 +6,9 @@ import com.networknt.status.Status;
 import com.networknt.taiji.avro.AvroSerializer;
 import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
-import com.networknt.taiji.event.BlockchainEvent;
 import com.networknt.taiji.event.EventId;
 import com.networknt.taiji.token.TokenCreatedEvent;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import static com.networknt.chain.utility.Console.exitError;
@@ -50,10 +48,6 @@ public class TokenCreator extends WalletManager {
         Integer decimals = getDecimals();
         long total = l * 10^decimals;
 
-        TokenCreatedEvent tokenCreatedEvent = new TokenCreatedEvent(ownerAddress, tokenAddress, name, symbol, total, decimals);
-        AvroSerializer serializer = new AvroSerializer();
-        byte[] tokenCreatedEventBytes = serializer.serialize(tokenCreatedEvent);
-
         // get number of transactions from the chain-reader to generate eventId.
         long nonce = 0;
         Result<List<SignedLedgerEntry>> result = TaijiClient.getTransaction(ownerAddress, currency);
@@ -68,16 +62,10 @@ public class TokenCreator extends WalletManager {
                 .setNonce(nonce)
                 .build();
 
-        BlockchainEvent blockchainEvent = BlockchainEvent.newBuilder()
-                .setEventId(eventId)
-                .setEntityAddress(tokenAddress)
-                .setEntityType("com.networknt.taiji.entity.Token")
-                .setEventType(TokenCreatedEvent.class.getName())
-                .setEventData(ByteBuffer.wrap(serializer.serialize(tokenCreatedEvent)))
-                .build();
+        TokenCreatedEvent tokenCreatedEvent = new TokenCreatedEvent(eventId, tokenAddress, name, symbol, total, decimals);
 
-        byte[] bytes = serializer.serialize(blockchainEvent);
-
+        AvroSerializer serializer = new AvroSerializer();
+        byte[] bytes = serializer.serialize(tokenCreatedEvent);
 
         // here we just create a credit entry only on with the toAddress the token address and value 0
         LedgerEntry creditEntry = new LedgerEntry(tokenAddress, 0, bytes);

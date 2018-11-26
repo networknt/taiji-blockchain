@@ -1,12 +1,9 @@
 package com.networknt.taiji.avro;
 
-import com.networknt.taiji.event.BlockchainEvent;
 import com.networknt.taiji.event.EventId;
 import com.networknt.taiji.token.TokenCreatedEvent;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import java.nio.ByteBuffer;
 
 public class AvroSerializerTest {
 
@@ -22,51 +19,22 @@ public class AvroSerializerTest {
     }
 
     private TokenCreatedEvent tokenCreatedEvent() {
-        TokenCreatedEvent event = TokenCreatedEvent.newBuilder()
-                .setOwnerAddress("000085DF3b608aF058482391681C3a04C437776C")
-                .setTokenAddress("0001a01963b09fe09DE62d83BD2B9A0c2b618D74")
-                .setName("Light Token")
-                .setSymbol("LIGHT")
-                .setTotal(1000L)
-                .setDecimals(9)
-                .build();
-
-        return event;
-
-    }
-
-    private BlockchainEvent blockchainEvent() {
         EventId eventId = EventId.newBuilder()
                 .setAddress("000085DF3b608aF058482391681C3a04C437776C")
                 .setNonce(1L)
                 .build();
 
-        TokenCreatedEvent tokenCreatedEvent = tokenCreatedEvent();
-        AvroSerializer avroSerializer = new AvroSerializer();
-
-        BlockchainEvent event = BlockchainEvent.newBuilder()
+        TokenCreatedEvent event = TokenCreatedEvent.newBuilder()
                 .setEventId(eventId)
                 .setEntityAddress("0001a01963b09fe09DE62d83BD2B9A0c2b618D74")
-                .setEntityType("com.networknt.taiji.entity.Token")
-                .setEventType(TokenCreatedEvent.class.getName())
-                .setEventData(ByteBuffer.wrap(avroSerializer.serialize(tokenCreatedEvent)))
+                .setName("Light Token")
+                .setSymbol("LIGHT")
+                .setTotalSupply(1000L)
+                .setDecimals(9)
                 .build();
+
         return event;
-    }
 
-    @Ignore
-    @Test
-    public void testBlockchainEvent() {
-        AvroSerializer avroSerializer = new AvroSerializer();
-        byte[] bytes = avroSerializer.serialize(blockchainEvent());
-        AvroDeserializer deserializer = new AvroDeserializer(true);
-        BlockchainEvent blockchainEvent = (BlockchainEvent)deserializer.deserialize(bytes);
-        ByteBuffer byteBuffer = blockchainEvent.getEventData();
-        byte[] ba = new byte[byteBuffer.remaining()];
-        byteBuffer.get(ba);
-
-        Object object = deserializer.deserialize(ba);
-        System.out.println("object class = " + object.getClass());
     }
 
     @Ignore

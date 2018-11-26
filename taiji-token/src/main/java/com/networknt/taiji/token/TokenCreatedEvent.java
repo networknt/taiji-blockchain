@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord, TokenEvent {
-  private static final long serialVersionUID = 5123626456919881235L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenCreatedEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"ownerAddress\",\"type\":\"string\"},{\"name\":\"tokenAddress\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"symbol\",\"type\":\"string\"},{\"name\":\"total\",\"type\":\"long\"},{\"name\":\"decimals\",\"type\":\"int\"}]}");
+  private static final long serialVersionUID = -6093477019626534301L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenCreatedEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"nonce\",\"type\":\"long\"}]}},{\"name\":\"entityAddress\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"symbol\",\"type\":\"string\"},{\"name\":\"totalSupply\",\"type\":\"long\"},{\"name\":\"decimals\",\"type\":\"int\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -51,11 +51,11 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.CharSequence ownerAddress;
-  @Deprecated public java.lang.CharSequence tokenAddress;
+  @Deprecated public com.networknt.taiji.event.EventId EventId;
+  @Deprecated public java.lang.CharSequence entityAddress;
   @Deprecated public java.lang.CharSequence name;
   @Deprecated public java.lang.CharSequence symbol;
-  @Deprecated public long total;
+  @Deprecated public long totalSupply;
   @Deprecated public int decimals;
 
   /**
@@ -67,19 +67,19 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * All-args constructor.
-   * @param ownerAddress The new value for ownerAddress
-   * @param tokenAddress The new value for tokenAddress
+   * @param EventId The new value for EventId
+   * @param entityAddress The new value for entityAddress
    * @param name The new value for name
    * @param symbol The new value for symbol
-   * @param total The new value for total
+   * @param totalSupply The new value for totalSupply
    * @param decimals The new value for decimals
    */
-  public TokenCreatedEvent(java.lang.CharSequence ownerAddress, java.lang.CharSequence tokenAddress, java.lang.CharSequence name, java.lang.CharSequence symbol, java.lang.Long total, java.lang.Integer decimals) {
-    this.ownerAddress = ownerAddress;
-    this.tokenAddress = tokenAddress;
+  public TokenCreatedEvent(com.networknt.taiji.event.EventId EventId, java.lang.CharSequence entityAddress, java.lang.CharSequence name, java.lang.CharSequence symbol, java.lang.Long totalSupply, java.lang.Integer decimals) {
+    this.EventId = EventId;
+    this.entityAddress = entityAddress;
     this.name = name;
     this.symbol = symbol;
-    this.total = total;
+    this.totalSupply = totalSupply;
     this.decimals = decimals;
   }
 
@@ -87,11 +87,11 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return ownerAddress;
-    case 1: return tokenAddress;
+    case 0: return EventId;
+    case 1: return entityAddress;
     case 2: return name;
     case 3: return symbol;
-    case 4: return total;
+    case 4: return totalSupply;
     case 5: return decimals;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
@@ -101,46 +101,46 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: ownerAddress = (java.lang.CharSequence)value$; break;
-    case 1: tokenAddress = (java.lang.CharSequence)value$; break;
+    case 0: EventId = (com.networknt.taiji.event.EventId)value$; break;
+    case 1: entityAddress = (java.lang.CharSequence)value$; break;
     case 2: name = (java.lang.CharSequence)value$; break;
     case 3: symbol = (java.lang.CharSequence)value$; break;
-    case 4: total = (java.lang.Long)value$; break;
+    case 4: totalSupply = (java.lang.Long)value$; break;
     case 5: decimals = (java.lang.Integer)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
 
   /**
-   * Gets the value of the 'ownerAddress' field.
-   * @return The value of the 'ownerAddress' field.
+   * Gets the value of the 'EventId' field.
+   * @return The value of the 'EventId' field.
    */
-  public java.lang.CharSequence getOwnerAddress() {
-    return ownerAddress;
+  public com.networknt.taiji.event.EventId getEventId() {
+    return EventId;
   }
 
   /**
-   * Sets the value of the 'ownerAddress' field.
+   * Sets the value of the 'EventId' field.
    * @param value the value to set.
    */
-  public void setOwnerAddress(java.lang.CharSequence value) {
-    this.ownerAddress = value;
+  public void setEventId(com.networknt.taiji.event.EventId value) {
+    this.EventId = value;
   }
 
   /**
-   * Gets the value of the 'tokenAddress' field.
-   * @return The value of the 'tokenAddress' field.
+   * Gets the value of the 'entityAddress' field.
+   * @return The value of the 'entityAddress' field.
    */
-  public java.lang.CharSequence getTokenAddress() {
-    return tokenAddress;
+  public java.lang.CharSequence getEntityAddress() {
+    return entityAddress;
   }
 
   /**
-   * Sets the value of the 'tokenAddress' field.
+   * Sets the value of the 'entityAddress' field.
    * @param value the value to set.
    */
-  public void setTokenAddress(java.lang.CharSequence value) {
-    this.tokenAddress = value;
+  public void setEntityAddress(java.lang.CharSequence value) {
+    this.entityAddress = value;
   }
 
   /**
@@ -176,19 +176,19 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   }
 
   /**
-   * Gets the value of the 'total' field.
-   * @return The value of the 'total' field.
+   * Gets the value of the 'totalSupply' field.
+   * @return The value of the 'totalSupply' field.
    */
-  public java.lang.Long getTotal() {
-    return total;
+  public java.lang.Long getTotalSupply() {
+    return totalSupply;
   }
 
   /**
-   * Sets the value of the 'total' field.
+   * Sets the value of the 'totalSupply' field.
    * @param value the value to set.
    */
-  public void setTotal(java.lang.Long value) {
-    this.total = value;
+  public void setTotalSupply(java.lang.Long value) {
+    this.totalSupply = value;
   }
 
   /**
@@ -239,11 +239,12 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<TokenCreatedEvent>
     implements org.apache.avro.data.RecordBuilder<TokenCreatedEvent> {
 
-    private java.lang.CharSequence ownerAddress;
-    private java.lang.CharSequence tokenAddress;
+    private com.networknt.taiji.event.EventId EventId;
+    private com.networknt.taiji.event.EventId.Builder EventIdBuilder;
+    private java.lang.CharSequence entityAddress;
     private java.lang.CharSequence name;
     private java.lang.CharSequence symbol;
-    private long total;
+    private long totalSupply;
     private int decimals;
 
     /** Creates a new Builder */
@@ -257,12 +258,15 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
      */
     private Builder(com.networknt.taiji.token.TokenCreatedEvent.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.ownerAddress)) {
-        this.ownerAddress = data().deepCopy(fields()[0].schema(), other.ownerAddress);
+      if (isValidValue(fields()[0], other.EventId)) {
+        this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.tokenAddress)) {
-        this.tokenAddress = data().deepCopy(fields()[1].schema(), other.tokenAddress);
+      if (other.hasEventIdBuilder()) {
+        this.EventIdBuilder = com.networknt.taiji.event.EventId.newBuilder(other.getEventIdBuilder());
+      }
+      if (isValidValue(fields()[1], other.entityAddress)) {
+        this.entityAddress = data().deepCopy(fields()[1].schema(), other.entityAddress);
         fieldSetFlags()[1] = true;
       }
       if (isValidValue(fields()[2], other.name)) {
@@ -273,8 +277,8 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
         this.symbol = data().deepCopy(fields()[3].schema(), other.symbol);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.total)) {
-        this.total = data().deepCopy(fields()[4].schema(), other.total);
+      if (isValidValue(fields()[4], other.totalSupply)) {
+        this.totalSupply = data().deepCopy(fields()[4].schema(), other.totalSupply);
         fieldSetFlags()[4] = true;
       }
       if (isValidValue(fields()[5], other.decimals)) {
@@ -289,12 +293,13 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
      */
     private Builder(com.networknt.taiji.token.TokenCreatedEvent other) {
             super(SCHEMA$);
-      if (isValidValue(fields()[0], other.ownerAddress)) {
-        this.ownerAddress = data().deepCopy(fields()[0].schema(), other.ownerAddress);
+      if (isValidValue(fields()[0], other.EventId)) {
+        this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.tokenAddress)) {
-        this.tokenAddress = data().deepCopy(fields()[1].schema(), other.tokenAddress);
+      this.EventIdBuilder = null;
+      if (isValidValue(fields()[1], other.entityAddress)) {
+        this.entityAddress = data().deepCopy(fields()[1].schema(), other.entityAddress);
         fieldSetFlags()[1] = true;
       }
       if (isValidValue(fields()[2], other.name)) {
@@ -305,8 +310,8 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
         this.symbol = data().deepCopy(fields()[3].schema(), other.symbol);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.total)) {
-        this.total = data().deepCopy(fields()[4].schema(), other.total);
+      if (isValidValue(fields()[4], other.totalSupply)) {
+        this.totalSupply = data().deepCopy(fields()[4].schema(), other.totalSupply);
         fieldSetFlags()[4] = true;
       }
       if (isValidValue(fields()[5], other.decimals)) {
@@ -316,79 +321,114 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     }
 
     /**
-      * Gets the value of the 'ownerAddress' field.
+      * Gets the value of the 'EventId' field.
       * @return The value.
       */
-    public java.lang.CharSequence getOwnerAddress() {
-      return ownerAddress;
+    public com.networknt.taiji.event.EventId getEventId() {
+      return EventId;
     }
 
     /**
-      * Sets the value of the 'ownerAddress' field.
-      * @param value The value of 'ownerAddress'.
+      * Sets the value of the 'EventId' field.
+      * @param value The value of 'EventId'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenCreatedEvent.Builder setOwnerAddress(java.lang.CharSequence value) {
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder setEventId(com.networknt.taiji.event.EventId value) {
       validate(fields()[0], value);
-      this.ownerAddress = value;
+      this.EventIdBuilder = null;
+      this.EventId = value;
       fieldSetFlags()[0] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'ownerAddress' field has been set.
-      * @return True if the 'ownerAddress' field has been set, false otherwise.
+      * Checks whether the 'EventId' field has been set.
+      * @return True if the 'EventId' field has been set, false otherwise.
       */
-    public boolean hasOwnerAddress() {
+    public boolean hasEventId() {
       return fieldSetFlags()[0];
     }
 
+    /**
+     * Gets the Builder instance for the 'EventId' field and creates one if it doesn't exist yet.
+     * @return This builder.
+     */
+    public com.networknt.taiji.event.EventId.Builder getEventIdBuilder() {
+      if (EventIdBuilder == null) {
+        if (hasEventId()) {
+          setEventIdBuilder(com.networknt.taiji.event.EventId.newBuilder(EventId));
+        } else {
+          setEventIdBuilder(com.networknt.taiji.event.EventId.newBuilder());
+        }
+      }
+      return EventIdBuilder;
+    }
 
     /**
-      * Clears the value of the 'ownerAddress' field.
+     * Sets the Builder instance for the 'EventId' field
+     * @param value The builder instance that must be set.
+     * @return This builder.
+     */
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder setEventIdBuilder(com.networknt.taiji.event.EventId.Builder value) {
+      clearEventId();
+      EventIdBuilder = value;
+      return this;
+    }
+
+    /**
+     * Checks whether the 'EventId' field has an active Builder instance
+     * @return True if the 'EventId' field has an active Builder instance
+     */
+    public boolean hasEventIdBuilder() {
+      return EventIdBuilder != null;
+    }
+
+    /**
+      * Clears the value of the 'EventId' field.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenCreatedEvent.Builder clearOwnerAddress() {
-      ownerAddress = null;
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder clearEventId() {
+      EventId = null;
+      EventIdBuilder = null;
       fieldSetFlags()[0] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'tokenAddress' field.
+      * Gets the value of the 'entityAddress' field.
       * @return The value.
       */
-    public java.lang.CharSequence getTokenAddress() {
-      return tokenAddress;
+    public java.lang.CharSequence getEntityAddress() {
+      return entityAddress;
     }
 
     /**
-      * Sets the value of the 'tokenAddress' field.
-      * @param value The value of 'tokenAddress'.
+      * Sets the value of the 'entityAddress' field.
+      * @param value The value of 'entityAddress'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenCreatedEvent.Builder setTokenAddress(java.lang.CharSequence value) {
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder setEntityAddress(java.lang.CharSequence value) {
       validate(fields()[1], value);
-      this.tokenAddress = value;
+      this.entityAddress = value;
       fieldSetFlags()[1] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'tokenAddress' field has been set.
-      * @return True if the 'tokenAddress' field has been set, false otherwise.
+      * Checks whether the 'entityAddress' field has been set.
+      * @return True if the 'entityAddress' field has been set, false otherwise.
       */
-    public boolean hasTokenAddress() {
+    public boolean hasEntityAddress() {
       return fieldSetFlags()[1];
     }
 
 
     /**
-      * Clears the value of the 'tokenAddress' field.
+      * Clears the value of the 'entityAddress' field.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenCreatedEvent.Builder clearTokenAddress() {
-      tokenAddress = null;
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder clearEntityAddress() {
+      entityAddress = null;
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -472,39 +512,39 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     }
 
     /**
-      * Gets the value of the 'total' field.
+      * Gets the value of the 'totalSupply' field.
       * @return The value.
       */
-    public java.lang.Long getTotal() {
-      return total;
+    public java.lang.Long getTotalSupply() {
+      return totalSupply;
     }
 
     /**
-      * Sets the value of the 'total' field.
-      * @param value The value of 'total'.
+      * Sets the value of the 'totalSupply' field.
+      * @param value The value of 'totalSupply'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenCreatedEvent.Builder setTotal(long value) {
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder setTotalSupply(long value) {
       validate(fields()[4], value);
-      this.total = value;
+      this.totalSupply = value;
       fieldSetFlags()[4] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'total' field has been set.
-      * @return True if the 'total' field has been set, false otherwise.
+      * Checks whether the 'totalSupply' field has been set.
+      * @return True if the 'totalSupply' field has been set, false otherwise.
       */
-    public boolean hasTotal() {
+    public boolean hasTotalSupply() {
       return fieldSetFlags()[4];
     }
 
 
     /**
-      * Clears the value of the 'total' field.
+      * Clears the value of the 'totalSupply' field.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenCreatedEvent.Builder clearTotal() {
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder clearTotalSupply() {
       fieldSetFlags()[4] = false;
       return this;
     }
@@ -552,11 +592,15 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     public TokenCreatedEvent build() {
       try {
         TokenCreatedEvent record = new TokenCreatedEvent();
-        record.ownerAddress = fieldSetFlags()[0] ? this.ownerAddress : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.tokenAddress = fieldSetFlags()[1] ? this.tokenAddress : (java.lang.CharSequence) defaultValue(fields()[1]);
+        if (EventIdBuilder != null) {
+          record.EventId = this.EventIdBuilder.build();
+        } else {
+          record.EventId = fieldSetFlags()[0] ? this.EventId : (com.networknt.taiji.event.EventId) defaultValue(fields()[0]);
+        }
+        record.entityAddress = fieldSetFlags()[1] ? this.entityAddress : (java.lang.CharSequence) defaultValue(fields()[1]);
         record.name = fieldSetFlags()[2] ? this.name : (java.lang.CharSequence) defaultValue(fields()[2]);
         record.symbol = fieldSetFlags()[3] ? this.symbol : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.total = fieldSetFlags()[4] ? this.total : (java.lang.Long) defaultValue(fields()[4]);
+        record.totalSupply = fieldSetFlags()[4] ? this.totalSupply : (java.lang.Long) defaultValue(fields()[4]);
         record.decimals = fieldSetFlags()[5] ? this.decimals : (java.lang.Integer) defaultValue(fields()[5]);
         return record;
       } catch (java.lang.Exception e) {

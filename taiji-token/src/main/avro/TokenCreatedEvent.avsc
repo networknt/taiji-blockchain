@@ -4,11 +4,25 @@
   "namespace": "com.networknt.taiji.token",
   "fields": [
     {
-      "name": "ownerAddress",
-      "type": "string"
+      "name": "EventId",
+      "type": {
+        "type": "record",
+        "name": "EventId",
+        "namespace": "com.networknt.taiji.event",
+        "fields": [
+          {
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "name": "nonce",
+            "type": "long"
+          }
+        ]
+      }
     },
     {
-      "name": "tokenAddress",
+      "name": "entityAddress",
       "type": "string"
     },
     {
@@ -20,7 +34,7 @@
       "type": "string"
     },
     {
-      "name": "total",
+      "name": "totalSupply",
       "type": "long"
     },
     {
