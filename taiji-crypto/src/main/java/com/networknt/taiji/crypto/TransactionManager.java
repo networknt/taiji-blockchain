@@ -18,18 +18,14 @@ public class TransactionManager {
     public static SignedTransaction signTransaction(RawTransaction rawTransaction, Credentials credentials) {
         SignedTransaction signedTransaction = new SignedTransaction(rawTransaction.getCurrency());
 
-        if(rawTransaction.getC() != null) {
-            List<Map<String, byte[]>> signedCreditEntries = rawTransaction.getC().stream()
-                    .map(c -> SignLedgerEntry(c, credentials))
-                    .collect(Collectors.toList());
-            signedTransaction.setC(signedCreditEntries);
-        }
-        if(rawTransaction.getD() != null) {
-            List<Map<String, byte[]>> signedDebitEntries = rawTransaction.getD().stream()
-                    .map(d -> SignLedgerEntry(d, credentials))
-                    .collect(Collectors.toList());
-            signedTransaction.setD(signedDebitEntries);
-        }
+        List<Map<String, byte[]>> signedCreditEntries = rawTransaction.getC().stream()
+                .map(c -> SignLedgerEntry(c, credentials))
+                .collect(Collectors.toList());
+        signedTransaction.setC(signedCreditEntries);
+        List<Map<String, byte[]>> signedDebitEntries = rawTransaction.getD().stream()
+                .map(d -> SignLedgerEntry(d, credentials))
+                .collect(Collectors.toList());
+        signedTransaction.setD(signedDebitEntries);
         return signedTransaction;
     }
 
@@ -43,11 +39,11 @@ public class TransactionManager {
     /**
      * Verify each entry signature and the balance of the entire transaction. Also
      * ensure that the from account has enough fee and amount to execute the transaction.
-     * Also, it needs to be sure that the address is owned by this bankId.
+     * It needs to be sure that the address is owned by this bankId.
      *
      * @return String error if not null
      */
-    public static TxVerifyResult verifyTransaction(SignedTransaction stx, String bankId) {
+    public static TxVerifyResult verifyTransaction(SignedTransaction stx, String bankId, Fee fee) {
         TxVerifyResult result = new TxVerifyResult();
         result.setCurrency(stx.getCurrency());
         // decode ledger entry list d and calculate the amount.
@@ -82,26 +78,22 @@ public class TransactionManager {
         }
         // debit amount is the total of debit entries.
         result.setDebitAmount(abs(balance));
-
+        int feeInShell = fee.getInnerChain(); // assuming it is inner chain transaction by default
         List<Map<String, Long>> credits = new ArrayList<>();
         List<Map<String, byte[]>> c = stx.getC();
-        List<Map<String, byte[]>> events = null;
         for(int i = 0; i < stx.getC().size(); i++) {
             Map<String, byte[]> cmap = c.get(i);
             Map.Entry<String,byte[]> entry = cmap.entrySet().iterator().next();
             byte[] signedLedger = entry.getValue();
             SignedLedgerEntry sc = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
-            // if sc value is 0, then the data cannot be empty as it is an event.
+            if(!sc.toAddress.startsWith(bankId)) feeInShell = fee.getInterChain(); // at least one toAddress is not in chain.
             if(sc.value == 0) {
                 if(sc.data == null) {
                     result.setError("value is zero but there is no event data for address " + sc.toAddress);
                     return result;
                 } else {
-                    // collect all the events in the credit entries.
-                    if(events == null) events = new ArrayList<>();
-                    Map<String, byte[]> event = new HashMap<>();
-                    event.put(sc.toAddress, sc.data);
-                    events.add(event);
+                    // this is a valid event entry.
+                    feeInShell = fee.getApplication();
                 }
             }
             // validate the toAddress with checksum to prevent sending money to an invalid address.
@@ -121,6 +113,20 @@ public class TransactionManager {
                 result.setError("Signature is not matched in the signed message");
                 return result;
             }
+            // validate if the fee entry exists and amount is correct.
+            boolean feeExist = false;
+            if(sc.toAddress.equals(fee.getBankAddress())) {
+                if (sc.value != feeInShell) {
+                    result.setError("Incorrect fee " + sc.value + " and the home bank expect " + feeInShell);
+                    return result;
+                } else {
+                    feeExist = true;
+                }
+            }
+            if(!feeExist) {
+                result.setError("Fee entry is missing");
+                return result;
+            }
             // snapshot credit entry
             Map<String, Long> addressAmount = new HashMap<>();
             addressAmount.put(sc.toAddress, sc.value);
@@ -133,7 +139,6 @@ public class TransactionManager {
             return result;
         }
         result.setCredits(credits);
-        if(events != null) result.setEvents(events);
         return result;
     }
 

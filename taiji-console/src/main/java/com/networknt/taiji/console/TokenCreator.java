@@ -89,7 +89,7 @@ public class TokenCreator extends WalletManager {
         if(feeResult.isSuccess()) {
             fee = feeResult.getResult();
         } else {
-            exitError(result.getError().toString());
+            exitError(feeResult.getError().toString());
         }
         LedgerEntry feeEntry = new LedgerEntry(fee.getBankAddress(), fee.getApplication());
         rtx.addCreditEntry(fee.getBankAddress(), feeEntry);

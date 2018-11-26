@@ -1,6 +1,7 @@
 package com.networknt.taiji.console;
 
 import com.networknt.chain.utility.Console;
+import com.networknt.monad.Result;
 import com.networknt.status.Status;
 import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
@@ -39,11 +40,27 @@ public class WalletSendFunds extends WalletManager {
 
         confirmTransfer(amountToTransfer, transferUnit, amountInShell, toAddress);
 
+        // calculate the fee for the debit entry
+        Result<Fee> feeResult = TaijiClient.getFee(fromAddress, currency);
+        Fee fee = null;
+        if(feeResult.isSuccess()) {
+            fee = feeResult.getResult();
+        } else {
+            exitError(feeResult.getError().toString());
+        }
+        boolean innerChain = false;
+        if(fromAddress.substring(0, 4).equals(toAddress.substring(0, 4))) {
+            innerChain = true;
+        }
+        LedgerEntry feeEntry = new LedgerEntry(fee.getBankAddress(), innerChain? fee.getInnerChain() : fee.getInterChain());
+
         // here we just create a simple transaction with one debit entry and one credit entry.
         LedgerEntry ledgerEntry = new LedgerEntry(toAddress, amountInShell);
         RawTransaction rtx = new RawTransaction(currency);
         rtx.addCreditEntry(toAddress, ledgerEntry);
         rtx.addDebitEntry(credentials.getAddress(), ledgerEntry);
+        rtx.addCreditEntry(fee.getBankAddress(), feeEntry);
+        rtx.addDebitEntry(fromAddress, feeEntry);
         SignedTransaction stx = TransactionManager.signTransaction(rtx, credentials);
 
         Status status = TaijiClient.postTx(credentials.getAddress().substring(0, 4), stx);

@@ -3,6 +3,7 @@ package com.networknt.taiji.avro;
 import com.networknt.taiji.event.BlockchainEvent;
 import com.networknt.taiji.event.EventId;
 import com.networknt.taiji.token.TokenCreatedEvent;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.nio.ByteBuffer;
@@ -53,6 +54,7 @@ public class AvroSerializerTest {
         return event;
     }
 
+    @Ignore
     @Test
     public void testBlockchainEvent() {
         AvroSerializer avroSerializer = new AvroSerializer();
@@ -67,6 +69,7 @@ public class AvroSerializerTest {
         System.out.println("object class = " + object.getClass());
     }
 
+    @Ignore
     @Test
     public void testTokenCreatedEvent() {
         AvroSerializer avroSerializer = new AvroSerializer();
@@ -76,6 +79,7 @@ public class AvroSerializerTest {
         System.out.println("object class = " + object.getClass());
     }
 
+    @Ignore
     @Test
     public void testKafkaAvroSerializer() {
 
