@@ -43,7 +43,7 @@ public class TransactionManager {
      *
      * @return String error if not null
      */
-    public static TxVerifyResult verifyTransaction(SignedTransaction stx, String bankId, Fee fee) {
+    public static TxVerifyResult verifyTransaction(SignedTransaction stx, String bankId, FeeConfig feeConfig) {
         TxVerifyResult result = new TxVerifyResult();
         result.setCurrency(stx.getCurrency());
         // decode ledger entry list d and calculate the amount.
@@ -78,6 +78,8 @@ public class TransactionManager {
         }
         // debit amount is the total of debit entries.
         result.setDebitAmount(abs(balance));
+        Fee fee = feeConfig.getCurrencies().get(result.getCurrency());
+        boolean feeExist = false;
         int feeInShell = fee.getInnerChain(); // assuming it is inner chain transaction by default
         List<Map<String, Long>> credits = new ArrayList<>();
         List<Map<String, byte[]>> c = stx.getC();
@@ -114,7 +116,6 @@ public class TransactionManager {
                 return result;
             }
             // validate if the fee entry exists and amount is correct.
-            boolean feeExist = false;
             if(sc.toAddress.equals(fee.getBankAddress())) {
                 if (sc.value != feeInShell) {
                     result.setError("Incorrect fee " + sc.value + " and the home bank expect " + feeInShell);
@@ -122,10 +123,6 @@ public class TransactionManager {
                 } else {
                     feeExist = true;
                 }
-            }
-            if(!feeExist) {
-                result.setError("Fee entry is missing");
-                return result;
             }
             // snapshot credit entry
             Map<String, Long> addressAmount = new HashMap<>();
@@ -138,6 +135,11 @@ public class TransactionManager {
             result.setError("Debit and Credit entries are not balanced.");
             return result;
         }
+        if(!feeExist) {
+            result.setError("Fee entry is missing");
+            return result;
+        }
+
         result.setCredits(credits);
         return result;
     }

@@ -1,0 +1,10 @@
+# Fee structure for the current instance of chain-writer which is owned by
+# a home bank. All fees are in SHELL.
+currencies:
+  taiji:
+    bankAddress: 000085f904e427a2721738930681ca7AA2E7984B
+    #  bankAddress: 00013e98C16bAAcD74b8EBD24c2911c299520e7a
+    #  bankAddress: 0002502F06d625dcc335c3FC7F8B40B8cb3f1c9c
+    innerChain: 1000
+    interChain: 5000
+    application: 1000000
