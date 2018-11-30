@@ -24,6 +24,9 @@ public class TokenRunner {
                 case "approve":
                     TokenApprover.main(tail(args));
                     break;
+                case "withdraw":
+                    TokenWithdrawal.main(tail(args));
+                    break;
                 default:
                     exitError(USAGE);
             }

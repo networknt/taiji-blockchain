@@ -2,11 +2,16 @@ package com.networknt.taiji.event;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.networknt.config.Config;
 
+import javax.management.RuntimeErrorException;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public class JsonMapper {
 
@@ -39,6 +44,22 @@ public class JsonMapper {
     try {
       return objectMapper.readValue(json, (Class<T>) JsonMapper.class.getClassLoader().loadClass(targetType));
     } catch (IOException | ClassNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static Map<String, Object> string2Map(String s) {
+    try {
+      return objectMapper.readValue(s, new TypeReference<Map<String, Object>>(){});
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static List<Map<String, Object>> string2List(String s) {
+    try {
+      return objectMapper.readValue(s, new TypeReference<List<Map<String, Object>>>(){});
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }

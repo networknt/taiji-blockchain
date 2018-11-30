@@ -1,0 +1,37 @@
+{
+  "type": "record",
+  "name": "TokenApprovedEvent",
+  "namespace": "com.networknt.taiji.token",
+  "fields": [
+    {
+      "name": "EventId",
+      "type": {
+        "type": "record",
+        "name": "EventId",
+        "namespace": "com.networknt.taiji.event",
+        "fields": [
+          {
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "name": "nonce",
+            "type": "long"
+          }
+        ]
+      }
+    },
+    {
+      "name": "entityAddress",
+      "type": "string"
+    },
+    {
+      "name": "toAddress",
+      "type": "string"
+    },
+    {
+      "name": "amount",
+      "type": "long"
+    }
+  ]
+}

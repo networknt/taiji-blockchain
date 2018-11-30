@@ -1,7 +1,7 @@
 {
   "type": "record",
-  "name": "BlockchainEvent",
-  "namespace": "com.networknt.taiji.event",
+  "name": "TokenTransferredEvent",
+  "namespace": "com.networknt.taiji.token",
   "fields": [
     {
       "name": "EventId",
@@ -26,19 +26,12 @@
       "type": "string"
     },
     {
-      "name": "entityType",
+      "name": "toAddress",
       "type": "string"
     },
     {
-      "name": "eventType",
-      "type": "string"
-    },
-    {
-      "name": "eventData",
-      "type": [
-        "null",
-        "bytes"
-      ]
+      "name": "amount",
+      "type": "long"
     }
   ]
 }

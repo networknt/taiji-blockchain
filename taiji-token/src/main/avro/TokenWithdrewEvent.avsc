@@ -1,0 +1,37 @@
+{
+  "type": "record",
+  "name": "TokenWithdrewEvent",
+  "namespace": "com.networknt.taiji.token",
+  "fields": [
+    {
+      "name": "EventId",
+      "type": {
+        "type": "record",
+        "name": "EventId",
+        "namespace": "com.networknt.taiji.event",
+        "fields": [
+          {
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "name": "nonce",
+            "type": "long"
+          }
+        ]
+      }
+    },
+    {
+      "name": "entityAddress",
+      "type": "string"
+    },
+    {
+      "name": "fromAddress",
+      "type": "string"
+    },
+    {
+      "name": "amount",
+      "type": "long"
+    }
+  ]
+}

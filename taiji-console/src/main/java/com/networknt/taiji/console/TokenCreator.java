@@ -13,7 +13,7 @@ import java.util.List;
 
 import static com.networknt.chain.utility.Console.exitError;
 
-public class TokenCreator extends WalletManager {
+public class TokenCreator extends TokenManager {
     public TokenCreator() {
     }
 
@@ -99,26 +99,6 @@ public class TokenCreator extends WalletManager {
         }
     }
 
-    private String getCurrency() {
-        String currency = console.readLine("What currency chain do you want your token to attach [taiji]: ")
-                .trim();
-        if(currency.equals("")) {
-            currency = "taiji";
-        } else {
-            if(!currency.equals("taiji")) {
-                exitError("Unsupported currency or token.");
-            }
-        }
-        return currency;
-    }
-
-    private String getOwnerAddress() {
-        String ownerAddress = console.readLine("What address (source address) to own the token: ").trim();
-        if(ownerAddress.equals("")) {
-            exitError("You need to enter a real source address.");
-        }
-        return ownerAddress;
-    }
 
     private String getName() {
         String name = console.readLine("What is the token name (it can be a long name or description: ").trim();
@@ -146,17 +126,6 @@ public class TokenCreator extends WalletManager {
         throw new RuntimeException("Application exit failure");
     }
 
-    private Long getAmountToTransfer() {
-        String amount = console.readLine("What amount would you like to transfer "
-                + "(please enter a numeric value): ")
-                .trim();
-        try {
-            return new Long(amount);
-        } catch (NumberFormatException e) {
-            exitError("Invalid amount specified");
-        }
-        throw new RuntimeException("Application exit failure");
-    }
 
     private Integer getDecimals() {
         String decimals = console.readLine("What is the number of decimals to support (default 9): ").trim();

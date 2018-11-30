@@ -13,20 +13,20 @@ import java.util.List;
 
 import static com.networknt.chain.utility.Console.exitError;
 
-public class TokenTransfer extends TokenManager {
-    public TokenTransfer() {
+public class TokenWithdrawal extends TokenManager {
+    public TokenWithdrawal() {
     }
 
-    public TokenTransfer(IODevice console) {
+    public TokenWithdrawal(IODevice console) {
         super(console);
     }
 
     public static void main(String[] args) {
-        new TokenTransfer().run();
+        new TokenWithdrawal().run();
     }
 
     static void main(IODevice console) {
-        new TokenTransfer(console).run();
+        new TokenWithdrawal(console).run();
     }
 
     private void run() {
@@ -35,8 +35,8 @@ public class TokenTransfer extends TokenManager {
         Credentials credentials = loadWalletFromAddress(ownerAddress);
         console.printf("Wallet for address " + credentials.getAddress() + " loaded\n");
         String tokenAddress = getTokenAddress();
-        String transferredAddress = getTransferredAddress();
-        Long l = getTransferredAmount();
+        String withdrawFromAddress = getWithdrawFromAddress();
+        Long l = getWithdrawnAmount();
         // TODO we need to get the decimals for the token in order to calculate the exact number.
         long total = l * 10^9;
 
@@ -54,7 +54,7 @@ public class TokenTransfer extends TokenManager {
                 .setNonce(nonce)
                 .build();
 
-        TokenApprovedEvent tokenApprovedEvent = new TokenApprovedEvent(eventId, tokenAddress, transferredAddress, total);
+        TokenApprovedEvent tokenApprovedEvent = new TokenApprovedEvent(eventId, tokenAddress, withdrawFromAddress, total);
 
         AvroSerializer serializer = new AvroSerializer();
         byte[] bytes = serializer.serialize(tokenApprovedEvent);
@@ -78,10 +78,10 @@ public class TokenTransfer extends TokenManager {
 
         Status status = TaijiClient.postTx(credentials.getAddress().substring(0, 4), stx);
         if(status != null && status.getStatusCode() == 200) {
-            Console.exitSuccess((String.format("Token has been transferred successfully for owner address %s, token address %s to transferred address %s with status %s%n",
+            Console.exitSuccess((String.format("Token has been withdrawn successfully for owner address %s, token address %s from withdrawn address %s with status %s%n",
                     ownerAddress,
                     tokenAddress,
-                    transferredAddress,
+                    withdrawFromAddress,
                     status.toString())));
         } else {
             if(status == null) {

@@ -44,6 +44,8 @@ public class TaijiClient {
     // service name
     static final String writerServiceId = "com.networknt.chainwriter-1.0.0";
     static final String readerServiceId = "com.networknt.chainreader-1.0.0";
+    static final String tokenServiceId = "com.networknt.chaintoken-1.0.0";
+
     // Get the singleton Cluster instance
     static Cluster cluster = SingletonServiceFactory.getBean(Cluster.class);
     // Get the singleton Http2Client instance
