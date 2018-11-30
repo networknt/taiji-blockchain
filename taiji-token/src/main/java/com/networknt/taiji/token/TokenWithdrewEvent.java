@@ -12,9 +12,9 @@ import org.apache.avro.message.SchemaStore;
 
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord, TokenEvent {
-  private static final long serialVersionUID = 4491447312330761462L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenWithdrewEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"nonce\",\"type\":\"long\"}]}},{\"name\":\"entityAddress\",\"type\":\"string\"},{\"name\":\"fromAddress\",\"type\":\"string\"},{\"name\":\"amount\",\"type\":\"long\"}]}");
+public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = -8175296731683570159L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenWithdrewEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"nonce\",\"type\":\"long\"}]}},{\"name\":\"symbol\",\"type\":\"string\"},{\"name\":\"fromAddress\",\"type\":\"string\"},{\"name\":\"amount\",\"type\":\"long\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -52,7 +52,7 @@ public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordB
   }
 
   @Deprecated public com.networknt.taiji.event.EventId EventId;
-  @Deprecated public java.lang.CharSequence entityAddress;
+  @Deprecated public java.lang.CharSequence symbol;
   @Deprecated public java.lang.CharSequence fromAddress;
   @Deprecated public long amount;
 
@@ -66,13 +66,13 @@ public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordB
   /**
    * All-args constructor.
    * @param EventId The new value for EventId
-   * @param entityAddress The new value for entityAddress
+   * @param symbol The new value for symbol
    * @param fromAddress The new value for fromAddress
    * @param amount The new value for amount
    */
-  public TokenWithdrewEvent(com.networknt.taiji.event.EventId EventId, java.lang.CharSequence entityAddress, java.lang.CharSequence fromAddress, java.lang.Long amount) {
+  public TokenWithdrewEvent(com.networknt.taiji.event.EventId EventId, java.lang.CharSequence symbol, java.lang.CharSequence fromAddress, java.lang.Long amount) {
     this.EventId = EventId;
-    this.entityAddress = entityAddress;
+    this.symbol = symbol;
     this.fromAddress = fromAddress;
     this.amount = amount;
   }
@@ -82,7 +82,7 @@ public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordB
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return EventId;
-    case 1: return entityAddress;
+    case 1: return symbol;
     case 2: return fromAddress;
     case 3: return amount;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
@@ -94,7 +94,7 @@ public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordB
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: EventId = (com.networknt.taiji.event.EventId)value$; break;
-    case 1: entityAddress = (java.lang.CharSequence)value$; break;
+    case 1: symbol = (java.lang.CharSequence)value$; break;
     case 2: fromAddress = (java.lang.CharSequence)value$; break;
     case 3: amount = (java.lang.Long)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
@@ -118,19 +118,19 @@ public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordB
   }
 
   /**
-   * Gets the value of the 'entityAddress' field.
-   * @return The value of the 'entityAddress' field.
+   * Gets the value of the 'symbol' field.
+   * @return The value of the 'symbol' field.
    */
-  public java.lang.CharSequence getEntityAddress() {
-    return entityAddress;
+  public java.lang.CharSequence getSymbol() {
+    return symbol;
   }
 
   /**
-   * Sets the value of the 'entityAddress' field.
+   * Sets the value of the 'symbol' field.
    * @param value the value to set.
    */
-  public void setEntityAddress(java.lang.CharSequence value) {
-    this.entityAddress = value;
+  public void setSymbol(java.lang.CharSequence value) {
+    this.symbol = value;
   }
 
   /**
@@ -199,7 +199,7 @@ public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordB
 
     private com.networknt.taiji.event.EventId EventId;
     private com.networknt.taiji.event.EventId.Builder EventIdBuilder;
-    private java.lang.CharSequence entityAddress;
+    private java.lang.CharSequence symbol;
     private java.lang.CharSequence fromAddress;
     private long amount;
 
@@ -221,8 +221,8 @@ public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordB
       if (other.hasEventIdBuilder()) {
         this.EventIdBuilder = com.networknt.taiji.event.EventId.newBuilder(other.getEventIdBuilder());
       }
-      if (isValidValue(fields()[1], other.entityAddress)) {
-        this.entityAddress = data().deepCopy(fields()[1].schema(), other.entityAddress);
+      if (isValidValue(fields()[1], other.symbol)) {
+        this.symbol = data().deepCopy(fields()[1].schema(), other.symbol);
         fieldSetFlags()[1] = true;
       }
       if (isValidValue(fields()[2], other.fromAddress)) {
@@ -246,8 +246,8 @@ public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordB
         fieldSetFlags()[0] = true;
       }
       this.EventIdBuilder = null;
-      if (isValidValue(fields()[1], other.entityAddress)) {
-        this.entityAddress = data().deepCopy(fields()[1].schema(), other.entityAddress);
+      if (isValidValue(fields()[1], other.symbol)) {
+        this.symbol = data().deepCopy(fields()[1].schema(), other.symbol);
         fieldSetFlags()[1] = true;
       }
       if (isValidValue(fields()[2], other.fromAddress)) {
@@ -335,40 +335,40 @@ public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordB
     }
 
     /**
-      * Gets the value of the 'entityAddress' field.
+      * Gets the value of the 'symbol' field.
       * @return The value.
       */
-    public java.lang.CharSequence getEntityAddress() {
-      return entityAddress;
+    public java.lang.CharSequence getSymbol() {
+      return symbol;
     }
 
     /**
-      * Sets the value of the 'entityAddress' field.
-      * @param value The value of 'entityAddress'.
+      * Sets the value of the 'symbol' field.
+      * @param value The value of 'symbol'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenWithdrewEvent.Builder setEntityAddress(java.lang.CharSequence value) {
+    public com.networknt.taiji.token.TokenWithdrewEvent.Builder setSymbol(java.lang.CharSequence value) {
       validate(fields()[1], value);
-      this.entityAddress = value;
+      this.symbol = value;
       fieldSetFlags()[1] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'entityAddress' field has been set.
-      * @return True if the 'entityAddress' field has been set, false otherwise.
+      * Checks whether the 'symbol' field has been set.
+      * @return True if the 'symbol' field has been set, false otherwise.
       */
-    public boolean hasEntityAddress() {
+    public boolean hasSymbol() {
       return fieldSetFlags()[1];
     }
 
 
     /**
-      * Clears the value of the 'entityAddress' field.
+      * Clears the value of the 'symbol' field.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenWithdrewEvent.Builder clearEntityAddress() {
-      entityAddress = null;
+    public com.networknt.taiji.token.TokenWithdrewEvent.Builder clearSymbol() {
+      symbol = null;
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -460,7 +460,7 @@ public class TokenWithdrewEvent extends org.apache.avro.specific.SpecificRecordB
         } else {
           record.EventId = fieldSetFlags()[0] ? this.EventId : (com.networknt.taiji.event.EventId) defaultValue(fields()[0]);
         }
-        record.entityAddress = fieldSetFlags()[1] ? this.entityAddress : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.symbol = fieldSetFlags()[1] ? this.symbol : (java.lang.CharSequence) defaultValue(fields()[1]);
         record.fromAddress = fieldSetFlags()[2] ? this.fromAddress : (java.lang.CharSequence) defaultValue(fields()[2]);
         record.amount = fieldSetFlags()[3] ? this.amount : (java.lang.Long) defaultValue(fields()[3]);
         return record;
