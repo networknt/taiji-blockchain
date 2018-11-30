@@ -63,7 +63,7 @@ public class Converter {
         }
     }
 
-    static long power(long number, int power){
+    public static long power(long number, int power){
         long res = 1;
         long sq = number;
         while(power > 0){

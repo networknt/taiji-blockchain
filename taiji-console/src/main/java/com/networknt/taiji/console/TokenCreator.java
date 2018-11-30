@@ -8,6 +8,7 @@ import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.event.EventId;
 import com.networknt.taiji.token.TokenCreatedEvent;
+import com.networknt.taiji.utility.Converter;
 
 import java.util.List;
 
@@ -46,7 +47,8 @@ public class TokenCreator extends TokenManager {
         String symbol = getSymbol();
         Long l = getTotal();
         Integer decimals = getDecimals();
-        long total = l * 10^decimals;
+        long factor = Converter.power(10, decimals);
+        long total = l * factor;
 
         // get number of transactions from the chain-reader to generate eventId.
         long nonce = 0;
