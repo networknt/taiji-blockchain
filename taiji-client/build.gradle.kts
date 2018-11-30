@@ -7,6 +7,7 @@ plugins {
 dependencies {
     compile(project(":taiji-core"))
     compile(project(":taiji-crypto"))
+    compile(project(":event-common"))
     compile("com.networknt:client:1.5.22")
     compile("com.networknt:cluster:1.5.22")
     compile("com.networknt:balance:1.5.22")

@@ -8,8 +8,10 @@ import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.event.EventId;
 import com.networknt.taiji.token.TokenApprovedEvent;
+import com.networknt.taiji.utility.Converter;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.networknt.chain.utility.Console.exitError;
 
@@ -36,9 +38,18 @@ public class TokenWithdrawal extends TokenManager {
         console.printf("Wallet for address " + credentials.getAddress() + " loaded\n");
         String tokenAddress = getTokenAddress();
         String withdrawFromAddress = getWithdrawFromAddress();
+
         Long l = getWithdrawnAmount();
-        // TODO we need to get the decimals for the token in order to calculate the exact number.
-        long total = l * 10^9;
+        Result<Map<String, Object>> tokenInfoResult = TaijiClient.getTokenInfoByAddress(tokenAddress);
+        Map<String, Object> tokenInfo = null;
+        if(tokenInfoResult.isSuccess()) {
+            tokenInfo = tokenInfoResult.getResult();
+        } else {
+            exitError(tokenInfoResult.getError().toString());
+        }
+        int decimals = (Integer)tokenInfo.get("decimals");
+        long factor = Converter.power(10, decimals);
+        long total = l * factor;
 
         // get number of transactions from the chain-reader to generate eventId.
         long nonce = 0;

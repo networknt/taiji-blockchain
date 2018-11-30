@@ -14,6 +14,7 @@ import com.networknt.taiji.crypto.Fee;
 import com.networknt.taiji.crypto.SignedLedgerEntry;
 import com.networknt.taiji.crypto.SignedTransaction;
 import com.networknt.taiji.crypto.TransactionReceipt;
+import com.networknt.taiji.event.JsonMapper;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
 import io.undertow.client.ClientRequest;
@@ -44,7 +45,7 @@ public class TaijiClient {
     // service name
     static final String writerServiceId = "com.networknt.chainwriter-1.0.0";
     static final String readerServiceId = "com.networknt.chainreader-1.0.0";
-    static final String tokenServiceId = "com.networknt.chaintoken-1.0.0";
+    static final String tokenServiceId = "com.networknt.tokenreader-1.0.0";
 
     // Get the singleton Cluster instance
     static Cluster cluster = SingletonServiceFactory.getBean(Cluster.class);
@@ -250,4 +251,79 @@ public class TaijiClient {
         }
         return result;
     }
+
+    /**
+     * Get token info by symbol
+     *
+     * @param symbol token symbol
+     * @return Result<Map<String, Object>> of token info
+     */
+    public static Result<Map<String, Object>> getTokenInfoBySymbol(String symbol) {
+        Result<Map<String, Object>> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        try {
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/symbol/" + symbol);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                Map<String, Object> tokenInfo = JsonMapper.string2Map(body);
+                result = Success.of(tokenInfo);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
+    /**
+     * Get token info by token address
+     *
+     * @param address token address
+     * @return Result<Map<String, Object>> of token info
+     */
+    public static Result<Map<String, Object>> getTokenInfoByAddress(String address) {
+        Result<Map<String, Object>> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        try {
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/token/" + address);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                Map<String, Object> tokenInfo = JsonMapper.string2Map(body);
+                result = Success.of(tokenInfo);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
 }
