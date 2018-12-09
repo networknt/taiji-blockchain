@@ -326,4 +326,151 @@ public class TaijiClient {
         return result;
     }
 
+    /**
+     * Get token account by address
+     *
+     * @param address owner address
+     * @return Result<Map<String, Object>> of token account
+     */
+    public static Result<Map<String, Object>> getTokenAccountByAddress(String address) {
+        Result<Map<String, Object>> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        try {
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/account/" + address);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                Map<String, Object> account = JsonMapper.string2Map(body);
+                result = Success.of(account);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
+    /**
+     * Get token account by address and symbol
+     *
+     * @param address owner address
+     * @return Result<Map<String, Object>> of token account for a particular symbol
+     */
+    public static Result<Map<String, Object>> getTokenAccountByAddressSymbol(String address, String symbol) {
+        Result<Map<String, Object>> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        try {
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/account/" + address + "/" + symbol);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                Map<String, Object> account = JsonMapper.string2Map(body);
+                result = Success.of(account);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
+    /**
+     * Get token transactions by address
+     *
+     * @param address owner address
+     * @return Result<Map<String, Object>> of token account
+     */
+    public static Result<List<Map<String, Object>>> getTokenTransactionByAddress(String address) {
+        Result<List<Map<String, Object>>> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        try {
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/transaction/" + address);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                List<Map<String, Object>> transactions = JsonMapper.string2List(body);
+                result = Success.of(transactions);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
+    /**
+     * Get token transactions by address and symbol
+     *
+     * @param address owner address
+     * @return Result<List<Map<String, Object>>> of token transactions for a particular symbol
+     */
+    public static Result<List<Map<String, Object>>> getTokenTransactionByAddressSymbol(String address, String symbol) {
+        Result<List<Map<String, Object>>> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        try {
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/transaction/" + address + "/" + symbol);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                List<Map<String, Object>> transactions = JsonMapper.string2List(body);
+                result = Success.of(transactions);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
 }
