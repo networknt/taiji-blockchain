@@ -30,7 +30,7 @@ public class WalletSendFunds extends WalletManager {
         Credentials credentials = loadWalletFromAddress(fromAddress);
         console.printf("Wallet for address " + credentials.getAddress() + " loaded\n");
 
-        if (!WalletUtils.isValidAddress(toAddress)) {
+        if (!Keys.validateToAddress(toAddress)) {
             exitError("Invalid destination address specified");
         }
 

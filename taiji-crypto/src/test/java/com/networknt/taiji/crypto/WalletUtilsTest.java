@@ -14,7 +14,6 @@ import static com.networknt.chain.utility.Hash.sha256;
 import static com.networknt.taiji.crypto.SampleKeys.CREDENTIALS;
 import static com.networknt.taiji.crypto.SampleKeys.KEY_PAIR;
 import static com.networknt.taiji.crypto.SampleKeys.PASSWORD;
-import static com.networknt.taiji.crypto.WalletUtils.isValidAddress;
 import static com.networknt.taiji.crypto.WalletUtils.isValidPrivateKey;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
@@ -123,13 +122,4 @@ public class WalletUtilsTest {
         assertFalse(isValidPrivateKey(SampleKeys.PRIVATE_KEY_STRING.substring(1)));
     }
 
-    @Test
-    public void testIsValidAddress() {
-        assertTrue(isValidAddress(SampleKeys.ADDRESS));
-        assertTrue(isValidAddress(SampleKeys.ADDRESS_NO_PREFIX));
-
-        assertFalse(isValidAddress(""));
-        assertFalse(isValidAddress(SampleKeys.ADDRESS + 'a'));
-        assertFalse(isValidAddress(SampleKeys.ADDRESS.substring(1)));
-    }
 }
