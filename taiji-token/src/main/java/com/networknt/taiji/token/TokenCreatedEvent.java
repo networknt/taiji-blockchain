@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord, TokenEvent {
-  private static final long serialVersionUID = -6093477019626534301L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenCreatedEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"nonce\",\"type\":\"long\"}]}},{\"name\":\"entityAddress\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"symbol\",\"type\":\"string\"},{\"name\":\"totalSupply\",\"type\":\"long\"},{\"name\":\"decimals\",\"type\":\"int\"}]}");
+  private static final long serialVersionUID = 6978915215387437622L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenCreatedEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"nonce\",\"type\":\"long\"}]}},{\"name\":\"currency\",\"type\":[\"string\",\"null\"],\"default\":\"taiji\"},{\"name\":\"entityAddress\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"symbol\",\"type\":\"string\"},{\"name\":\"totalSupply\",\"type\":\"long\"},{\"name\":\"decimals\",\"type\":\"int\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -52,6 +52,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   }
 
   @Deprecated public com.networknt.taiji.event.EventId EventId;
+  @Deprecated public java.lang.CharSequence currency;
   @Deprecated public java.lang.CharSequence entityAddress;
   @Deprecated public java.lang.CharSequence name;
   @Deprecated public java.lang.CharSequence symbol;
@@ -68,14 +69,16 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   /**
    * All-args constructor.
    * @param EventId The new value for EventId
+   * @param currency The new value for currency
    * @param entityAddress The new value for entityAddress
    * @param name The new value for name
    * @param symbol The new value for symbol
    * @param totalSupply The new value for totalSupply
    * @param decimals The new value for decimals
    */
-  public TokenCreatedEvent(com.networknt.taiji.event.EventId EventId, java.lang.CharSequence entityAddress, java.lang.CharSequence name, java.lang.CharSequence symbol, java.lang.Long totalSupply, java.lang.Integer decimals) {
+  public TokenCreatedEvent(com.networknt.taiji.event.EventId EventId, java.lang.CharSequence currency, java.lang.CharSequence entityAddress, java.lang.CharSequence name, java.lang.CharSequence symbol, java.lang.Long totalSupply, java.lang.Integer decimals) {
     this.EventId = EventId;
+    this.currency = currency;
     this.entityAddress = entityAddress;
     this.name = name;
     this.symbol = symbol;
@@ -88,11 +91,12 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return EventId;
-    case 1: return entityAddress;
-    case 2: return name;
-    case 3: return symbol;
-    case 4: return totalSupply;
-    case 5: return decimals;
+    case 1: return currency;
+    case 2: return entityAddress;
+    case 3: return name;
+    case 4: return symbol;
+    case 5: return totalSupply;
+    case 6: return decimals;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -102,11 +106,12 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: EventId = (com.networknt.taiji.event.EventId)value$; break;
-    case 1: entityAddress = (java.lang.CharSequence)value$; break;
-    case 2: name = (java.lang.CharSequence)value$; break;
-    case 3: symbol = (java.lang.CharSequence)value$; break;
-    case 4: totalSupply = (java.lang.Long)value$; break;
-    case 5: decimals = (java.lang.Integer)value$; break;
+    case 1: currency = (java.lang.CharSequence)value$; break;
+    case 2: entityAddress = (java.lang.CharSequence)value$; break;
+    case 3: name = (java.lang.CharSequence)value$; break;
+    case 4: symbol = (java.lang.CharSequence)value$; break;
+    case 5: totalSupply = (java.lang.Long)value$; break;
+    case 6: decimals = (java.lang.Integer)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -125,6 +130,22 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
    */
   public void setEventId(com.networknt.taiji.event.EventId value) {
     this.EventId = value;
+  }
+
+  /**
+   * Gets the value of the 'currency' field.
+   * @return The value of the 'currency' field.
+   */
+  public java.lang.CharSequence getCurrency() {
+    return currency;
+  }
+
+  /**
+   * Sets the value of the 'currency' field.
+   * @param value the value to set.
+   */
+  public void setCurrency(java.lang.CharSequence value) {
+    this.currency = value;
   }
 
   /**
@@ -241,6 +262,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
 
     private com.networknt.taiji.event.EventId EventId;
     private com.networknt.taiji.event.EventId.Builder EventIdBuilder;
+    private java.lang.CharSequence currency;
     private java.lang.CharSequence entityAddress;
     private java.lang.CharSequence name;
     private java.lang.CharSequence symbol;
@@ -265,25 +287,29 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       if (other.hasEventIdBuilder()) {
         this.EventIdBuilder = com.networknt.taiji.event.EventId.newBuilder(other.getEventIdBuilder());
       }
-      if (isValidValue(fields()[1], other.entityAddress)) {
-        this.entityAddress = data().deepCopy(fields()[1].schema(), other.entityAddress);
+      if (isValidValue(fields()[1], other.currency)) {
+        this.currency = data().deepCopy(fields()[1].schema(), other.currency);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.name)) {
-        this.name = data().deepCopy(fields()[2].schema(), other.name);
+      if (isValidValue(fields()[2], other.entityAddress)) {
+        this.entityAddress = data().deepCopy(fields()[2].schema(), other.entityAddress);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.symbol)) {
-        this.symbol = data().deepCopy(fields()[3].schema(), other.symbol);
+      if (isValidValue(fields()[3], other.name)) {
+        this.name = data().deepCopy(fields()[3].schema(), other.name);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.totalSupply)) {
-        this.totalSupply = data().deepCopy(fields()[4].schema(), other.totalSupply);
+      if (isValidValue(fields()[4], other.symbol)) {
+        this.symbol = data().deepCopy(fields()[4].schema(), other.symbol);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.decimals)) {
-        this.decimals = data().deepCopy(fields()[5].schema(), other.decimals);
+      if (isValidValue(fields()[5], other.totalSupply)) {
+        this.totalSupply = data().deepCopy(fields()[5].schema(), other.totalSupply);
         fieldSetFlags()[5] = true;
+      }
+      if (isValidValue(fields()[6], other.decimals)) {
+        this.decimals = data().deepCopy(fields()[6].schema(), other.decimals);
+        fieldSetFlags()[6] = true;
       }
     }
 
@@ -298,25 +324,29 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
         fieldSetFlags()[0] = true;
       }
       this.EventIdBuilder = null;
-      if (isValidValue(fields()[1], other.entityAddress)) {
-        this.entityAddress = data().deepCopy(fields()[1].schema(), other.entityAddress);
+      if (isValidValue(fields()[1], other.currency)) {
+        this.currency = data().deepCopy(fields()[1].schema(), other.currency);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.name)) {
-        this.name = data().deepCopy(fields()[2].schema(), other.name);
+      if (isValidValue(fields()[2], other.entityAddress)) {
+        this.entityAddress = data().deepCopy(fields()[2].schema(), other.entityAddress);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.symbol)) {
-        this.symbol = data().deepCopy(fields()[3].schema(), other.symbol);
+      if (isValidValue(fields()[3], other.name)) {
+        this.name = data().deepCopy(fields()[3].schema(), other.name);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.totalSupply)) {
-        this.totalSupply = data().deepCopy(fields()[4].schema(), other.totalSupply);
+      if (isValidValue(fields()[4], other.symbol)) {
+        this.symbol = data().deepCopy(fields()[4].schema(), other.symbol);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.decimals)) {
-        this.decimals = data().deepCopy(fields()[5].schema(), other.decimals);
+      if (isValidValue(fields()[5], other.totalSupply)) {
+        this.totalSupply = data().deepCopy(fields()[5].schema(), other.totalSupply);
         fieldSetFlags()[5] = true;
+      }
+      if (isValidValue(fields()[6], other.decimals)) {
+        this.decimals = data().deepCopy(fields()[6].schema(), other.decimals);
+        fieldSetFlags()[6] = true;
       }
     }
 
@@ -395,6 +425,45 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     }
 
     /**
+      * Gets the value of the 'currency' field.
+      * @return The value.
+      */
+    public java.lang.CharSequence getCurrency() {
+      return currency;
+    }
+
+    /**
+      * Sets the value of the 'currency' field.
+      * @param value The value of 'currency'.
+      * @return This builder.
+      */
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder setCurrency(java.lang.CharSequence value) {
+      validate(fields()[1], value);
+      this.currency = value;
+      fieldSetFlags()[1] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'currency' field has been set.
+      * @return True if the 'currency' field has been set, false otherwise.
+      */
+    public boolean hasCurrency() {
+      return fieldSetFlags()[1];
+    }
+
+
+    /**
+      * Clears the value of the 'currency' field.
+      * @return This builder.
+      */
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder clearCurrency() {
+      currency = null;
+      fieldSetFlags()[1] = false;
+      return this;
+    }
+
+    /**
       * Gets the value of the 'entityAddress' field.
       * @return The value.
       */
@@ -408,9 +477,9 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder setEntityAddress(java.lang.CharSequence value) {
-      validate(fields()[1], value);
+      validate(fields()[2], value);
       this.entityAddress = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -419,7 +488,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'entityAddress' field has been set, false otherwise.
       */
     public boolean hasEntityAddress() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[2];
     }
 
 
@@ -429,7 +498,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder clearEntityAddress() {
       entityAddress = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -447,9 +516,9 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder setName(java.lang.CharSequence value) {
-      validate(fields()[2], value);
+      validate(fields()[3], value);
       this.name = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[3] = true;
       return this;
     }
 
@@ -458,7 +527,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'name' field has been set, false otherwise.
       */
     public boolean hasName() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[3];
     }
 
 
@@ -468,7 +537,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder clearName() {
       name = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -486,9 +555,9 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder setSymbol(java.lang.CharSequence value) {
-      validate(fields()[3], value);
+      validate(fields()[4], value);
       this.symbol = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[4] = true;
       return this;
     }
 
@@ -497,7 +566,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'symbol' field has been set, false otherwise.
       */
     public boolean hasSymbol() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[4];
     }
 
 
@@ -507,7 +576,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder clearSymbol() {
       symbol = null;
-      fieldSetFlags()[3] = false;
+      fieldSetFlags()[4] = false;
       return this;
     }
 
@@ -525,9 +594,9 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder setTotalSupply(long value) {
-      validate(fields()[4], value);
+      validate(fields()[5], value);
       this.totalSupply = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[5] = true;
       return this;
     }
 
@@ -536,7 +605,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'totalSupply' field has been set, false otherwise.
       */
     public boolean hasTotalSupply() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[5];
     }
 
 
@@ -545,7 +614,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder clearTotalSupply() {
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[5] = false;
       return this;
     }
 
@@ -563,9 +632,9 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder setDecimals(int value) {
-      validate(fields()[5], value);
+      validate(fields()[6], value);
       this.decimals = value;
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[6] = true;
       return this;
     }
 
@@ -574,7 +643,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'decimals' field has been set, false otherwise.
       */
     public boolean hasDecimals() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[6];
     }
 
 
@@ -583,7 +652,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder clearDecimals() {
-      fieldSetFlags()[5] = false;
+      fieldSetFlags()[6] = false;
       return this;
     }
 
@@ -597,11 +666,12 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
         } else {
           record.EventId = fieldSetFlags()[0] ? this.EventId : (com.networknt.taiji.event.EventId) defaultValue(fields()[0]);
         }
-        record.entityAddress = fieldSetFlags()[1] ? this.entityAddress : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.name = fieldSetFlags()[2] ? this.name : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.symbol = fieldSetFlags()[3] ? this.symbol : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.totalSupply = fieldSetFlags()[4] ? this.totalSupply : (java.lang.Long) defaultValue(fields()[4]);
-        record.decimals = fieldSetFlags()[5] ? this.decimals : (java.lang.Integer) defaultValue(fields()[5]);
+        record.currency = fieldSetFlags()[1] ? this.currency : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.entityAddress = fieldSetFlags()[2] ? this.entityAddress : (java.lang.CharSequence) defaultValue(fields()[2]);
+        record.name = fieldSetFlags()[3] ? this.name : (java.lang.CharSequence) defaultValue(fields()[3]);
+        record.symbol = fieldSetFlags()[4] ? this.symbol : (java.lang.CharSequence) defaultValue(fields()[4]);
+        record.totalSupply = fieldSetFlags()[5] ? this.totalSupply : (java.lang.Long) defaultValue(fields()[5]);
+        record.decimals = fieldSetFlags()[6] ? this.decimals : (java.lang.Integer) defaultValue(fields()[6]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
