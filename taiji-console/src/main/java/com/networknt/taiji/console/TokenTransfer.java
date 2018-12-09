@@ -8,6 +8,7 @@ import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.event.EventId;
 import com.networknt.taiji.token.TokenApprovedEvent;
+import com.networknt.taiji.token.TokenTransferredEvent;
 import com.networknt.taiji.utility.Converter;
 
 import java.util.List;
@@ -65,10 +66,10 @@ public class TokenTransfer extends TokenManager {
                 .setNonce(nonce)
                 .build();
 
-        TokenApprovedEvent tokenApprovedEvent = new TokenApprovedEvent(eventId, tokenAddress, transferredAddress, total);
+        TokenTransferredEvent tokenTransferredEvent = new TokenTransferredEvent(eventId, tokenAddress, transferredAddress, total);
 
         AvroSerializer serializer = new AvroSerializer();
-        byte[] bytes = serializer.serialize(tokenApprovedEvent);
+        byte[] bytes = serializer.serialize(tokenTransferredEvent);
 
         // here we just create a credit entry only on with the toAddress the token address and value 0
         LedgerEntry creditEntry = new LedgerEntry(tokenAddress, 0, bytes);
