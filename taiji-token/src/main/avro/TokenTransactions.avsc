@@ -1,0 +1,58 @@
+{
+  "name": "TokenTransactions",
+  "type": "record",
+  "namespace": "com.networknt.taiji.token",
+  "fields": [
+    {
+      "name": "TokenTransactionArray",
+      "namespace": "com.networknt.taiji.token",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "TokenTransaction",
+          "namespace": "com.networknt.taiji.token",
+          "type": "record",
+          "fields": [
+            {
+              "name": "timestamp",
+              "type": "long",
+              "doc": "transaction timestamp in milliseconds from epoch"
+            },
+            {
+              "name": "symbol",
+              "type": "string",
+              "doc": "token symbol which is one word capitalized"
+            },
+            {
+              "name": "type",
+              "type": {
+                "type": "enum",
+                "name": "TokenTranType",
+                "symbols": [
+                  "T",
+                  "A"
+                ]
+              },
+              "doc": "token transaction type, T for transaction and A for Approval and Allowance"
+            },
+            {
+              "name": "from",
+              "type": "string",
+              "doc": "from address"
+            },
+            {
+              "name": "to",
+              "type": "string",
+              "doc": "to address"
+            },
+            {
+              "name": "amount",
+              "type": "long",
+              "doc": "transaction amount"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

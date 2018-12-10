@@ -12,39 +12,77 @@
         "fields": [
           {
             "name": "address",
-            "type": "string"
+            "type": "string",
+            "doc": "owner address that create the token"
           },
           {
             "name": "nonce",
-            "type": "long"
+            "type": "long",
+            "doc": "the number of the transactions for the address"
           }
         ]
       }
     },
     {
       "name": "currency",
-      "type": ["string", "null"],
-      "default": "taiji"
+      "type": [
+        "string",
+        "null"
+      ],
+      "default": "taiji",
+      "doc": "the currency blockchain the token is associated to"
     },
     {
       "name": "entityAddress",
-      "type": "string"
+      "type": "string",
+      "doc": "token address which is the unique identifier"
     },
     {
       "name": "name",
-      "type": "string"
+      "type": "string",
+      "doc": "name of the token"
     },
     {
       "name": "symbol",
-      "type": "string"
+      "type": "string",
+      "doc": "token symbol which is one word capitalized"
     },
     {
       "name": "totalSupply",
-      "type": "long"
+      "type": "long",
+      "doc": "total supply of the token"
     },
     {
       "name": "decimals",
-      "type": "int"
+      "type": "int",
+      "doc": "number of decimals a token can be split"
+    },
+    {
+      "name": "timestamp",
+      "type": [
+        "null",
+        "long"
+      ],
+      "default": null,
+      "doc": "time the event is recorded on the blockchain"
+    },
+    {
+      "name": "offset",
+      "type": [
+        "null",
+        "long"
+      ],
+      "default": null,
+      "doc": "kafka partition offset"
+    },
+    {
+      "name": "partition",
+      "type": [
+        "null",
+        "int"
+      ],
+      "default": null,
+      "doc": "kafka partition id"
     }
   ]
 }
