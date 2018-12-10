@@ -64,7 +64,15 @@ public class TokenCreator extends TokenManager {
                 .setNonce(nonce)
                 .build();
 
-        TokenCreatedEvent tokenCreatedEvent = new TokenCreatedEvent(eventId, currency, tokenAddress, name, symbol, total, decimals);
+        TokenCreatedEvent tokenCreatedEvent = TokenCreatedEvent.newBuilder()
+            .setEventId(eventId)
+            .setCurrency(currency)
+            .setEntityAddress(tokenAddress)
+            .setName(name)
+            .setSymbol(symbol)
+            .setTotalSupply(total)
+            .setDecimals(decimals)
+            .build();
 
         AvroSerializer serializer = new AvroSerializer();
         byte[] bytes = serializer.serialize(tokenCreatedEvent);
