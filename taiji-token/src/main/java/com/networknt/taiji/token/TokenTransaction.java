@@ -14,7 +14,7 @@ import org.apache.avro.message.SchemaStore;
 @org.apache.avro.specific.AvroGenerated
 public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 5468977294698843980L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenTransaction\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"doc\":\"transaction timestamp in milliseconds from epoch\"},{\"name\":\"symbol\",\"type\":\"string\",\"doc\":\"token symbol which is one word capitalized\"},{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"TokenTranType\",\"symbols\":[\"T\",\"A\"]},\"doc\":\"token transaction type, T for transaction and A for Approval and Allowance\"},{\"name\":\"from\",\"type\":[\"null\",\"string\"],\"doc\":\"from address\"},{\"name\":\"to\",\"type\":\"string\",\"doc\":\"to address\"},{\"name\":\"amount\",\"type\":\"long\",\"doc\":\"transaction amount\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenTransaction\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"doc\":\"transaction timestamp in milliseconds from epoch\"},{\"name\":\"symbol\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"token symbol which is one word capitalized\"},{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"TokenTranType\",\"symbols\":[\"T\",\"A\"]},\"doc\":\"token transaction type, T for transaction and A for Approval and Allowance\"},{\"name\":\"from\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"from address\",\"default\":null},{\"name\":\"to\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"to address\"},{\"name\":\"amount\",\"type\":\"long\",\"doc\":\"transaction amount\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -54,13 +54,13 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
   /** transaction timestamp in milliseconds from epoch */
   @Deprecated public long timestamp;
   /** token symbol which is one word capitalized */
-  @Deprecated public java.lang.CharSequence symbol;
+  @Deprecated public java.lang.String symbol;
   /** token transaction type, T for transaction and A for Approval and Allowance */
   @Deprecated public com.networknt.taiji.token.TokenTranType type;
   /** from address */
-  @Deprecated public java.lang.CharSequence from;
+  @Deprecated public java.lang.String from;
   /** to address */
-  @Deprecated public java.lang.CharSequence to;
+  @Deprecated public java.lang.String to;
   /** transaction amount */
   @Deprecated public long amount;
 
@@ -80,7 +80,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
    * @param to to address
    * @param amount transaction amount
    */
-  public TokenTransaction(java.lang.Long timestamp, java.lang.CharSequence symbol, com.networknt.taiji.token.TokenTranType type, java.lang.CharSequence from, java.lang.CharSequence to, java.lang.Long amount) {
+  public TokenTransaction(java.lang.Long timestamp, java.lang.String symbol, com.networknt.taiji.token.TokenTranType type, java.lang.String from, java.lang.String to, java.lang.Long amount) {
     this.timestamp = timestamp;
     this.symbol = symbol;
     this.type = type;
@@ -108,10 +108,10 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: timestamp = (java.lang.Long)value$; break;
-    case 1: symbol = (java.lang.CharSequence)value$; break;
+    case 1: symbol = (java.lang.String)value$; break;
     case 2: type = (com.networknt.taiji.token.TokenTranType)value$; break;
-    case 3: from = (java.lang.CharSequence)value$; break;
-    case 4: to = (java.lang.CharSequence)value$; break;
+    case 3: from = (java.lang.String)value$; break;
+    case 4: to = (java.lang.String)value$; break;
     case 5: amount = (java.lang.Long)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
@@ -138,7 +138,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
    * Gets the value of the 'symbol' field.
    * @return token symbol which is one word capitalized
    */
-  public java.lang.CharSequence getSymbol() {
+  public java.lang.String getSymbol() {
     return symbol;
   }
 
@@ -147,7 +147,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
    * token symbol which is one word capitalized
    * @param value the value to set.
    */
-  public void setSymbol(java.lang.CharSequence value) {
+  public void setSymbol(java.lang.String value) {
     this.symbol = value;
   }
 
@@ -172,7 +172,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
    * Gets the value of the 'from' field.
    * @return from address
    */
-  public java.lang.CharSequence getFrom() {
+  public java.lang.String getFrom() {
     return from;
   }
 
@@ -181,7 +181,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
    * from address
    * @param value the value to set.
    */
-  public void setFrom(java.lang.CharSequence value) {
+  public void setFrom(java.lang.String value) {
     this.from = value;
   }
 
@@ -189,7 +189,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
    * Gets the value of the 'to' field.
    * @return to address
    */
-  public java.lang.CharSequence getTo() {
+  public java.lang.String getTo() {
     return to;
   }
 
@@ -198,7 +198,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
    * to address
    * @param value the value to set.
    */
-  public void setTo(java.lang.CharSequence value) {
+  public void setTo(java.lang.String value) {
     this.to = value;
   }
 
@@ -254,13 +254,13 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
     /** transaction timestamp in milliseconds from epoch */
     private long timestamp;
     /** token symbol which is one word capitalized */
-    private java.lang.CharSequence symbol;
+    private java.lang.String symbol;
     /** token transaction type, T for transaction and A for Approval and Allowance */
     private com.networknt.taiji.token.TokenTranType type;
     /** from address */
-    private java.lang.CharSequence from;
+    private java.lang.String from;
     /** to address */
-    private java.lang.CharSequence to;
+    private java.lang.String to;
     /** transaction amount */
     private long amount;
 
@@ -380,7 +380,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
       * token symbol which is one word capitalized
       * @return The value.
       */
-    public java.lang.CharSequence getSymbol() {
+    public java.lang.String getSymbol() {
       return symbol;
     }
 
@@ -390,7 +390,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
       * @param value The value of 'symbol'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenTransaction.Builder setSymbol(java.lang.CharSequence value) {
+    public com.networknt.taiji.token.TokenTransaction.Builder setSymbol(java.lang.String value) {
       validate(fields()[1], value);
       this.symbol = value;
       fieldSetFlags()[1] = true;
@@ -466,7 +466,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
       * from address
       * @return The value.
       */
-    public java.lang.CharSequence getFrom() {
+    public java.lang.String getFrom() {
       return from;
     }
 
@@ -476,7 +476,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
       * @param value The value of 'from'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenTransaction.Builder setFrom(java.lang.CharSequence value) {
+    public com.networknt.taiji.token.TokenTransaction.Builder setFrom(java.lang.String value) {
       validate(fields()[3], value);
       this.from = value;
       fieldSetFlags()[3] = true;
@@ -509,7 +509,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
       * to address
       * @return The value.
       */
-    public java.lang.CharSequence getTo() {
+    public java.lang.String getTo() {
       return to;
     }
 
@@ -519,7 +519,7 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
       * @param value The value of 'to'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenTransaction.Builder setTo(java.lang.CharSequence value) {
+    public com.networknt.taiji.token.TokenTransaction.Builder setTo(java.lang.String value) {
       validate(fields()[4], value);
       this.to = value;
       fieldSetFlags()[4] = true;
@@ -595,10 +595,10 @@ public class TokenTransaction extends org.apache.avro.specific.SpecificRecordBas
       try {
         TokenTransaction record = new TokenTransaction();
         record.timestamp = fieldSetFlags()[0] ? this.timestamp : (java.lang.Long) defaultValue(fields()[0]);
-        record.symbol = fieldSetFlags()[1] ? this.symbol : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.symbol = fieldSetFlags()[1] ? this.symbol : (java.lang.String) defaultValue(fields()[1]);
         record.type = fieldSetFlags()[2] ? this.type : (com.networknt.taiji.token.TokenTranType) defaultValue(fields()[2]);
-        record.from = fieldSetFlags()[3] ? this.from : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.to = fieldSetFlags()[4] ? this.to : (java.lang.CharSequence) defaultValue(fields()[4]);
+        record.from = fieldSetFlags()[3] ? this.from : (java.lang.String) defaultValue(fields()[3]);
+        record.to = fieldSetFlags()[4] ? this.to : (java.lang.String) defaultValue(fields()[4]);
         record.amount = fieldSetFlags()[5] ? this.amount : (java.lang.Long) defaultValue(fields()[5]);
         return record;
       } catch (java.lang.Exception e) {

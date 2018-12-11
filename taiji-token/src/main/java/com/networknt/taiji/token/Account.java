@@ -14,7 +14,7 @@ import org.apache.avro.message.SchemaStore;
 @org.apache.avro.specific.AvroGenerated
 public class Account extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -82418240323841175L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Account\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"balance\",\"type\":\"long\",\"doc\":\"current token balance for the symbol\",\"default\":0},{\"name\":\"approval\",\"type\":{\"type\":\"map\",\"values\":\"long\"},\"doc\":\"approval from a token holder to withdraw\",\"default\":null},{\"name\":\"allowance\",\"type\":{\"type\":\"map\",\"values\":\"long\"},\"doc\":\"allowance to the other address to withdraw\",\"default\":null}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Account\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"balance\",\"type\":\"long\",\"doc\":\"current token balance for the symbol\",\"default\":0},{\"name\":\"approval\",\"type\":{\"type\":\"map\",\"values\":\"long\",\"avro.java.string\":\"String\"},\"doc\":\"approval from a token holder to withdraw\",\"default\":null},{\"name\":\"allowance\",\"type\":{\"type\":\"map\",\"values\":\"long\",\"avro.java.string\":\"String\"},\"doc\":\"allowance to the other address to withdraw\",\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -54,9 +54,9 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
   /** current token balance for the symbol */
   @Deprecated public long balance;
   /** approval from a token holder to withdraw */
-  @Deprecated public java.util.Map<java.lang.CharSequence,java.lang.Long> approval;
+  @Deprecated public java.util.Map<java.lang.String,java.lang.Long> approval;
   /** allowance to the other address to withdraw */
-  @Deprecated public java.util.Map<java.lang.CharSequence,java.lang.Long> allowance;
+  @Deprecated public java.util.Map<java.lang.String,java.lang.Long> allowance;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -71,7 +71,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param approval approval from a token holder to withdraw
    * @param allowance allowance to the other address to withdraw
    */
-  public Account(java.lang.Long balance, java.util.Map<java.lang.CharSequence,java.lang.Long> approval, java.util.Map<java.lang.CharSequence,java.lang.Long> allowance) {
+  public Account(java.lang.Long balance, java.util.Map<java.lang.String,java.lang.Long> approval, java.util.Map<java.lang.String,java.lang.Long> allowance) {
     this.balance = balance;
     this.approval = approval;
     this.allowance = allowance;
@@ -93,8 +93,8 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: balance = (java.lang.Long)value$; break;
-    case 1: approval = (java.util.Map<java.lang.CharSequence,java.lang.Long>)value$; break;
-    case 2: allowance = (java.util.Map<java.lang.CharSequence,java.lang.Long>)value$; break;
+    case 1: approval = (java.util.Map<java.lang.String,java.lang.Long>)value$; break;
+    case 2: allowance = (java.util.Map<java.lang.String,java.lang.Long>)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -120,7 +120,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'approval' field.
    * @return approval from a token holder to withdraw
    */
-  public java.util.Map<java.lang.CharSequence,java.lang.Long> getApproval() {
+  public java.util.Map<java.lang.String,java.lang.Long> getApproval() {
     return approval;
   }
 
@@ -129,7 +129,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
    * approval from a token holder to withdraw
    * @param value the value to set.
    */
-  public void setApproval(java.util.Map<java.lang.CharSequence,java.lang.Long> value) {
+  public void setApproval(java.util.Map<java.lang.String,java.lang.Long> value) {
     this.approval = value;
   }
 
@@ -137,7 +137,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'allowance' field.
    * @return allowance to the other address to withdraw
    */
-  public java.util.Map<java.lang.CharSequence,java.lang.Long> getAllowance() {
+  public java.util.Map<java.lang.String,java.lang.Long> getAllowance() {
     return allowance;
   }
 
@@ -146,7 +146,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
    * allowance to the other address to withdraw
    * @param value the value to set.
    */
-  public void setAllowance(java.util.Map<java.lang.CharSequence,java.lang.Long> value) {
+  public void setAllowance(java.util.Map<java.lang.String,java.lang.Long> value) {
     this.allowance = value;
   }
 
@@ -185,9 +185,9 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
     /** current token balance for the symbol */
     private long balance;
     /** approval from a token holder to withdraw */
-    private java.util.Map<java.lang.CharSequence,java.lang.Long> approval;
+    private java.util.Map<java.lang.String,java.lang.Long> approval;
     /** allowance to the other address to withdraw */
-    private java.util.Map<java.lang.CharSequence,java.lang.Long> allowance;
+    private java.util.Map<java.lang.String,java.lang.Long> allowance;
 
     /** Creates a new Builder */
     private Builder() {
@@ -281,7 +281,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * approval from a token holder to withdraw
       * @return The value.
       */
-    public java.util.Map<java.lang.CharSequence,java.lang.Long> getApproval() {
+    public java.util.Map<java.lang.String,java.lang.Long> getApproval() {
       return approval;
     }
 
@@ -291,7 +291,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'approval'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.Account.Builder setApproval(java.util.Map<java.lang.CharSequence,java.lang.Long> value) {
+    public com.networknt.taiji.token.Account.Builder setApproval(java.util.Map<java.lang.String,java.lang.Long> value) {
       validate(fields()[1], value);
       this.approval = value;
       fieldSetFlags()[1] = true;
@@ -324,7 +324,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * allowance to the other address to withdraw
       * @return The value.
       */
-    public java.util.Map<java.lang.CharSequence,java.lang.Long> getAllowance() {
+    public java.util.Map<java.lang.String,java.lang.Long> getAllowance() {
       return allowance;
     }
 
@@ -334,7 +334,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'allowance'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.Account.Builder setAllowance(java.util.Map<java.lang.CharSequence,java.lang.Long> value) {
+    public com.networknt.taiji.token.Account.Builder setAllowance(java.util.Map<java.lang.String,java.lang.Long> value) {
       validate(fields()[2], value);
       this.allowance = value;
       fieldSetFlags()[2] = true;
@@ -368,8 +368,8 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       try {
         Account record = new Account();
         record.balance = fieldSetFlags()[0] ? this.balance : (java.lang.Long) defaultValue(fields()[0]);
-        record.approval = fieldSetFlags()[1] ? this.approval : (java.util.Map<java.lang.CharSequence,java.lang.Long>) defaultValue(fields()[1]);
-        record.allowance = fieldSetFlags()[2] ? this.allowance : (java.util.Map<java.lang.CharSequence,java.lang.Long>) defaultValue(fields()[2]);
+        record.approval = fieldSetFlags()[1] ? this.approval : (java.util.Map<java.lang.String,java.lang.Long>) defaultValue(fields()[1]);
+        record.allowance = fieldSetFlags()[2] ? this.allowance : (java.util.Map<java.lang.String,java.lang.Long>) defaultValue(fields()[2]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

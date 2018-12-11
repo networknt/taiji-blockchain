@@ -14,7 +14,7 @@ import org.apache.avro.message.SchemaStore;
 @org.apache.avro.specific.AvroGenerated
 public class TokenAccount extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -5701189941888852080L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenAccount\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"symbols\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"record\",\"name\":\"Account\",\"fields\":[{\"name\":\"balance\",\"type\":\"long\",\"doc\":\"current token balance for the symbol\",\"default\":0},{\"name\":\"approval\",\"type\":{\"type\":\"map\",\"values\":\"long\"},\"doc\":\"approval from a token holder to withdraw\",\"default\":null},{\"name\":\"allowance\",\"type\":{\"type\":\"map\",\"values\":\"long\"},\"doc\":\"allowance to the other address to withdraw\",\"default\":null}]}},\"doc\":\"each symbol has a map of balance, approval or allowance\",\"default\":null}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenAccount\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"symbols\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"record\",\"name\":\"Account\",\"fields\":[{\"name\":\"balance\",\"type\":\"long\",\"doc\":\"current token balance for the symbol\",\"default\":0},{\"name\":\"approval\",\"type\":{\"type\":\"map\",\"values\":\"long\",\"avro.java.string\":\"String\"},\"doc\":\"approval from a token holder to withdraw\",\"default\":null},{\"name\":\"allowance\",\"type\":{\"type\":\"map\",\"values\":\"long\",\"avro.java.string\":\"String\"},\"doc\":\"allowance to the other address to withdraw\",\"default\":null}]},\"avro.java.string\":\"String\"},\"doc\":\"each symbol has a map of balance, approval or allowance\",\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -52,7 +52,7 @@ public class TokenAccount extends org.apache.avro.specific.SpecificRecordBase im
   }
 
   /** each symbol has a map of balance, approval or allowance */
-  @Deprecated public java.util.Map<java.lang.CharSequence,com.networknt.taiji.token.Account> symbols;
+  @Deprecated public java.util.Map<java.lang.String,com.networknt.taiji.token.Account> symbols;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -65,7 +65,7 @@ public class TokenAccount extends org.apache.avro.specific.SpecificRecordBase im
    * All-args constructor.
    * @param symbols each symbol has a map of balance, approval or allowance
    */
-  public TokenAccount(java.util.Map<java.lang.CharSequence,com.networknt.taiji.token.Account> symbols) {
+  public TokenAccount(java.util.Map<java.lang.String,com.networknt.taiji.token.Account> symbols) {
     this.symbols = symbols;
   }
 
@@ -82,7 +82,7 @@ public class TokenAccount extends org.apache.avro.specific.SpecificRecordBase im
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: symbols = (java.util.Map<java.lang.CharSequence,com.networknt.taiji.token.Account>)value$; break;
+    case 0: symbols = (java.util.Map<java.lang.String,com.networknt.taiji.token.Account>)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -91,7 +91,7 @@ public class TokenAccount extends org.apache.avro.specific.SpecificRecordBase im
    * Gets the value of the 'symbols' field.
    * @return each symbol has a map of balance, approval or allowance
    */
-  public java.util.Map<java.lang.CharSequence,com.networknt.taiji.token.Account> getSymbols() {
+  public java.util.Map<java.lang.String,com.networknt.taiji.token.Account> getSymbols() {
     return symbols;
   }
 
@@ -100,7 +100,7 @@ public class TokenAccount extends org.apache.avro.specific.SpecificRecordBase im
    * each symbol has a map of balance, approval or allowance
    * @param value the value to set.
    */
-  public void setSymbols(java.util.Map<java.lang.CharSequence,com.networknt.taiji.token.Account> value) {
+  public void setSymbols(java.util.Map<java.lang.String,com.networknt.taiji.token.Account> value) {
     this.symbols = value;
   }
 
@@ -137,7 +137,7 @@ public class TokenAccount extends org.apache.avro.specific.SpecificRecordBase im
     implements org.apache.avro.data.RecordBuilder<TokenAccount> {
 
     /** each symbol has a map of balance, approval or allowance */
-    private java.util.Map<java.lang.CharSequence,com.networknt.taiji.token.Account> symbols;
+    private java.util.Map<java.lang.String,com.networknt.taiji.token.Account> symbols;
 
     /** Creates a new Builder */
     private Builder() {
@@ -173,7 +173,7 @@ public class TokenAccount extends org.apache.avro.specific.SpecificRecordBase im
       * each symbol has a map of balance, approval or allowance
       * @return The value.
       */
-    public java.util.Map<java.lang.CharSequence,com.networknt.taiji.token.Account> getSymbols() {
+    public java.util.Map<java.lang.String,com.networknt.taiji.token.Account> getSymbols() {
       return symbols;
     }
 
@@ -183,7 +183,7 @@ public class TokenAccount extends org.apache.avro.specific.SpecificRecordBase im
       * @param value The value of 'symbols'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenAccount.Builder setSymbols(java.util.Map<java.lang.CharSequence,com.networknt.taiji.token.Account> value) {
+    public com.networknt.taiji.token.TokenAccount.Builder setSymbols(java.util.Map<java.lang.String,com.networknt.taiji.token.Account> value) {
       validate(fields()[0], value);
       this.symbols = value;
       fieldSetFlags()[0] = true;
@@ -216,7 +216,7 @@ public class TokenAccount extends org.apache.avro.specific.SpecificRecordBase im
     public TokenAccount build() {
       try {
         TokenAccount record = new TokenAccount();
-        record.symbols = fieldSetFlags()[0] ? this.symbols : (java.util.Map<java.lang.CharSequence,com.networknt.taiji.token.Account>) defaultValue(fields()[0]);
+        record.symbols = fieldSetFlags()[0] ? this.symbols : (java.util.Map<java.lang.String,com.networknt.taiji.token.Account>) defaultValue(fields()[0]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

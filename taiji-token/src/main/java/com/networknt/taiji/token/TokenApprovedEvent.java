@@ -12,9 +12,9 @@ import org.apache.avro.message.SchemaStore;
 
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord, TokenEvent {
+public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordBase implements TokenEvent {
   private static final long serialVersionUID = 5355608116298122218L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenApprovedEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"nonce\",\"type\":\"long\"}]}},{\"name\":\"symbol\",\"type\":\"string\"},{\"name\":\"toAddress\",\"type\":\"string\"},{\"name\":\"amount\",\"type\":\"long\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenApprovedEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"nonce\",\"type\":\"long\"}]}},{\"name\":\"symbol\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"toAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"amount\",\"type\":\"long\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -52,8 +52,8 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
   }
 
   @Deprecated public com.networknt.taiji.event.EventId EventId;
-  @Deprecated public java.lang.CharSequence symbol;
-  @Deprecated public java.lang.CharSequence toAddress;
+  @Deprecated public java.lang.String symbol;
+  @Deprecated public java.lang.String toAddress;
   @Deprecated public long amount;
 
   /**
@@ -70,7 +70,7 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
    * @param toAddress The new value for toAddress
    * @param amount The new value for amount
    */
-  public TokenApprovedEvent(com.networknt.taiji.event.EventId EventId, java.lang.CharSequence symbol, java.lang.CharSequence toAddress, java.lang.Long amount) {
+  public TokenApprovedEvent(com.networknt.taiji.event.EventId EventId, java.lang.String symbol, java.lang.String toAddress, java.lang.Long amount) {
     this.EventId = EventId;
     this.symbol = symbol;
     this.toAddress = toAddress;
@@ -94,8 +94,8 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: EventId = (com.networknt.taiji.event.EventId)value$; break;
-    case 1: symbol = (java.lang.CharSequence)value$; break;
-    case 2: toAddress = (java.lang.CharSequence)value$; break;
+    case 1: symbol = (java.lang.String)value$; break;
+    case 2: toAddress = (java.lang.String)value$; break;
     case 3: amount = (java.lang.Long)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
@@ -121,7 +121,7 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
    * Gets the value of the 'symbol' field.
    * @return The value of the 'symbol' field.
    */
-  public java.lang.CharSequence getSymbol() {
+  public java.lang.String getSymbol() {
     return symbol;
   }
 
@@ -129,7 +129,7 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
    * Sets the value of the 'symbol' field.
    * @param value the value to set.
    */
-  public void setSymbol(java.lang.CharSequence value) {
+  public void setSymbol(java.lang.String value) {
     this.symbol = value;
   }
 
@@ -137,7 +137,7 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
    * Gets the value of the 'toAddress' field.
    * @return The value of the 'toAddress' field.
    */
-  public java.lang.CharSequence getToAddress() {
+  public java.lang.String getToAddress() {
     return toAddress;
   }
 
@@ -145,7 +145,7 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
    * Sets the value of the 'toAddress' field.
    * @param value the value to set.
    */
-  public void setToAddress(java.lang.CharSequence value) {
+  public void setToAddress(java.lang.String value) {
     this.toAddress = value;
   }
 
@@ -199,8 +199,8 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
 
     private com.networknt.taiji.event.EventId EventId;
     private com.networknt.taiji.event.EventId.Builder EventIdBuilder;
-    private java.lang.CharSequence symbol;
-    private java.lang.CharSequence toAddress;
+    private java.lang.String symbol;
+    private java.lang.String toAddress;
     private long amount;
 
     /** Creates a new Builder */
@@ -338,7 +338,7 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
       * Gets the value of the 'symbol' field.
       * @return The value.
       */
-    public java.lang.CharSequence getSymbol() {
+    public java.lang.String getSymbol() {
       return symbol;
     }
 
@@ -347,7 +347,7 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'symbol'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenApprovedEvent.Builder setSymbol(java.lang.CharSequence value) {
+    public com.networknt.taiji.token.TokenApprovedEvent.Builder setSymbol(java.lang.String value) {
       validate(fields()[1], value);
       this.symbol = value;
       fieldSetFlags()[1] = true;
@@ -377,7 +377,7 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
       * Gets the value of the 'toAddress' field.
       * @return The value.
       */
-    public java.lang.CharSequence getToAddress() {
+    public java.lang.String getToAddress() {
       return toAddress;
     }
 
@@ -386,7 +386,7 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
       * @param value The value of 'toAddress'.
       * @return This builder.
       */
-    public com.networknt.taiji.token.TokenApprovedEvent.Builder setToAddress(java.lang.CharSequence value) {
+    public com.networknt.taiji.token.TokenApprovedEvent.Builder setToAddress(java.lang.String value) {
       validate(fields()[2], value);
       this.toAddress = value;
       fieldSetFlags()[2] = true;
@@ -460,8 +460,8 @@ public class TokenApprovedEvent extends org.apache.avro.specific.SpecificRecordB
         } else {
           record.EventId = fieldSetFlags()[0] ? this.EventId : (com.networknt.taiji.event.EventId) defaultValue(fields()[0]);
         }
-        record.symbol = fieldSetFlags()[1] ? this.symbol : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.toAddress = fieldSetFlags()[2] ? this.toAddress : (java.lang.CharSequence) defaultValue(fields()[2]);
+        record.symbol = fieldSetFlags()[1] ? this.symbol : (java.lang.String) defaultValue(fields()[1]);
+        record.toAddress = fieldSetFlags()[2] ? this.toAddress : (java.lang.String) defaultValue(fields()[2]);
         record.amount = fieldSetFlags()[3] ? this.amount : (java.lang.Long) defaultValue(fields()[3]);
         return record;
       } catch (java.lang.Exception e) {

@@ -38,6 +38,7 @@
             {
               "name": "from",
               "type": ["null", "string"],
+              "default": null,
               "doc": "from address"
             },
             {

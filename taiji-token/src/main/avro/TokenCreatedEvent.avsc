@@ -25,11 +25,7 @@
     },
     {
       "name": "currency",
-      "type": [
-        "string",
-        "null"
-      ],
-      "default": "taiji",
+      "type": "string",
       "doc": "the currency blockchain the token is associated to"
     },
     {
@@ -59,29 +55,20 @@
     },
     {
       "name": "timestamp",
-      "type": [
-        "null",
-        "long"
-      ],
-      "default": null,
+      "type": "long",
+      "default": 0,
       "doc": "time the event is recorded on the blockchain"
     },
     {
       "name": "offset",
-      "type": [
-        "null",
-        "long"
-      ],
-      "default": null,
+      "type": "long",
+      "default": 0,
       "doc": "kafka partition offset"
     },
     {
       "name": "partition",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null,
+      "type": "int",
+      "default": 0,
       "doc": "kafka partition id"
     }
   ]
