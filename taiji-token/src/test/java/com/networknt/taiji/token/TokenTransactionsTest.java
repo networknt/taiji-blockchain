@@ -1,5 +1,6 @@
 package com.networknt.taiji.token;
 
+import com.networknt.taiji.event.AvroConverter;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -36,5 +37,9 @@ public class TokenTransactionsTest {
                 .build();
 
         System.out.println("transactions = " + txs);
+
+        String json = AvroConverter.toJson(txs, false);
+        System.out.println("json = " + json);
     }
+
 }
