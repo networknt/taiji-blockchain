@@ -14,7 +14,7 @@ import org.apache.avro.message.SchemaStore;
 @org.apache.avro.specific.AvroGenerated
 public class EventId extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -4007368551302052766L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"nonce\",\"type\":\"long\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"nonce\",\"type\":\"long\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -51,7 +51,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
     return DECODER.decode(b);
   }
 
-  @Deprecated public java.lang.CharSequence address;
+  @Deprecated public String address;
   @Deprecated public long nonce;
 
   /**
@@ -66,14 +66,14 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param address The new value for address
    * @param nonce The new value for nonce
    */
-  public EventId(java.lang.CharSequence address, java.lang.Long nonce) {
+  public EventId(String address, Long nonce) {
     this.address = address;
     this.nonce = nonce;
   }
 
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
-  public java.lang.Object get(int field$) {
+  public Object get(int field$) {
     switch (field$) {
     case 0: return address;
     case 1: return nonce;
@@ -83,10 +83,10 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
 
   // Used by DatumReader.  Applications should not call.
   @SuppressWarnings(value="unchecked")
-  public void put(int field$, java.lang.Object value$) {
+  public void put(int field$, Object value$) {
     switch (field$) {
-    case 0: address = (java.lang.CharSequence)value$; break;
-    case 1: nonce = (java.lang.Long)value$; break;
+    case 0: address = (String)value$; break;
+    case 1: nonce = (Long)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -95,7 +95,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'address' field.
    * @return The value of the 'address' field.
    */
-  public java.lang.CharSequence getAddress() {
+  public String getAddress() {
     return address;
   }
 
@@ -103,7 +103,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
    * Sets the value of the 'address' field.
    * @param value the value to set.
    */
-  public void setAddress(java.lang.CharSequence value) {
+  public void setAddress(String value) {
     this.address = value;
   }
 
@@ -111,7 +111,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'nonce' field.
    * @return The value of the 'nonce' field.
    */
-  public java.lang.Long getNonce() {
+  public Long getNonce() {
     return nonce;
   }
 
@@ -119,7 +119,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
    * Sets the value of the 'nonce' field.
    * @param value the value to set.
    */
-  public void setNonce(java.lang.Long value) {
+  public void setNonce(Long value) {
     this.nonce = value;
   }
 
@@ -127,8 +127,8 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
    * Creates a new EventId RecordBuilder.
    * @return A new EventId RecordBuilder
    */
-  public static com.networknt.taiji.event.EventId.Builder newBuilder() {
-    return new com.networknt.taiji.event.EventId.Builder();
+  public static Builder newBuilder() {
+    return new Builder();
   }
 
   /**
@@ -136,8 +136,8 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param other The existing builder to copy.
    * @return A new EventId RecordBuilder
    */
-  public static com.networknt.taiji.event.EventId.Builder newBuilder(com.networknt.taiji.event.EventId.Builder other) {
-    return new com.networknt.taiji.event.EventId.Builder(other);
+  public static Builder newBuilder(Builder other) {
+    return new Builder(other);
   }
 
   /**
@@ -145,8 +145,8 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param other The existing instance to copy.
    * @return A new EventId RecordBuilder
    */
-  public static com.networknt.taiji.event.EventId.Builder newBuilder(com.networknt.taiji.event.EventId other) {
-    return new com.networknt.taiji.event.EventId.Builder(other);
+  public static Builder newBuilder(EventId other) {
+    return new Builder(other);
   }
 
   /**
@@ -155,7 +155,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<EventId>
     implements org.apache.avro.data.RecordBuilder<EventId> {
 
-    private java.lang.CharSequence address;
+    private String address;
     private long nonce;
 
     /** Creates a new Builder */
@@ -167,7 +167,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.networknt.taiji.event.EventId.Builder other) {
+    private Builder(Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.address)) {
         this.address = data().deepCopy(fields()[0].schema(), other.address);
@@ -183,7 +183,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
      * Creates a Builder by copying an existing EventId instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.networknt.taiji.event.EventId other) {
+    private Builder(EventId other) {
             super(SCHEMA$);
       if (isValidValue(fields()[0], other.address)) {
         this.address = data().deepCopy(fields()[0].schema(), other.address);
@@ -199,7 +199,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
       * Gets the value of the 'address' field.
       * @return The value.
       */
-    public java.lang.CharSequence getAddress() {
+    public String getAddress() {
       return address;
     }
 
@@ -208,7 +208,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'address'.
       * @return This builder.
       */
-    public com.networknt.taiji.event.EventId.Builder setAddress(java.lang.CharSequence value) {
+    public Builder setAddress(String value) {
       validate(fields()[0], value);
       this.address = value;
       fieldSetFlags()[0] = true;
@@ -228,7 +228,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'address' field.
       * @return This builder.
       */
-    public com.networknt.taiji.event.EventId.Builder clearAddress() {
+    public Builder clearAddress() {
       address = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -238,7 +238,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
       * Gets the value of the 'nonce' field.
       * @return The value.
       */
-    public java.lang.Long getNonce() {
+    public Long getNonce() {
       return nonce;
     }
 
@@ -247,7 +247,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'nonce'.
       * @return This builder.
       */
-    public com.networknt.taiji.event.EventId.Builder setNonce(long value) {
+    public Builder setNonce(long value) {
       validate(fields()[1], value);
       this.nonce = value;
       fieldSetFlags()[1] = true;
@@ -267,7 +267,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'nonce' field.
       * @return This builder.
       */
-    public com.networknt.taiji.event.EventId.Builder clearNonce() {
+    public Builder clearNonce() {
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -277,10 +277,10 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
     public EventId build() {
       try {
         EventId record = new EventId();
-        record.address = fieldSetFlags()[0] ? this.address : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.nonce = fieldSetFlags()[1] ? this.nonce : (java.lang.Long) defaultValue(fields()[1]);
+        record.address = fieldSetFlags()[0] ? this.address : (String) defaultValue(fields()[0]);
+        record.nonce = fieldSetFlags()[1] ? this.nonce : (Long) defaultValue(fields()[1]);
         return record;
-      } catch (java.lang.Exception e) {
+      } catch (Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
     }
@@ -315,8 +315,7 @@ public class EventId extends org.apache.avro.specific.SpecificRecordBase impleme
 
   public static EventId fromString(String str) {
     String[] s = str.split("-");
-    if (s.length != 2)
-      throw new IllegalArgumentException("Should have length of 2: " + str);
+    if (s.length != 2) throw new IllegalArgumentException("Should have length of 2: " + str);
     return new EventId(s[0], Long.parseUnsignedLong(s[1], 16));
   }
 }
