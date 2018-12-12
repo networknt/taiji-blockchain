@@ -4,6 +4,8 @@ import com.networknt.chain.utility.Hash;
 import com.networknt.chain.utility.Numeric;
 import com.networknt.utility.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.security.*;
@@ -17,6 +19,7 @@ import static com.networknt.taiji.crypto.SecureRandomUtils.secureRandom;
  * Crypto key utilities.
  */
 public class Keys {
+    static final Logger logger = LoggerFactory.getLogger(Keys.class);
 
     static final int PRIVATE_KEY_SIZE = 32;
     static final int PUBLIC_KEY_SIZE = 64;
@@ -54,6 +57,16 @@ public class Keys {
             NoSuchAlgorithmException, NoSuchProviderException {
         KeyPair keyPair = createSecp256k1KeyPair();
         return ECKeyPair.create(keyPair);
+    }
+
+    public static ECKeyPair createEcKeyPairUnsafe() {
+        try {
+            KeyPair keyPair = createSecp256k1KeyPair();
+            return ECKeyPair.create(keyPair);
+        } catch (InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchProviderException ex) {
+            logger.error("Exception", ex);
+            return null;
+        }
     }
 
     public static String getAddress(ECKeyPair ecKeyPair) {

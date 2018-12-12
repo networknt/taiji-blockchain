@@ -1,1 +1,1 @@
-include("chain-utility", "chain-rlp", "taiji-utility", "taiji-crypto", "taiji-core", "taiji-console", "taiji-client", "app-template", "taiji-token", "event-common", "event-handler", "avro-serializer")
+include("chain-utility", "chain-rlp", "taiji-utility", "taiji-crypto", "taiji-core", "taiji-console", "taiji-client", "taiji-token", "event-common", "event-handler", "avro-serializer")

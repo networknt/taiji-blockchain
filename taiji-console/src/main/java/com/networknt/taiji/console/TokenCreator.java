@@ -38,7 +38,8 @@ public class TokenCreator extends TokenManager {
         console.printf("Generate token address (this may take a few minutes)...\n");
         String tokenAddress = null;
         try {
-            tokenAddress = AddrGen.generateAddress(ownerAddress.substring(0, 4));
+            AddressGenerator generator = new AddressGenerator(ownerAddress.substring(0, 4));
+            tokenAddress = Keys.getAddress(generator.generate());
         } catch(Exception e) {
             exitError(e);
         }

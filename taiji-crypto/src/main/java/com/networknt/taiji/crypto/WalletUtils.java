@@ -49,10 +49,9 @@ public class WalletUtils {
 
     public static String generateNewWalletFile(
             String password, File destinationDirectory, String chainId, boolean useFullScrypt)
-            throws CipherException, IOException, InvalidAlgorithmParameterException,
-            NoSuchAlgorithmException, NoSuchProviderException {
-
-        ECKeyPair ecKeyPair = AddrGen.generateKeyPair(chainId);
+            throws CipherException, IOException {
+        AddressGenerator generator = new AddressGenerator(chainId);
+        ECKeyPair ecKeyPair = generator.generate();
         return generateWalletFile(password, ecKeyPair, destinationDirectory, useFullScrypt);
     }
 
