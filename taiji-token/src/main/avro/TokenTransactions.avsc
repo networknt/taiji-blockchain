@@ -37,7 +37,7 @@
             },
             {
               "name": "from",
-              "type": ["null", "string"],
+              "type": "string",
               "default": null,
               "doc": "from address"
             },
