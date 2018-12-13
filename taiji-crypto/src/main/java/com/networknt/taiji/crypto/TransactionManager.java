@@ -76,7 +76,8 @@ public class TransactionManager {
             }
             balance = balance - sd.value;
         }
-        // debit amount is the total of debit entries.
+        // debit amount is the total of debit entries. For fee calculation, always pick the highest
+        // as we are looping the entire list of credit ledgers.
         result.setDebitAmount(abs(balance));
         Fee fee = feeConfig.getCurrencies().get(result.getCurrency());
         boolean feeExist = false;
@@ -88,7 +89,10 @@ public class TransactionManager {
             Map.Entry<String,byte[]> entry = cmap.entrySet().iterator().next();
             byte[] signedLedger = entry.getValue();
             SignedLedgerEntry sc = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
-            if(!sc.toAddress.startsWith(bankId)) feeInShell = fee.getInterChain(); // at least one toAddress is not in chain.
+            // the second condition is to ensure not switch application fee to interchain fee. 
+            if(!sc.toAddress.startsWith(bankId) && feeInShell < fee.getInterChain()) {
+                feeInShell = fee.getInterChain(); // at least one toAddress is not in chain.
+            }
             if(sc.value == 0) {
                 if(sc.data == null) {
                     result.setError("value is zero but there is no event data for address " + sc.toAddress);
