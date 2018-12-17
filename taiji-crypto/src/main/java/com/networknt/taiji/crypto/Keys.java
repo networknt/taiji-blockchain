@@ -53,6 +53,14 @@ public class Keys {
         return keyPairGenerator.generateKeyPair();
     }
 
+    public static KeyPair createCipherKeyPair() throws NoSuchProviderException,
+            NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+        KeyPairGenerator kpg = KeyPairGenerator.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME);
+        kpg.initialize(new ECGenParameterSpec("secp256r1"), secureRandom());
+        return kpg.generateKeyPair();
+    }
+
+
     public static ECKeyPair createEcKeyPair() throws InvalidAlgorithmParameterException,
             NoSuchAlgorithmException, NoSuchProviderException {
         KeyPair keyPair = createSecp256k1KeyPair();

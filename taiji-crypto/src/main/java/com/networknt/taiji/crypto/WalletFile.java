@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Ethereum wallet file.
@@ -18,6 +19,7 @@ import java.io.IOException;
 public class WalletFile {
     private String address;
     private Crypto crypto;
+    private Encryption encryption;
     private String id;
     private int version;
 
@@ -44,6 +46,14 @@ public class WalletFile {
     @JsonSetter("Crypto")  // older wallet files may have this attribute name
     public void setCryptoV1(Crypto crypto) {
         setCrypto(crypto);
+    }
+
+    public Encryption getEncryption() {
+        return encryption;
+    }
+
+    public void setEncryption(Encryption encryption) {
+        this.encryption = encryption;
     }
 
     public String getId() {
@@ -175,55 +185,123 @@ public class WalletFile {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (!(o instanceof Crypto)) {
-                return false;
-            }
-            
-            Crypto that = (Crypto) o;
-            
-            if (getCipher() != null
-                    ? !getCipher().equals(that.getCipher())
-                    : that.getCipher() != null) {
-                return false;
-            }
-            if (getCiphertext() != null
-                    ? !getCiphertext().equals(that.getCiphertext())
-                    : that.getCiphertext() != null) {
-                return false;
-            }
-            if (getCipherparams() != null
-                    ? !getCipherparams().equals(that.getCipherparams())
-                    : that.getCipherparams() != null) {
-                return false;
-            }
-            if (getKdf() != null
-                    ? !getKdf().equals(that.getKdf())
-                    : that.getKdf() != null) {
-                return false;
-            }
-            if (getKdfparams() != null
-                    ? !getKdfparams().equals(that.getKdfparams())
-                    : that.getKdfparams() != null) {
-                return false;
-            }
-            return getMac() != null
-                    ? getMac().equals(that.getMac()) : that.getMac() == null;
-        }  
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Crypto crypto = (Crypto) o;
+            return Objects.equals(cipher, crypto.cipher) &&
+                    Objects.equals(ciphertext, crypto.ciphertext) &&
+                    Objects.equals(cipherparams, crypto.cipherparams) &&
+                    Objects.equals(kdf, crypto.kdf) &&
+                    Objects.equals(kdfparams, crypto.kdfparams) &&
+                    Objects.equals(mac, crypto.mac);
+        }
 
         @Override
         public int hashCode() {
-            int result = getCipher() != null ? getCipher().hashCode() : 0;
-            result = 31 * result + (getCiphertext() != null ? getCiphertext().hashCode() : 0);
-            result = 31 * result + (getCipherparams() != null ? getCipherparams().hashCode() : 0);
-            result = 31 * result + (getKdf() != null ? getKdf().hashCode() : 0);
-            result = 31 * result + (getKdfparams() != null ? getKdfparams().hashCode() : 0);
-            result = 31 * result + (getMac() != null ? getMac().hashCode() : 0);
-            return result;
+            return Objects.hash(cipher, ciphertext, cipherparams, kdf, kdfparams, mac);
         }
-        
+    }
+
+    public static class Encryption {
+        private String cipher;
+        private String ciphertext;
+        private String publictext;
+        private CipherParams cipherparams;
+
+        private String kdf;
+        private KdfParams kdfparams;
+
+        private String mac;
+
+        public Encryption() {
+        }
+
+        public String getCipher() {
+            return cipher;
+        }
+
+        public void setCipher(String cipher) {
+            this.cipher = cipher;
+        }
+
+        public String getCiphertext() {
+            return ciphertext;
+        }
+
+        public void setCiphertext(String ciphertext) {
+            this.ciphertext = ciphertext;
+        }
+
+        public String getPublictext() {
+            return publictext;
+        }
+
+        public void setPublictext(String publictext) {
+            this.publictext = publictext;
+        }
+
+        public CipherParams getCipherparams() {
+            return cipherparams;
+        }
+
+        public void setCipherparams(CipherParams cipherparams) {
+            this.cipherparams = cipherparams;
+        }
+
+        public String getKdf() {
+            return kdf;
+        }
+
+        public void setKdf(String kdf) {
+            this.kdf = kdf;
+        }
+
+        public KdfParams getKdfparams() {
+            return kdfparams;
+        }
+
+        @JsonTypeInfo(
+                use = JsonTypeInfo.Id.NAME,
+                include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
+                property = "kdf")
+        @JsonSubTypes({
+                @JsonSubTypes.Type(value = Aes128CtrKdfParams.class, name = Wallet.AES_128_CTR),
+                @JsonSubTypes.Type(value = ScryptKdfParams.class, name = Wallet.SCRYPT)
+        })
+        // To support my Ether Wallet keys uncomment this annotation & comment out the above
+        //  @JsonDeserialize(using = KdfParamsDeserialiser.class)
+        // Also add the following to the ObjectMapperFactory
+        // objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+        public void setKdfparams(KdfParams kdfparams) {
+            this.kdfparams = kdfparams;
+        }
+
+        public String getMac() {
+            return mac;
+        }
+
+        public void setMac(String mac) {
+            this.mac = mac;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Encryption that = (Encryption) o;
+            return Objects.equals(cipher, that.cipher) &&
+                    Objects.equals(ciphertext, that.ciphertext) &&
+                    Objects.equals(publictext, that.publictext) &&
+                    Objects.equals(cipherparams, that.cipherparams) &&
+                    Objects.equals(kdf, that.kdf) &&
+                    Objects.equals(kdfparams, that.kdfparams) &&
+                    Objects.equals(mac, that.mac);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(cipher, ciphertext, publictext, cipherparams, kdf, kdfparams, mac);
+        }
     }
 
     public static class CipherParams {

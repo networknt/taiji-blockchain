@@ -90,7 +90,7 @@ public class WalletManager {
             credentials = WalletUtils.loadCredentials(password, walletStream);
         } catch (CipherException e) {
             exitError("Wrong password for wallet file: " + e.getMessage());
-        } catch (IOException e) {
+        } catch (Exception e) {
             exitError("Unable to load wallet file from the stream:" + e.getMessage());
         }
         return credentials;
@@ -113,7 +113,7 @@ public class WalletManager {
                 return WalletUtils.loadCredentials(currentPassword, walletFile);
             } catch (CipherException e) {
                 console.printf("Invalid password specified\n");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 exitError("Unable to load wallet file: " + walletFile + "\n" + e.getMessage());
             }
         }
@@ -129,7 +129,7 @@ public class WalletManager {
                 return WalletUtils.loadCredentials(currentPassword, is);
             } catch (CipherException e) {
                 console.printf("Invalid password specified\n");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 exitError("Unable to load wallet file for address : " + address + "\n" + e.getMessage());
             }
         }

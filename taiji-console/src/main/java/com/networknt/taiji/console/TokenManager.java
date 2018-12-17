@@ -127,7 +127,7 @@ public class TokenManager {
                 return WalletUtils.loadCredentials(currentPassword, is);
             } catch (CipherException e) {
                 console.printf("Invalid password specified\n");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 exitError("Unable to load wallet file for address : " + address + "\n" + e.getMessage());
             }
         }

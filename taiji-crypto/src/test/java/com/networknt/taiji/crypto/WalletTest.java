@@ -16,12 +16,7 @@ public class WalletTest {
 
     @Test
     public void testCreateStandard() throws Exception {
-        testCreate(Wallet.createStandard(SampleKeys.PASSWORD, SampleKeys.KEY_PAIR));
-    }
-
-    @Test
-    public void testCreateLight() throws Exception {
-        testCreate(Wallet.createLight(SampleKeys.PASSWORD, SampleKeys.KEY_PAIR));
+        testCreate(Wallet.createStandard(SampleKeys.PASSWORD, SampleKeys.KEY_PAIR, Keys.createCipherKeyPair()));
     }
 
     private void testCreate(WalletFile walletFile) throws Exception {
@@ -30,29 +25,24 @@ public class WalletTest {
 
     @Test
     public void testEncryptDecryptStandard() throws Exception {
-        testEncryptDecrypt(Wallet.createStandard(SampleKeys.PASSWORD, SampleKeys.KEY_PAIR));
-    }
-
-    @Test
-    public void testEncryptDecryptLight() throws Exception {
-        testEncryptDecrypt(Wallet.createLight(SampleKeys.PASSWORD, SampleKeys.KEY_PAIR));
+        testEncryptDecrypt(Wallet.createStandard(SampleKeys.PASSWORD, SampleKeys.KEY_PAIR, Keys.createCipherKeyPair()));
     }
 
     private void testEncryptDecrypt(WalletFile walletFile) throws Exception {
-        assertThat(Wallet.decrypt(SampleKeys.PASSWORD, walletFile), equalTo(SampleKeys.KEY_PAIR));
+        assertThat(Wallet.decryptSigningKeyPair(SampleKeys.PASSWORD, walletFile), equalTo(SampleKeys.KEY_PAIR));
     }
 
     @Test
     public void testDecryptAes128Ctr() throws Exception {
         WalletFile walletFile = load(AES_128_CTR);
-        ECKeyPair ecKeyPair = Wallet.decrypt(PASSWORD, walletFile);
+        ECKeyPair ecKeyPair = Wallet.decryptSigningKeyPair(PASSWORD, walletFile);
         assertThat(Numeric.toHexStringNoPrefix(ecKeyPair.getPrivateKey()), is(SECRET));
     }
 
     @Test
     public void testDecryptScrypt() throws Exception {
         WalletFile walletFile = load(SCRYPT);
-        ECKeyPair ecKeyPair = Wallet.decrypt(PASSWORD, walletFile);
+        ECKeyPair ecKeyPair = Wallet.decryptSigningKeyPair(PASSWORD, walletFile);
         assertThat(Numeric.toHexStringNoPrefix(ecKeyPair.getPrivateKey()), is(SECRET));
     }
 
@@ -89,7 +79,7 @@ public class WalletTest {
             "        \"mac\" : \"2b29e4641ec17f4dc8b86fc8592090b50109b372529c30b001d4d96249edaf62\"\n" +
             "    },\n" +
             "    \"id\" : \"af0451b4-6020-4ef0-91ec-794a5a965b01\",\n" +
-            "    \"version\" : 3\n" +
+            "    \"version\" : 4\n" +
             "}";
 
     private static final String SCRYPT = "{\n" +
@@ -110,7 +100,7 @@ public class WalletTest {
             "        \"mac\" : \"7e8f2192767af9be18e7a373c1986d9190fcaa43ad689bbb01a62dbde159338d\"\n" +
             "    },\n" +
             "    \"id\" : \"7654525c-17e0-4df5-94b5-c7fde752c9d2\",\n" +
-            "    \"version\" : 3\n" +
+            "    \"version\" : 4\n" +
             "}";
     //CHECKSTYLE:ON
 }

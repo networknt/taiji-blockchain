@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.text.NumberFormat;
@@ -21,10 +22,11 @@ public class AddressGen {
     public static Credentials generateCredentials(String chainId)
             throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
         while(true) {
-            ECKeyPair pair = Keys.createEcKeyPair();
-            String address = Keys.getAddress(pair);
+            ECKeyPair signingKeyPair = Keys.createEcKeyPair();
+            String address = Keys.getAddress(signingKeyPair);
+            KeyPair encryptingKeyPair = Keys.createCipherKeyPair();
             if(address.startsWith(chainId)) {
-                return Credentials.create(pair);
+                return Credentials.create(signingKeyPair, encryptingKeyPair);
             }
         }
     }

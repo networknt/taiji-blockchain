@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.security.KeyPair;
 
 import static com.networknt.chain.utility.Hash.sha256;
 import static com.networknt.taiji.crypto.SampleKeys.CREDENTIALS;
@@ -38,15 +39,6 @@ public class WalletUtilsTest {
     }
 
     @Test
-    public void testGenerateBip39Wallets() throws Exception {
-        Bip39Wallet wallet = WalletUtils.generateBip39Wallet(PASSWORD, tempDir);
-        byte[] seed = MnemonicUtils.generateSeed(wallet.getMnemonic(), PASSWORD);
-        Credentials credentials = Credentials.create(ECKeyPair.create(sha256(seed)));
-
-        assertEquals(credentials, WalletUtils.loadBip39Credentials(PASSWORD, wallet.getMnemonic()));
-    }
-
-    @Test
     public void testGenerateFullNewWalletFile() throws Exception {
         String fileName = WalletUtils.generateFullNewWalletFile(PASSWORD, tempDir, chainId);
         testGeneratedNewWalletFile(fileName);
@@ -58,26 +50,14 @@ public class WalletUtilsTest {
         testGeneratedNewWalletFile(fileName);
     }
 
-
-    @Test
-    public void testGenerateLightNewWalletFile() throws Exception {
-        String fileName = WalletUtils.generateLightNewWalletFile(PASSWORD, tempDir, chainId);
-        testGeneratedNewWalletFile(fileName);
-    }
-
     private void testGeneratedNewWalletFile(String fileName) throws Exception {
         WalletUtils.loadCredentials(PASSWORD, new File(tempDir, fileName));
     }
 
     @Test
     public void testGenerateFullWalletFile() throws Exception {
-        String fileName = WalletUtils.generateWalletFile(PASSWORD, KEY_PAIR, tempDir, true);
-        testGenerateWalletFile(fileName);
-    }
-
-    @Test
-    public void testGenerateLightWalletFile() throws Exception {
-        String fileName = WalletUtils.generateWalletFile(PASSWORD, KEY_PAIR, tempDir, false);
+        KeyPair keyPair = Keys.createCipherKeyPair();
+        String fileName = WalletUtils.generateWalletFile(PASSWORD, KEY_PAIR, keyPair, tempDir, true);
         testGenerateWalletFile(fileName);
     }
 
@@ -92,19 +72,8 @@ public class WalletUtilsTest {
     public void testLoadCredentialsFromStream() throws Exception {
         Credentials credentials = WalletUtils.loadCredentials(
                 PASSWORD,
-                Config.getInstance().getInputStreamFromFile("ef678007d18427e6022059dbc264f27507cd1ffc.json"));
+                Config.getInstance().getInputStreamFromFile("ef678007D18427E6022059Dbc264f27507CD1ffC.json"));
         assertThat(credentials, equalTo(CREDENTIALS));
-    }
-
-    @Ignore  // enable if users need to work with MyWallet
-    @Test
-    public void testLoadCredentialsMyWallet() throws Exception {
-        Credentials credentials = WalletUtils.loadCredentials(
-                PASSWORD,
-                Config.getInstance().getInputStreamFromFile("4f9c1a1efaa7d81ba1cabf07f2c3a5ac5cf4f818.json"));
-        assertThat(credentials, equalTo(
-                Credentials.create(
-                        "6ca4203d715e693279d6cd9742ad2fb7a3f6f4abe27a64da92e0a70ae5d859c9")));
     }
 
     private static File createTempDir() throws Exception {

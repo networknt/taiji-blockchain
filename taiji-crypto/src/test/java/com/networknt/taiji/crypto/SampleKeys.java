@@ -3,6 +3,7 @@ package com.networknt.taiji.crypto;
 import com.networknt.chain.utility.Numeric;
 
 import java.math.BigInteger;
+import java.security.KeyPair;
 
 public class SampleKeys {
     public static final String PRIVATE_KEY_STRING =
@@ -20,7 +21,7 @@ public class SampleKeys {
 
     static final ECKeyPair KEY_PAIR = new ECKeyPair(PRIVATE_KEY, PUBLIC_KEY);
 
-    public static final Credentials CREDENTIALS = Credentials.create(KEY_PAIR);
+    public static final Credentials CREDENTIALS = Credentials.create(KEY_PAIR, null);
 
     private SampleKeys() {}
 }

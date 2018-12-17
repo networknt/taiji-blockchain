@@ -65,18 +65,18 @@ public class KeyImporter extends WalletManager {
                     + " digit hex value");
         }
 
-        Credentials credentials = Credentials.create(privateKey);
         String password = getPassword("Please enter a wallet file password: ");
 
         String destinationDir = getDestinationDir();
         File destination = createDir(destinationDir);
 
         try {
+            Credentials credentials = Credentials.create(privateKey);
             String walletFileName = WalletUtils.generateWalletFile(
-                    password, credentials.getEcKeyPair(), destination, true);
+                    password, credentials.getEcKeyPair(), credentials.getEncryptingKeyPair(), destination, true);
             console.printf("Wallet file " + walletFileName
                     + " successfully created in: " + destinationDir + "\n");
-        } catch (CipherException | IOException e) {
+        } catch (Exception e) {
             exitError(e);
         }
     }

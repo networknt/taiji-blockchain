@@ -47,7 +47,7 @@ public class WalletUpdater extends WalletManager {
 
         try {
             String walletFileName = WalletUtils.generateWalletFile(
-                    newPassword, credentials.getEcKeyPair(), destination, true);
+                    newPassword, credentials.getEcKeyPair(), credentials.getEncryptingKeyPair(), destination, true);
             console.printf("New wallet file " + walletFileName
                     + " successfully created in: " + destinationDir + "\n");
         } catch (CipherException | IOException e) {

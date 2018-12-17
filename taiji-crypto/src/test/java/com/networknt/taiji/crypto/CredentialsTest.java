@@ -2,21 +2,17 @@ package com.networknt.taiji.crypto;
 
 import org.junit.Test;
 
+import java.security.KeyPair;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class CredentialsTest {
 
     @Test
-    public void testCredentialsFromString() {
-        Credentials credentials = Credentials.create(SampleKeys.KEY_PAIR);
-        verify(credentials);
-    }
-
-    @Test
-    public void testCredentialsFromECKeyPair() {
-        Credentials credentials = Credentials.create(
-                SampleKeys.PRIVATE_KEY_STRING, SampleKeys.PUBLIC_KEY_STRING);
+    public void testCredentialsFromString() throws Exception {
+        KeyPair keyPair = Keys.createCipherKeyPair();
+        Credentials credentials = Credentials.create(SampleKeys.KEY_PAIR, keyPair);
         verify(credentials);
     }
 
