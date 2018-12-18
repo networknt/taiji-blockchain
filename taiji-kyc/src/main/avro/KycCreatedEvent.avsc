@@ -1,0 +1,83 @@
+{
+  "type": "record",
+  "name": "KycCreatedEvent",
+  "namespace": "com.networknt.taiji.kyc",
+  "fields": [
+    {
+      "name": "EventId",
+      "type": {
+        "type": "record",
+        "name": "EventId",
+        "namespace": "com.networknt.taiji.event",
+        "fields": [
+          {
+            "name": "address",
+            "type": "string",
+            "doc": "owner address that create the token"
+          },
+          {
+            "name": "nonce",
+            "type": "long",
+            "doc": "the number of the transactions for the address"
+          }
+        ]
+      }
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "doc": "the currency blockchain the token is associated to"
+    },
+    {
+      "name": "type",
+      "type": {
+        "type": "enum",
+        "name": "KycType",
+        "symbols": [
+          "P",
+          "B"
+        ]
+      },
+      "doc": "KYC type, P for personal and B for business"
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "doc": "email address of the address owner or business contact"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "peronal or business name"
+    },
+    {
+      "name": "key",
+      "type": "string",
+      "doc": "public key for encryption"
+    },
+    {
+      "name": "verified",
+      "type": "boolean",
+      "default": false,
+      "doc": "If the email is verified"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "default": 0,
+      "doc": "time the event is recorded on the blockchain"
+    },
+    {
+      "name": "offset",
+      "type": "long",
+      "default": 0,
+      "doc": "kafka partition offset"
+    },
+    {
+      "name": "partition",
+      "type": "int",
+      "default": 0,
+      "doc": "kafka partition id"
+    }
+  ]
+}
