@@ -4,6 +4,7 @@
 
 java -jar /home/steve/tool/avro-tools-1.8.2.jar compile -string schema KycCreatedEvent.avsc .
 java -jar /home/steve/tool/avro-tools-1.8.2.jar compile -string schema KycVerifiedEvent.avsc .
+java -jar /home/steve/tool/avro-tools-1.8.2.jar compile -string schema KycUpdatedEvent.avsc .
 
 # Update events to implement from KycEvent interface in order to group these events in streams processing.
 
@@ -14,5 +15,6 @@ find . -name '*Event.java' -exec sed -i "s/implements org.apache.avro.specific.S
 mv com/networknt/taiji/kyc/KycCreatedEvent.java ../java/com/networknt/taiji/kyc
 mv com/networknt/taiji/kyc/KycVerifiedEvent.java ../java/com/networknt/taiji/kyc
 mv com/networknt/taiji/kyc/KycType.java ../java/com/networknt/taiji/kyc
+mv com/networknt/taiji/kyc/KycUpdatedEvent.java ../java/com/networknt/taiji/kyc
 
 rm -rf com

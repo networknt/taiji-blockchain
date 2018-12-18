@@ -41,6 +41,11 @@
       "doc": "KYC type, P for personal and B for business"
     },
     {
+      "name": "id",
+      "type": "string",
+      "doc": "unique identifier for the user or business"
+    },
+    {
       "name": "email",
       "type": "string",
       "doc": "email address of the address owner or business contact"
@@ -48,7 +53,7 @@
     {
       "name": "name",
       "type": "string",
-      "doc": "peronal or business name"
+      "doc": "personal or business name"
     },
     {
       "name": "key",
@@ -60,6 +65,21 @@
       "type": "boolean",
       "default": false,
       "doc": "If the email is verified"
+    },
+    {
+      "name": "tags",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "default": [],
+      "doc": "tags to categorize the person or business"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "default": null,
+      "doc": "Description of person or business which can be full text searched"
     },
     {
       "name": "timestamp",

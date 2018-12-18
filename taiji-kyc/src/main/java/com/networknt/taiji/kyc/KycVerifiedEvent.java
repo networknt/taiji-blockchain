@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBase implements KycEvent {
-  private static final long serialVersionUID = -3839535249283387898L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"KycVerifiedEvent\",\"namespace\":\"com.networknt.taiji.kyc\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"owner address that create the token\"},{\"name\":\"nonce\",\"type\":\"long\",\"doc\":\"the number of the transactions for the address\"}]}},{\"name\":\"timestamp\",\"type\":\"long\",\"doc\":\"time the event is recorded on the blockchain\",\"default\":0},{\"name\":\"offset\",\"type\":\"long\",\"doc\":\"kafka partition offset\",\"default\":0},{\"name\":\"partition\",\"type\":\"int\",\"doc\":\"kafka partition id\",\"default\":0}]}");
+  private static final long serialVersionUID = -3737023998361051902L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"KycVerifiedEvent\",\"namespace\":\"com.networknt.taiji.kyc\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"owner address that create the token\"},{\"name\":\"nonce\",\"type\":\"long\",\"doc\":\"the number of the transactions for the address\"}]}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -52,12 +52,6 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
   }
 
   @Deprecated public com.networknt.taiji.event.EventId EventId;
-  /** time the event is recorded on the blockchain */
-  @Deprecated public long timestamp;
-  /** kafka partition offset */
-  @Deprecated public long offset;
-  /** kafka partition id */
-  @Deprecated public int partition;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -69,15 +63,9 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
   /**
    * All-args constructor.
    * @param EventId The new value for EventId
-   * @param timestamp time the event is recorded on the blockchain
-   * @param offset kafka partition offset
-   * @param partition kafka partition id
    */
-  public KycVerifiedEvent(com.networknt.taiji.event.EventId EventId, java.lang.Long timestamp, java.lang.Long offset, java.lang.Integer partition) {
+  public KycVerifiedEvent(com.networknt.taiji.event.EventId EventId) {
     this.EventId = EventId;
-    this.timestamp = timestamp;
-    this.offset = offset;
-    this.partition = partition;
   }
 
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
@@ -85,9 +73,6 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return EventId;
-    case 1: return timestamp;
-    case 2: return offset;
-    case 3: return partition;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -97,9 +82,6 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: EventId = (com.networknt.taiji.event.EventId)value$; break;
-    case 1: timestamp = (java.lang.Long)value$; break;
-    case 2: offset = (java.lang.Long)value$; break;
-    case 3: partition = (java.lang.Integer)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -118,57 +100,6 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
    */
   public void setEventId(com.networknt.taiji.event.EventId value) {
     this.EventId = value;
-  }
-
-  /**
-   * Gets the value of the 'timestamp' field.
-   * @return time the event is recorded on the blockchain
-   */
-  public java.lang.Long getTimestamp() {
-    return timestamp;
-  }
-
-  /**
-   * Sets the value of the 'timestamp' field.
-   * time the event is recorded on the blockchain
-   * @param value the value to set.
-   */
-  public void setTimestamp(java.lang.Long value) {
-    this.timestamp = value;
-  }
-
-  /**
-   * Gets the value of the 'offset' field.
-   * @return kafka partition offset
-   */
-  public java.lang.Long getOffset() {
-    return offset;
-  }
-
-  /**
-   * Sets the value of the 'offset' field.
-   * kafka partition offset
-   * @param value the value to set.
-   */
-  public void setOffset(java.lang.Long value) {
-    this.offset = value;
-  }
-
-  /**
-   * Gets the value of the 'partition' field.
-   * @return kafka partition id
-   */
-  public java.lang.Integer getPartition() {
-    return partition;
-  }
-
-  /**
-   * Sets the value of the 'partition' field.
-   * kafka partition id
-   * @param value the value to set.
-   */
-  public void setPartition(java.lang.Integer value) {
-    this.partition = value;
   }
 
   /**
@@ -205,12 +136,6 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
 
     private com.networknt.taiji.event.EventId EventId;
     private com.networknt.taiji.event.EventId.Builder EventIdBuilder;
-    /** time the event is recorded on the blockchain */
-    private long timestamp;
-    /** kafka partition offset */
-    private long offset;
-    /** kafka partition id */
-    private int partition;
 
     /** Creates a new Builder */
     private Builder() {
@@ -230,18 +155,6 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
       if (other.hasEventIdBuilder()) {
         this.EventIdBuilder = com.networknt.taiji.event.EventId.newBuilder(other.getEventIdBuilder());
       }
-      if (isValidValue(fields()[1], other.timestamp)) {
-        this.timestamp = data().deepCopy(fields()[1].schema(), other.timestamp);
-        fieldSetFlags()[1] = true;
-      }
-      if (isValidValue(fields()[2], other.offset)) {
-        this.offset = data().deepCopy(fields()[2].schema(), other.offset);
-        fieldSetFlags()[2] = true;
-      }
-      if (isValidValue(fields()[3], other.partition)) {
-        this.partition = data().deepCopy(fields()[3].schema(), other.partition);
-        fieldSetFlags()[3] = true;
-      }
     }
 
     /**
@@ -255,18 +168,6 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
         fieldSetFlags()[0] = true;
       }
       this.EventIdBuilder = null;
-      if (isValidValue(fields()[1], other.timestamp)) {
-        this.timestamp = data().deepCopy(fields()[1].schema(), other.timestamp);
-        fieldSetFlags()[1] = true;
-      }
-      if (isValidValue(fields()[2], other.offset)) {
-        this.offset = data().deepCopy(fields()[2].schema(), other.offset);
-        fieldSetFlags()[2] = true;
-      }
-      if (isValidValue(fields()[3], other.partition)) {
-        this.partition = data().deepCopy(fields()[3].schema(), other.partition);
-        fieldSetFlags()[3] = true;
-      }
     }
 
     /**
@@ -343,132 +244,6 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
       return this;
     }
 
-    /**
-      * Gets the value of the 'timestamp' field.
-      * time the event is recorded on the blockchain
-      * @return The value.
-      */
-    public java.lang.Long getTimestamp() {
-      return timestamp;
-    }
-
-    /**
-      * Sets the value of the 'timestamp' field.
-      * time the event is recorded on the blockchain
-      * @param value The value of 'timestamp'.
-      * @return This builder.
-      */
-    public com.networknt.taiji.kyc.KycVerifiedEvent.Builder setTimestamp(long value) {
-      validate(fields()[1], value);
-      this.timestamp = value;
-      fieldSetFlags()[1] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'timestamp' field has been set.
-      * time the event is recorded on the blockchain
-      * @return True if the 'timestamp' field has been set, false otherwise.
-      */
-    public boolean hasTimestamp() {
-      return fieldSetFlags()[1];
-    }
-
-
-    /**
-      * Clears the value of the 'timestamp' field.
-      * time the event is recorded on the blockchain
-      * @return This builder.
-      */
-    public com.networknt.taiji.kyc.KycVerifiedEvent.Builder clearTimestamp() {
-      fieldSetFlags()[1] = false;
-      return this;
-    }
-
-    /**
-      * Gets the value of the 'offset' field.
-      * kafka partition offset
-      * @return The value.
-      */
-    public java.lang.Long getOffset() {
-      return offset;
-    }
-
-    /**
-      * Sets the value of the 'offset' field.
-      * kafka partition offset
-      * @param value The value of 'offset'.
-      * @return This builder.
-      */
-    public com.networknt.taiji.kyc.KycVerifiedEvent.Builder setOffset(long value) {
-      validate(fields()[2], value);
-      this.offset = value;
-      fieldSetFlags()[2] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'offset' field has been set.
-      * kafka partition offset
-      * @return True if the 'offset' field has been set, false otherwise.
-      */
-    public boolean hasOffset() {
-      return fieldSetFlags()[2];
-    }
-
-
-    /**
-      * Clears the value of the 'offset' field.
-      * kafka partition offset
-      * @return This builder.
-      */
-    public com.networknt.taiji.kyc.KycVerifiedEvent.Builder clearOffset() {
-      fieldSetFlags()[2] = false;
-      return this;
-    }
-
-    /**
-      * Gets the value of the 'partition' field.
-      * kafka partition id
-      * @return The value.
-      */
-    public java.lang.Integer getPartition() {
-      return partition;
-    }
-
-    /**
-      * Sets the value of the 'partition' field.
-      * kafka partition id
-      * @param value The value of 'partition'.
-      * @return This builder.
-      */
-    public com.networknt.taiji.kyc.KycVerifiedEvent.Builder setPartition(int value) {
-      validate(fields()[3], value);
-      this.partition = value;
-      fieldSetFlags()[3] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'partition' field has been set.
-      * kafka partition id
-      * @return True if the 'partition' field has been set, false otherwise.
-      */
-    public boolean hasPartition() {
-      return fieldSetFlags()[3];
-    }
-
-
-    /**
-      * Clears the value of the 'partition' field.
-      * kafka partition id
-      * @return This builder.
-      */
-    public com.networknt.taiji.kyc.KycVerifiedEvent.Builder clearPartition() {
-      fieldSetFlags()[3] = false;
-      return this;
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     public KycVerifiedEvent build() {
@@ -479,9 +254,6 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
         } else {
           record.EventId = fieldSetFlags()[0] ? this.EventId : (com.networknt.taiji.event.EventId) defaultValue(fields()[0]);
         }
-        record.timestamp = fieldSetFlags()[1] ? this.timestamp : (java.lang.Long) defaultValue(fields()[1]);
-        record.offset = fieldSetFlags()[2] ? this.offset : (java.lang.Long) defaultValue(fields()[2]);
-        record.partition = fieldSetFlags()[3] ? this.partition : (java.lang.Integer) defaultValue(fields()[3]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
