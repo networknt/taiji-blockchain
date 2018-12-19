@@ -46,6 +46,7 @@ public class TaijiClient {
     static final String writerServiceId = "com.networknt.chainwriter-1.0.0";
     static final String readerServiceId = "com.networknt.chainreader-1.0.0";
     static final String tokenServiceId = "com.networknt.tokenreader-1.0.0";
+    static final String kycServiceId = "com.networknt.kycreader-1.0.0";
 
     // Get the singleton Cluster instance
     static Cluster cluster = SingletonServiceFactory.getBean(Cluster.class);
@@ -511,4 +512,149 @@ public class TaijiClient {
         }
         return result;
     }
+
+    /**
+     * Get KYC info by email
+     *
+     * @param email kyc email
+     * @return Result<String>> of kyc info
+     */
+    public static Result<String> getKycByEmail(String email) {
+        Result<String> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", kycServiceId, null, null);
+        try {
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/email/" + email);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                result = Success.of(body);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
+    /**
+     * Get KYC info by id
+     *
+     * @param id kyc id
+     * @return Result<String>> of kyc info
+     */
+    public static Result<String> getKycById(String id) {
+        Result<String> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", kycServiceId, null, null);
+        try {
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/id/" + id);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                result = Success.of(body);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
+    /**
+     * Get KYC info by address
+     *
+     * @param address kyc address
+     * @return Result<String>> of kyc info
+     */
+    public static Result<String> getKycByAddress(String address) {
+        Result<String> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", kycServiceId, null, null);
+        try {
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/address/" + address);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                result = Success.of(body);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
+    /**
+     * Get KYC events by address
+     *
+     * @param address kyc address
+     * @return Result<String>> of kyc info
+     */
+    public static Result<String> getKycEventsByAddress(String address) {
+        Result<String> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", kycServiceId, null, null);
+        try {
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/history/" + address);
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                result = Success.of(body);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
 }
