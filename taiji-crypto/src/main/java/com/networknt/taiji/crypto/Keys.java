@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 
 import static com.networknt.taiji.crypto.SecureRandomUtils.secureRandom;
@@ -169,6 +172,18 @@ public class Keys {
             if(!b) break;
         }
         return b;
+    }
+
+    public static PrivateKey decodePrivateKey(byte[] bytes) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        KeyFactory factory = KeyFactory.getInstance("ECDH");
+        PKCS8EncodedKeySpec specPrivate = new PKCS8EncodedKeySpec(bytes);
+        return factory.generatePrivate(specPrivate);
+    }
+
+    public static PublicKey decodePublicKey(byte[] bytes) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        KeyFactory factory = KeyFactory.getInstance("ECDH");
+        X509EncodedKeySpec specPublic = new X509EncodedKeySpec(bytes);
+        return factory.generatePublic(specPublic);
     }
 
 }

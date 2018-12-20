@@ -291,14 +291,8 @@ public class Wallet {
         byte[] encryptKey = Arrays.copyOfRange(derivedKey, 0, 16);
         byte[] privateText = performCipherOperation(Cipher.DECRYPT_MODE, iv, encryptKey, cipherText);
 
-        KeyFactory factory = KeyFactory.getInstance("ECDH");
-
-        X509EncodedKeySpec specPublic = new X509EncodedKeySpec(publicText);
-        PublicKey publicKey = factory.generatePublic(specPublic);
-
-        PKCS8EncodedKeySpec specPrivate = new PKCS8EncodedKeySpec(privateText);
-        PrivateKey privateKey = factory.generatePrivate(specPrivate);
-
+        PublicKey publicKey = Keys.decodePublicKey(publicText);
+        PrivateKey privateKey = Keys.decodePrivateKey(privateText);
         return new KeyPair(publicKey, privateKey);
     }
 
