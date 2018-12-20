@@ -30,16 +30,18 @@
     },
     {
       "name": "tags",
-      "type": {
-        "type": "array",
-        "items": "string"
-      },
-      "default": [],
+      "type": ["null",
+        {
+          "type": "array",
+          "items": "string"
+        }
+      ],
+      "default": null,
       "doc": "tags to categorize the person or business"
     },
     {
       "name": "description",
-      "type": "string",
+      "type": ["null", "string"],
       "default": null,
       "doc": "Description of person or business which can be full text searched"
     }
