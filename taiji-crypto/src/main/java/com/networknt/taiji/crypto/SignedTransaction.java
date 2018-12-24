@@ -1,7 +1,5 @@
 package com.networknt.taiji.crypto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.Map;
  */
 public class SignedTransaction {
     String currency;
-    Map<String, Map<String, Long>> currencyMaps;
     List<Map<String, byte[]>> d = new ArrayList<>();
     List<Map<String, byte[]>> c = new ArrayList<>();
 
@@ -62,15 +59,5 @@ public class SignedTransaction {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    @JsonIgnore
-    public Map<String, Map<String, Long>> getCurrencyMaps() {
-        return currencyMaps;
-    }
-
-    @JsonIgnore
-    public void setCurrencyMaps(Map<String, Map<String, Long>> currencyMaps) {
-        this.currencyMaps = currencyMaps;
     }
 }
