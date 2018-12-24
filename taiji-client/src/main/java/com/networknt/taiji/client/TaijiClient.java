@@ -15,6 +15,7 @@ import com.networknt.taiji.crypto.SignedLedgerEntry;
 import com.networknt.taiji.crypto.SignedTransaction;
 import com.networknt.taiji.crypto.TransactionReceipt;
 import com.networknt.taiji.event.JsonMapper;
+import com.networknt.utility.StringUtils;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
 import io.undertow.client.ClientRequest;
@@ -32,6 +33,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 /**
  * This is the client that is responsible for service discovery and interact with
@@ -165,7 +167,9 @@ public class TaijiClient {
                 Status status = Config.getInstance().getMapper().readValue(body, Status.class);
                 result = Failure.of(status);
             } else {
-                Map<String, Long> currencyMap = Config.getInstance().getMapper().readValue(body, new TypeReference<HashMap<String,Long>>() {});
+                Map<String, String> map = Config.getInstance().getMapper().readValue(body, new TypeReference<HashMap<String, String>>() {});
+                Map<String, Long> currencyMap = map.entrySet().stream()
+                        .collect(Collectors.toMap(Map.Entry::getKey, e -> Long.parseLong(StringUtils.substringBefore(e.getValue(), " "))));
                 result = Success.of(currencyMap);
             }
         } catch (Exception e) {
