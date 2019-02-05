@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Optional;
+import com.networknt.config.JsonMapper;
 
 public class DefaultSerializedEventDeserializer implements SerializedEventDeserializer {
 
