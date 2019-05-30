@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase implements KycEvent {
-  private static final long serialVersionUID = -45636838782252472L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"KycCreatedEvent\",\"namespace\":\"com.networknt.taiji.kyc\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"owner address that create the token\"},{\"name\":\"nonce\",\"type\":\"long\",\"doc\":\"the number of the transactions for the address\"}]}},{\"name\":\"currency\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"the currency blockchain the token is associated to\"},{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"KycType\",\"symbols\":[\"P\",\"B\"]},\"doc\":\"KYC type, P for personal and B for business\"},{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"unique identifier for the user or business\"},{\"name\":\"email\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"email address of the address owner or business contact\"},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"personal or business name\"},{\"name\":\"key\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"public key for encryption\"},{\"name\":\"verified\",\"type\":\"boolean\",\"doc\":\"If the email is verified\",\"default\":false},{\"name\":\"tags\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}],\"doc\":\"tags to categorize the person or business\",\"default\":null},{\"name\":\"description\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"Description of person or business which can be full text searched\",\"default\":null},{\"name\":\"timestamp\",\"type\":\"long\",\"doc\":\"time the event is recorded on the blockchain\",\"default\":0},{\"name\":\"offset\",\"type\":\"long\",\"doc\":\"kafka partition offset\",\"default\":0},{\"name\":\"partition\",\"type\":\"int\",\"doc\":\"kafka partition id\",\"default\":0}]}");
+  private static final long serialVersionUID = 1790598769988526563L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"KycCreatedEvent\",\"namespace\":\"com.networknt.taiji.kyc\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"owner address that create the token\"},{\"name\":\"nonce\",\"type\":\"long\",\"doc\":\"the number of the transactions for the address\"}]}},{\"name\":\"currency\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"the currency blockchain the token is associated to\"},{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"KycType\",\"symbols\":[\"P\",\"B\"]},\"doc\":\"KYC type, P for personal and B for business\"},{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"unique identifier for the user or business\"},{\"name\":\"email\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"email address of the address owner or business contact\"},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"personal or business name\"},{\"name\":\"referralAddress\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"referral address, optional with default value null\",\"default\":null},{\"name\":\"key\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"public key for encryption\"},{\"name\":\"verified\",\"type\":\"boolean\",\"doc\":\"If the email is verified\",\"default\":false},{\"name\":\"tags\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}],\"doc\":\"tags to categorize the person or business\",\"default\":null},{\"name\":\"description\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"doc\":\"Description of person or business which can be full text searched\",\"default\":null},{\"name\":\"timestamp\",\"type\":\"long\",\"doc\":\"time the event is recorded on the blockchain\",\"default\":0},{\"name\":\"offset\",\"type\":\"long\",\"doc\":\"kafka partition offset\",\"default\":0},{\"name\":\"partition\",\"type\":\"int\",\"doc\":\"kafka partition id\",\"default\":0}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -62,6 +62,8 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
   @Deprecated public java.lang.String email;
   /** personal or business name */
   @Deprecated public java.lang.String name;
+  /** referral address, optional with default value null */
+  @Deprecated public java.lang.String referralAddress;
   /** public key for encryption */
   @Deprecated public java.lang.String key;
   /** If the email is verified */
@@ -92,6 +94,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
    * @param id unique identifier for the user or business
    * @param email email address of the address owner or business contact
    * @param name personal or business name
+   * @param referralAddress referral address, optional with default value null
    * @param key public key for encryption
    * @param verified If the email is verified
    * @param tags tags to categorize the person or business
@@ -100,13 +103,14 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
    * @param offset kafka partition offset
    * @param partition kafka partition id
    */
-  public KycCreatedEvent(com.networknt.taiji.event.EventId EventId, java.lang.String currency, com.networknt.taiji.kyc.KycType type, java.lang.String id, java.lang.String email, java.lang.String name, java.lang.String key, java.lang.Boolean verified, java.util.List<java.lang.String> tags, java.lang.String description, java.lang.Long timestamp, java.lang.Long offset, java.lang.Integer partition) {
+  public KycCreatedEvent(com.networknt.taiji.event.EventId EventId, java.lang.String currency, com.networknt.taiji.kyc.KycType type, java.lang.String id, java.lang.String email, java.lang.String name, java.lang.String referralAddress, java.lang.String key, java.lang.Boolean verified, java.util.List<java.lang.String> tags, java.lang.String description, java.lang.Long timestamp, java.lang.Long offset, java.lang.Integer partition) {
     this.EventId = EventId;
     this.currency = currency;
     this.type = type;
     this.id = id;
     this.email = email;
     this.name = name;
+    this.referralAddress = referralAddress;
     this.key = key;
     this.verified = verified;
     this.tags = tags;
@@ -126,13 +130,14 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     case 3: return id;
     case 4: return email;
     case 5: return name;
-    case 6: return key;
-    case 7: return verified;
-    case 8: return tags;
-    case 9: return description;
-    case 10: return timestamp;
-    case 11: return offset;
-    case 12: return partition;
+    case 6: return referralAddress;
+    case 7: return key;
+    case 8: return verified;
+    case 9: return tags;
+    case 10: return description;
+    case 11: return timestamp;
+    case 12: return offset;
+    case 13: return partition;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -147,13 +152,14 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     case 3: id = (java.lang.String)value$; break;
     case 4: email = (java.lang.String)value$; break;
     case 5: name = (java.lang.String)value$; break;
-    case 6: key = (java.lang.String)value$; break;
-    case 7: verified = (java.lang.Boolean)value$; break;
-    case 8: tags = (java.util.List<java.lang.String>)value$; break;
-    case 9: description = (java.lang.String)value$; break;
-    case 10: timestamp = (java.lang.Long)value$; break;
-    case 11: offset = (java.lang.Long)value$; break;
-    case 12: partition = (java.lang.Integer)value$; break;
+    case 6: referralAddress = (java.lang.String)value$; break;
+    case 7: key = (java.lang.String)value$; break;
+    case 8: verified = (java.lang.Boolean)value$; break;
+    case 9: tags = (java.util.List<java.lang.String>)value$; break;
+    case 10: description = (java.lang.String)value$; break;
+    case 11: timestamp = (java.lang.Long)value$; break;
+    case 12: offset = (java.lang.Long)value$; break;
+    case 13: partition = (java.lang.Integer)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -257,6 +263,23 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
    */
   public void setName(java.lang.String value) {
     this.name = value;
+  }
+
+  /**
+   * Gets the value of the 'referralAddress' field.
+   * @return referral address, optional with default value null
+   */
+  public java.lang.String getReferralAddress() {
+    return referralAddress;
+  }
+
+  /**
+   * Sets the value of the 'referralAddress' field.
+   * referral address, optional with default value null
+   * @param value the value to set.
+   */
+  public void setReferralAddress(java.lang.String value) {
+    this.referralAddress = value;
   }
 
   /**
@@ -422,6 +445,8 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     private java.lang.String email;
     /** personal or business name */
     private java.lang.String name;
+    /** referral address, optional with default value null */
+    private java.lang.String referralAddress;
     /** public key for encryption */
     private java.lang.String key;
     /** If the email is verified */
@@ -475,33 +500,37 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
         this.name = data().deepCopy(fields()[5].schema(), other.name);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.key)) {
-        this.key = data().deepCopy(fields()[6].schema(), other.key);
+      if (isValidValue(fields()[6], other.referralAddress)) {
+        this.referralAddress = data().deepCopy(fields()[6].schema(), other.referralAddress);
         fieldSetFlags()[6] = true;
       }
-      if (isValidValue(fields()[7], other.verified)) {
-        this.verified = data().deepCopy(fields()[7].schema(), other.verified);
+      if (isValidValue(fields()[7], other.key)) {
+        this.key = data().deepCopy(fields()[7].schema(), other.key);
         fieldSetFlags()[7] = true;
       }
-      if (isValidValue(fields()[8], other.tags)) {
-        this.tags = data().deepCopy(fields()[8].schema(), other.tags);
+      if (isValidValue(fields()[8], other.verified)) {
+        this.verified = data().deepCopy(fields()[8].schema(), other.verified);
         fieldSetFlags()[8] = true;
       }
-      if (isValidValue(fields()[9], other.description)) {
-        this.description = data().deepCopy(fields()[9].schema(), other.description);
+      if (isValidValue(fields()[9], other.tags)) {
+        this.tags = data().deepCopy(fields()[9].schema(), other.tags);
         fieldSetFlags()[9] = true;
       }
-      if (isValidValue(fields()[10], other.timestamp)) {
-        this.timestamp = data().deepCopy(fields()[10].schema(), other.timestamp);
+      if (isValidValue(fields()[10], other.description)) {
+        this.description = data().deepCopy(fields()[10].schema(), other.description);
         fieldSetFlags()[10] = true;
       }
-      if (isValidValue(fields()[11], other.offset)) {
-        this.offset = data().deepCopy(fields()[11].schema(), other.offset);
+      if (isValidValue(fields()[11], other.timestamp)) {
+        this.timestamp = data().deepCopy(fields()[11].schema(), other.timestamp);
         fieldSetFlags()[11] = true;
       }
-      if (isValidValue(fields()[12], other.partition)) {
-        this.partition = data().deepCopy(fields()[12].schema(), other.partition);
+      if (isValidValue(fields()[12], other.offset)) {
+        this.offset = data().deepCopy(fields()[12].schema(), other.offset);
         fieldSetFlags()[12] = true;
+      }
+      if (isValidValue(fields()[13], other.partition)) {
+        this.partition = data().deepCopy(fields()[13].schema(), other.partition);
+        fieldSetFlags()[13] = true;
       }
     }
 
@@ -536,33 +565,37 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
         this.name = data().deepCopy(fields()[5].schema(), other.name);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.key)) {
-        this.key = data().deepCopy(fields()[6].schema(), other.key);
+      if (isValidValue(fields()[6], other.referralAddress)) {
+        this.referralAddress = data().deepCopy(fields()[6].schema(), other.referralAddress);
         fieldSetFlags()[6] = true;
       }
-      if (isValidValue(fields()[7], other.verified)) {
-        this.verified = data().deepCopy(fields()[7].schema(), other.verified);
+      if (isValidValue(fields()[7], other.key)) {
+        this.key = data().deepCopy(fields()[7].schema(), other.key);
         fieldSetFlags()[7] = true;
       }
-      if (isValidValue(fields()[8], other.tags)) {
-        this.tags = data().deepCopy(fields()[8].schema(), other.tags);
+      if (isValidValue(fields()[8], other.verified)) {
+        this.verified = data().deepCopy(fields()[8].schema(), other.verified);
         fieldSetFlags()[8] = true;
       }
-      if (isValidValue(fields()[9], other.description)) {
-        this.description = data().deepCopy(fields()[9].schema(), other.description);
+      if (isValidValue(fields()[9], other.tags)) {
+        this.tags = data().deepCopy(fields()[9].schema(), other.tags);
         fieldSetFlags()[9] = true;
       }
-      if (isValidValue(fields()[10], other.timestamp)) {
-        this.timestamp = data().deepCopy(fields()[10].schema(), other.timestamp);
+      if (isValidValue(fields()[10], other.description)) {
+        this.description = data().deepCopy(fields()[10].schema(), other.description);
         fieldSetFlags()[10] = true;
       }
-      if (isValidValue(fields()[11], other.offset)) {
-        this.offset = data().deepCopy(fields()[11].schema(), other.offset);
+      if (isValidValue(fields()[11], other.timestamp)) {
+        this.timestamp = data().deepCopy(fields()[11].schema(), other.timestamp);
         fieldSetFlags()[11] = true;
       }
-      if (isValidValue(fields()[12], other.partition)) {
-        this.partition = data().deepCopy(fields()[12].schema(), other.partition);
+      if (isValidValue(fields()[12], other.offset)) {
+        this.offset = data().deepCopy(fields()[12].schema(), other.offset);
         fieldSetFlags()[12] = true;
+      }
+      if (isValidValue(fields()[13], other.partition)) {
+        this.partition = data().deepCopy(fields()[13].schema(), other.partition);
+        fieldSetFlags()[13] = true;
       }
     }
 
@@ -856,6 +889,49 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     }
 
     /**
+      * Gets the value of the 'referralAddress' field.
+      * referral address, optional with default value null
+      * @return The value.
+      */
+    public java.lang.String getReferralAddress() {
+      return referralAddress;
+    }
+
+    /**
+      * Sets the value of the 'referralAddress' field.
+      * referral address, optional with default value null
+      * @param value The value of 'referralAddress'.
+      * @return This builder.
+      */
+    public com.networknt.taiji.kyc.KycCreatedEvent.Builder setReferralAddress(java.lang.String value) {
+      validate(fields()[6], value);
+      this.referralAddress = value;
+      fieldSetFlags()[6] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'referralAddress' field has been set.
+      * referral address, optional with default value null
+      * @return True if the 'referralAddress' field has been set, false otherwise.
+      */
+    public boolean hasReferralAddress() {
+      return fieldSetFlags()[6];
+    }
+
+
+    /**
+      * Clears the value of the 'referralAddress' field.
+      * referral address, optional with default value null
+      * @return This builder.
+      */
+    public com.networknt.taiji.kyc.KycCreatedEvent.Builder clearReferralAddress() {
+      referralAddress = null;
+      fieldSetFlags()[6] = false;
+      return this;
+    }
+
+    /**
       * Gets the value of the 'key' field.
       * public key for encryption
       * @return The value.
@@ -871,9 +947,9 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder setKey(java.lang.String value) {
-      validate(fields()[6], value);
+      validate(fields()[7], value);
       this.key = value;
-      fieldSetFlags()[6] = true;
+      fieldSetFlags()[7] = true;
       return this;
     }
 
@@ -883,7 +959,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return True if the 'key' field has been set, false otherwise.
       */
     public boolean hasKey() {
-      return fieldSetFlags()[6];
+      return fieldSetFlags()[7];
     }
 
 
@@ -894,7 +970,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder clearKey() {
       key = null;
-      fieldSetFlags()[6] = false;
+      fieldSetFlags()[7] = false;
       return this;
     }
 
@@ -914,9 +990,9 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder setVerified(boolean value) {
-      validate(fields()[7], value);
+      validate(fields()[8], value);
       this.verified = value;
-      fieldSetFlags()[7] = true;
+      fieldSetFlags()[8] = true;
       return this;
     }
 
@@ -926,7 +1002,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return True if the 'verified' field has been set, false otherwise.
       */
     public boolean hasVerified() {
-      return fieldSetFlags()[7];
+      return fieldSetFlags()[8];
     }
 
 
@@ -936,7 +1012,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder clearVerified() {
-      fieldSetFlags()[7] = false;
+      fieldSetFlags()[8] = false;
       return this;
     }
 
@@ -956,9 +1032,9 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder setTags(java.util.List<java.lang.String> value) {
-      validate(fields()[8], value);
+      validate(fields()[9], value);
       this.tags = value;
-      fieldSetFlags()[8] = true;
+      fieldSetFlags()[9] = true;
       return this;
     }
 
@@ -968,7 +1044,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return True if the 'tags' field has been set, false otherwise.
       */
     public boolean hasTags() {
-      return fieldSetFlags()[8];
+      return fieldSetFlags()[9];
     }
 
 
@@ -979,7 +1055,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder clearTags() {
       tags = null;
-      fieldSetFlags()[8] = false;
+      fieldSetFlags()[9] = false;
       return this;
     }
 
@@ -999,9 +1075,9 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder setDescription(java.lang.String value) {
-      validate(fields()[9], value);
+      validate(fields()[10], value);
       this.description = value;
-      fieldSetFlags()[9] = true;
+      fieldSetFlags()[10] = true;
       return this;
     }
 
@@ -1011,7 +1087,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return True if the 'description' field has been set, false otherwise.
       */
     public boolean hasDescription() {
-      return fieldSetFlags()[9];
+      return fieldSetFlags()[10];
     }
 
 
@@ -1022,7 +1098,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder clearDescription() {
       description = null;
-      fieldSetFlags()[9] = false;
+      fieldSetFlags()[10] = false;
       return this;
     }
 
@@ -1042,9 +1118,9 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder setTimestamp(long value) {
-      validate(fields()[10], value);
+      validate(fields()[11], value);
       this.timestamp = value;
-      fieldSetFlags()[10] = true;
+      fieldSetFlags()[11] = true;
       return this;
     }
 
@@ -1054,7 +1130,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return True if the 'timestamp' field has been set, false otherwise.
       */
     public boolean hasTimestamp() {
-      return fieldSetFlags()[10];
+      return fieldSetFlags()[11];
     }
 
 
@@ -1064,7 +1140,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder clearTimestamp() {
-      fieldSetFlags()[10] = false;
+      fieldSetFlags()[11] = false;
       return this;
     }
 
@@ -1084,9 +1160,9 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder setOffset(long value) {
-      validate(fields()[11], value);
+      validate(fields()[12], value);
       this.offset = value;
-      fieldSetFlags()[11] = true;
+      fieldSetFlags()[12] = true;
       return this;
     }
 
@@ -1096,7 +1172,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return True if the 'offset' field has been set, false otherwise.
       */
     public boolean hasOffset() {
-      return fieldSetFlags()[11];
+      return fieldSetFlags()[12];
     }
 
 
@@ -1106,7 +1182,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder clearOffset() {
-      fieldSetFlags()[11] = false;
+      fieldSetFlags()[12] = false;
       return this;
     }
 
@@ -1126,9 +1202,9 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder setPartition(int value) {
-      validate(fields()[12], value);
+      validate(fields()[13], value);
       this.partition = value;
-      fieldSetFlags()[12] = true;
+      fieldSetFlags()[13] = true;
       return this;
     }
 
@@ -1138,7 +1214,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return True if the 'partition' field has been set, false otherwise.
       */
     public boolean hasPartition() {
-      return fieldSetFlags()[12];
+      return fieldSetFlags()[13];
     }
 
 
@@ -1148,7 +1224,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * @return This builder.
       */
     public com.networknt.taiji.kyc.KycCreatedEvent.Builder clearPartition() {
-      fieldSetFlags()[12] = false;
+      fieldSetFlags()[13] = false;
       return this;
     }
 
@@ -1167,13 +1243,14 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
         record.id = fieldSetFlags()[3] ? this.id : (java.lang.String) defaultValue(fields()[3]);
         record.email = fieldSetFlags()[4] ? this.email : (java.lang.String) defaultValue(fields()[4]);
         record.name = fieldSetFlags()[5] ? this.name : (java.lang.String) defaultValue(fields()[5]);
-        record.key = fieldSetFlags()[6] ? this.key : (java.lang.String) defaultValue(fields()[6]);
-        record.verified = fieldSetFlags()[7] ? this.verified : (java.lang.Boolean) defaultValue(fields()[7]);
-        record.tags = fieldSetFlags()[8] ? this.tags : (java.util.List<java.lang.String>) defaultValue(fields()[8]);
-        record.description = fieldSetFlags()[9] ? this.description : (java.lang.String) defaultValue(fields()[9]);
-        record.timestamp = fieldSetFlags()[10] ? this.timestamp : (java.lang.Long) defaultValue(fields()[10]);
-        record.offset = fieldSetFlags()[11] ? this.offset : (java.lang.Long) defaultValue(fields()[11]);
-        record.partition = fieldSetFlags()[12] ? this.partition : (java.lang.Integer) defaultValue(fields()[12]);
+        record.referralAddress = fieldSetFlags()[6] ? this.referralAddress : (java.lang.String) defaultValue(fields()[6]);
+        record.key = fieldSetFlags()[7] ? this.key : (java.lang.String) defaultValue(fields()[7]);
+        record.verified = fieldSetFlags()[8] ? this.verified : (java.lang.Boolean) defaultValue(fields()[8]);
+        record.tags = fieldSetFlags()[9] ? this.tags : (java.util.List<java.lang.String>) defaultValue(fields()[9]);
+        record.description = fieldSetFlags()[10] ? this.description : (java.lang.String) defaultValue(fields()[10]);
+        record.timestamp = fieldSetFlags()[11] ? this.timestamp : (java.lang.Long) defaultValue(fields()[11]);
+        record.offset = fieldSetFlags()[12] ? this.offset : (java.lang.Long) defaultValue(fields()[12]);
+        record.partition = fieldSetFlags()[13] ? this.partition : (java.lang.Integer) defaultValue(fields()[13]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

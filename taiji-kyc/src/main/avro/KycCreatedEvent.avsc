@@ -56,6 +56,12 @@
       "doc": "personal or business name"
     },
     {
+      "name": "referralAddress",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "referral address, optional with default value null"
+    },
+    {
       "name": "key",
       "type": "string",
       "doc": "public key for encryption"
