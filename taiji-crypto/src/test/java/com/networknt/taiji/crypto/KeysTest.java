@@ -1,8 +1,8 @@
 package com.networknt.taiji.crypto;
 
 import com.networknt.chain.utility.Numeric;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.security.KeyPair;
 import java.security.PrivateKey;
@@ -10,8 +10,8 @@ import java.security.PublicKey;
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class KeysTest {
 
@@ -128,31 +128,33 @@ public class KeysTest {
         assertThat(Keys.deserialize(ENCODED), is(SampleKeys.KEY_PAIR));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testDeserializeInvalidKey() {
-        Keys.deserialize(new byte[0]);
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            Keys.deserialize(new byte[0]);
+        });
     }
 
     @Test
     public void testIsNum() {
         String s = "0093903490832403290990234";
-        Assert.assertTrue(Keys.isNum(s));
+        assertTrue(Keys.isNum(s));
 
         s = "0390432490328493a9324832904832";
-        Assert.assertFalse(Keys.isNum(s));
+        assertFalse(Keys.isNum(s));
     }
 
     @Test
     public void testValidateAddress() {
         String a = "2390490324-03294023940324";
-        Assert.assertFalse(Keys.validateToAddress(a));
+        assertFalse(Keys.validateToAddress(a));
         a = "9032843920843920843902849032840943204303";
-        Assert.assertFalse(Keys.validateToAddress(a));
+        assertFalse(Keys.validateToAddress(a));
         a = "0000344D315050CA9B0938B6511EC342705a1f9c";
-        Assert.assertFalse(Keys.validateToAddress(a));
+        assertFalse(Keys.validateToAddress(a));
 
         a = "0000344d315050CA9B0938B6511EC342705a1f9c";
-        Assert.assertTrue(Keys.validateToAddress(a));
+        assertTrue(Keys.validateToAddress(a));
     }
 
 }

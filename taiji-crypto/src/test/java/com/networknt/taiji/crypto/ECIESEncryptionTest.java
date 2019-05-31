@@ -2,8 +2,7 @@ package com.networknt.taiji.crypto;
 
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey;
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -11,6 +10,8 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ECIESEncryptionTest {
 
@@ -31,7 +32,7 @@ public class ECIESEncryptionTest {
         X509EncodedKeySpec spec = new X509EncodedKeySpec(keyPair.getPublic().getEncoded());
         KeyFactory factory = KeyFactory.getInstance("ECDH");
         PublicKey publicKey = factory.generatePublic(spec);
-        Assert.assertEquals(publicKey, keyPair.getPublic());
+        assertEquals(publicKey, keyPair.getPublic());
     }
 
     @Test
@@ -41,7 +42,7 @@ public class ECIESEncryptionTest {
         PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyPair.getPrivate().getEncoded());
         KeyFactory factory = KeyFactory.getInstance("ECDH");
         PrivateKey privateKey = factory.generatePrivate(spec);
-        Assert.assertEquals(privateKey, keyPair.getPrivate());
+        assertEquals(privateKey, keyPair.getPrivate());
     }
 
     @Test

@@ -2,35 +2,33 @@ package com.networknt.taiji.crypto;
 
 import com.networknt.chain.utility.Numeric;
 import com.networknt.config.Config;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.security.KeyPair;
 
-import static com.networknt.chain.utility.Hash.sha256;
 import static com.networknt.taiji.crypto.SampleKeys.CREDENTIALS;
 import static com.networknt.taiji.crypto.SampleKeys.KEY_PAIR;
 import static com.networknt.taiji.crypto.SampleKeys.PASSWORD;
 import static com.networknt.taiji.crypto.WalletUtils.isValidPrivateKey;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@Ignore
+@Disabled
 public class WalletUtilsTest {
 
     private File tempDir;
     private String chainId = "0000";
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         tempDir = createTempDir();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         for (File file:tempDir.listFiles()) {
             file.delete();
@@ -65,7 +63,7 @@ public class WalletUtilsTest {
         Credentials credentials = WalletUtils.loadCredentials(
                 PASSWORD, new File(tempDir, fileName));
 
-        assertThat(credentials, equalTo(CREDENTIALS));
+        assertEquals(credentials, CREDENTIALS);
     }
 
     @Test
@@ -73,7 +71,7 @@ public class WalletUtilsTest {
         Credentials credentials = WalletUtils.loadCredentials(
                 PASSWORD,
                 Config.getInstance().getInputStreamFromFile("ef678007D18427E6022059Dbc264f27507CD1ffC.json"));
-        assertThat(credentials, equalTo(CREDENTIALS));
+        assertEquals(credentials, CREDENTIALS);
     }
 
     private static File createTempDir() throws Exception {

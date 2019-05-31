@@ -1,12 +1,10 @@
 package com.networknt.taiji.crypto;
 
 import com.networknt.config.Config;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TransactionManagerTest {
 
@@ -19,8 +17,8 @@ public class TransactionManagerTest {
         SignedTransaction stx = Config.getInstance().getMapper().readValue(s, SignedTransaction.class);
 
         TxVerifyResult result = TransactionManager.verifyTransaction(stx, "0000", feeConfig);
-        Assert.assertNotNull(result.getError());
-        Assert.assertEquals("Fee entry is missing", result.getError());
+        assertNotNull(result.getError());
+        assertEquals("Fee entry is missing", result.getError());
     }
 
     @Test
@@ -29,6 +27,6 @@ public class TransactionManagerTest {
         SignedTransaction stx = Config.getInstance().getMapper().readValue(s, SignedTransaction.class);
 
         TxVerifyResult result = TransactionManager.verifyTransaction(stx, "0001", feeConfig);
-        Assert.assertNotNull(result.getError());
+        assertNotNull(result.getError());
     }
 }

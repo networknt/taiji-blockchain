@@ -1,13 +1,15 @@
 package com.networknt.blockchain.rlp;
 
+import org.junit.jupiter.api.Test;
+
 import java.math.BigInteger;
 import java.util.Arrays;
 
-import org.junit.Assert;
-import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RlpEncoderTest {
 
@@ -89,7 +91,7 @@ public class RlpEncoderTest {
         assertThat(RlpEncoder.encode(RlpString.create(encodeMe)),
                 is(expectedEncoding));
 
-        Assert.assertEquals(RlpString.create(4).getBytes().length, 1);
-        Assert.assertEquals(RlpString.create(Long.MAX_VALUE).getBytes().length, 8);
+        assertEquals(RlpString.create(4).getBytes().length, 1);
+        assertEquals(RlpString.create(Long.MAX_VALUE).getBytes().length, 8);
     }
 }

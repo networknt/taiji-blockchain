@@ -2,8 +2,8 @@ package com.networknt.taiji.avro;
 
 import com.networknt.taiji.event.EventId;
 import com.networknt.taiji.token.TokenCreatedEvent;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class AvroSerializerTest {
 
@@ -37,7 +37,7 @@ public class AvroSerializerTest {
 
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testTokenCreatedEvent() {
         AvroSerializer avroSerializer = new AvroSerializer();
@@ -47,7 +47,7 @@ public class AvroSerializerTest {
         System.out.println("object class = " + object.getClass());
     }
 
-    @Ignore
+    @Disabled
     @Test
     public void testKafkaAvroSerializer() {
 

@@ -3,14 +3,14 @@ package com.networknt.taiji.crypto;
 import com.networknt.blockchain.rlp.RlpString;
 import com.networknt.blockchain.rlp.RlpType;
 import com.networknt.chain.utility.Numeric;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 
 public class LedgerEntryEncoderTest {
     @Test

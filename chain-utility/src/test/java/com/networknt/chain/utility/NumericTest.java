@@ -1,17 +1,17 @@
 package com.networknt.chain.utility;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
 
-import static junit.framework.TestCase.assertFalse;
+import static com.networknt.chain.utility.Assertions.verifyPrecondition;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class NumericTest {
@@ -59,20 +59,27 @@ public class NumericTest {
 
     // If TestRpc resolves the following issue, we can reinstate this code
     // https://github.com/ethereumjs/testrpc/issues/220
-    @Ignore
-    @Test(expected = RuntimeException.class)
+    @Disabled
+    @Test
     public void testQuantityDecodeLeadingZeroException() {
-        Numeric.decodeQuantity("0x0400");
+        org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
+            Numeric.decodeQuantity("0x0400");
+        });
+
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testQuantityDecodeMissingPrefix() {
-        Numeric.decodeQuantity("ff");
+        org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
+            Numeric.decodeQuantity("ff");
+        });
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testQuantityDecodeMissingValue() {
-        Numeric.decodeQuantity("0x");
+        org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
+            Numeric.decodeQuantity("0x");
+        });
     }
 
     @Test
@@ -87,9 +94,11 @@ public class NumericTest {
                 is("0x99dc848b94efc27edfad28def049810f"));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testQuantityEncodeNegative() {
-        Numeric.encodeQuantity(BigInteger.valueOf(-1));
+        org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
+            Numeric.encodeQuantity(BigInteger.valueOf(-1));
+        });
     }
 
     @Test
@@ -130,9 +139,12 @@ public class NumericTest {
                 is(new byte[] { 0x7f, (byte) 0xff, (byte) 0xff, (byte) 0xff }));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testToBytesPaddedInvalid() {
-        Numeric.toBytesPadded(BigInteger.valueOf(Long.MAX_VALUE), 7);
+        org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
+            Numeric.toBytesPadded(BigInteger.valueOf(Long.MAX_VALUE), 7);
+        });
+
     }
 
     @Test
@@ -196,14 +208,18 @@ public class NumericTest {
                 is("0x01c52b08330e05d731e38c856c1043288f7d9744"));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testToHexStringZeroPaddedNegative() {
-        Numeric.toHexStringNoPrefixZeroPadded(BigInteger.valueOf(-1), 20);
+        org.junit.jupiter.api.Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            Numeric.toHexStringNoPrefixZeroPadded(BigInteger.valueOf(-1), 20);
+        });
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testToHexStringZeroPaddedTooLargs() {
-        Numeric.toHexStringNoPrefixZeroPadded(BigInteger.valueOf(-1), 5);
+        org.junit.jupiter.api.Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            Numeric.toHexStringNoPrefixZeroPadded(BigInteger.valueOf(-1), 5);
+        });
     }
 
     @Test
@@ -234,7 +250,7 @@ public class NumericTest {
         long l1 = Long.MAX_VALUE;
         byte[] b = Numeric.fromLong(l1);
         long l2 = Numeric.toLong(b);
-        Assert.assertEquals(l1, l2);
+        assertEquals(l1, l2);
     }
 
     @Test
@@ -243,8 +259,8 @@ public class NumericTest {
         byte[] bytes = Numeric.hexStringToByteArray(address);
         String newAddress = Numeric.toHexString(bytes);
         // The reversed address is all lower case and need to apply toChecksum
-        Assert.assertNotEquals(address, newAddress);
+        assertNotEquals(address, newAddress);
         // They should be equal if ignore the case.
-        Assert.assertTrue(address.equalsIgnoreCase(newAddress));
+        assertTrue(address.equalsIgnoreCase(newAddress));
     }
 }

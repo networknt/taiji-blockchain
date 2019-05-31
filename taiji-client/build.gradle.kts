@@ -8,12 +8,30 @@ dependencies {
     compile(project(":taiji-core"))
     compile(project(":taiji-crypto"))
     compile(project(":event-common"))
-    compile("com.networknt:config:1.5.28")
-    compile("com.networknt:client:1.5.28")
-    compile("com.networknt:cluster:1.5.28")
-    compile("com.networknt:balance:1.5.28")
-    compile("com.networknt:consul:1.5.28")
-    compile("com.networknt:monad-result:1.5.28")
-    compile("com.beust:jcommander:1.72")
-    compile("ch.qos.logback:logback-classic:1.2.3")
+
+    val slf4jVersion: String by project
+    compile("org.slf4j", "slf4j-api", slf4jVersion)
+
+    val light4jVersion: String by project
+    compile("com.networknt", "config", light4jVersion)
+    compile("com.networknt", "client", light4jVersion)
+    compile("com.networknt", "cluster", light4jVersion)
+    compile("com.networknt", "balance", light4jVersion)
+    compile("com.networknt", "consul", light4jVersion)
+    compile("com.networknt", "monad-result", light4jVersion)
+
+    val jacksonVersion: String by project
+    compile("com.fasterxml.jackson.core", "jackson-databind", jacksonVersion)
+
+    val junitVersion: String by project
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", junitVersion)
+    testImplementation("org.junit.jupiter", "junit-jupiter-params", junitVersion)
+    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", junitVersion)
+    val logbackVersion: String by project
+    testImplementation("ch.qos.logback", "logback-classic", logbackVersion)
+    val hamcrestVersion: String by project
+    testImplementation("org.hamcrest", "hamcrest-library", hamcrestVersion)
+
+    val jcommanderVersion: String by project
+    compile("com.beust", "jcommander", jcommanderVersion)
 }

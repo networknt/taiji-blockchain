@@ -1,11 +1,10 @@
 package com.networknt.taiji.crypto;
 
-import org.junit.Test;
-
+import org.junit.jupiter.api.Test;
 import java.security.KeyPair;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CredentialsTest {
 

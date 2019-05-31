@@ -1,7 +1,7 @@
 package com.networknt.taiji.token;
 
 import com.networknt.taiji.event.AvroConverter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;

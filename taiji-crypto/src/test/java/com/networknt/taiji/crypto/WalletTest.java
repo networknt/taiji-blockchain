@@ -2,16 +2,16 @@ package com.networknt.taiji.crypto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.chain.utility.Numeric;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 
-@Ignore
+@Disabled
 public class WalletTest {
 
     @Test

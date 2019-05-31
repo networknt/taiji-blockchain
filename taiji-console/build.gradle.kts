@@ -1,6 +1,8 @@
 plugins {
     application
     maven
+    java
+    id("com.github.johnrengelman.shadow") version "5.0.0"
 }
 
 application {
@@ -17,30 +19,22 @@ dependencies {
     compile(project(":taiji-utility"))
     compile(project(":taiji-token"))
     compile(project(":avro-serializer"))
-    compile("org.slf4j:slf4j-api:1.7.25")
-    compile("com.networknt:service:1.5.28")
-    compile("com.fasterxml.jackson.core:jackson-databind:2.9.5")
-    testCompile("junit:junit:4.12")
-    testCompile("ch.qos.logback:logback-classic:1.2.3")
+
+    val slf4jVersion: String by project
+    compile("org.slf4j", "slf4j-api", slf4jVersion)
+
+    val light4jVersion: String by project
+    compile("com.networknt", "service", light4jVersion)
+
+    val jacksonVersion: String by project
+    compile("com.fasterxml.jackson.core", "jackson-databind", jacksonVersion)
+
+    val junitVersion: String by project
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", junitVersion)
+    testImplementation("org.junit.jupiter", "junit-jupiter-params", junitVersion)
+    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", junitVersion)
+    val logbackVersion: String by project
+    testImplementation("ch.qos.logback", "logback-classic", logbackVersion)
+    val hamcrestVersion: String by project
+    testImplementation("org.hamcrest", "hamcrest-library", hamcrestVersion)
 }
-
-
-val fatJar = task("fatJar", type = Jar::class) {
-    baseName = "${project.name}-fat"
-    manifest {
-        attributes["Implementation-Title"] = "Gradle Jar File Example"
-        attributes["Implementation-Version"] = version
-        attributes["Main-Class"] = "com.networknt.taiji.console.Cli"
-    }
-    from(configurations.runtime.map { if (it.isDirectory) it else zipTree(it)}) {
-        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.DSA")
-    }
-    with(tasks["jar"] as CopySpec)
-}
-
-tasks {
-    "build" {
-        dependsOn(fatJar)
-    }
-}
-

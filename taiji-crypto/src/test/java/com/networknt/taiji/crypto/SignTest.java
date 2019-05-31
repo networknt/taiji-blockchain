@@ -1,14 +1,15 @@
 package com.networknt.taiji.crypto;
 
 import com.networknt.chain.utility.Numeric;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 
 import java.math.BigInteger;
 import java.security.SignatureException;
-
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 
 public class SignTest {
 
@@ -42,9 +43,11 @@ public class SignTest {
                 equalTo(SampleKeys.PUBLIC_KEY));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testInvalidSignature() throws SignatureException {
-        Sign.signedMessageToKey(
-                TEST_MESSAGE, new Sign.SignatureData((byte) 27, new byte[]{1}, new byte[]{0}));
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            Sign.signedMessageToKey(
+                    TEST_MESSAGE, new Sign.SignatureData((byte) 27, new byte[]{1}, new byte[]{0}));
+        });
     }
 }

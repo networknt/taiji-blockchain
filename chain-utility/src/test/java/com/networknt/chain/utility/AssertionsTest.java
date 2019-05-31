@@ -1,6 +1,7 @@
 package com.networknt.chain.utility;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import static com.networknt.chain.utility.Assertions.verifyPrecondition;
 
@@ -12,8 +13,11 @@ public class AssertionsTest {
         verifyPrecondition(true, "");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testVerifyPreconditionFailure() {
-        verifyPrecondition(false, "");
+        org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
+            verifyPrecondition(false, "");
+        });
+
     }
 }

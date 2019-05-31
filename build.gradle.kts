@@ -9,7 +9,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-
 allprojects {
     group = "com.networknt"
     version = "1.0.0"

@@ -1,7 +1,6 @@
 package com.networknt.taiji.crypto;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 

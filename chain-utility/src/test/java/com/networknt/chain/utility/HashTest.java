@@ -1,10 +1,11 @@
 package com.networknt.chain.utility;
 
-import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.jupiter.api.Test;
+
 import static com.networknt.chain.utility.Numeric.asByte;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class HashTest {
 

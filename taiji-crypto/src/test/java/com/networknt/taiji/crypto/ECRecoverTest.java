@@ -2,21 +2,21 @@ package com.networknt.taiji.crypto;
 
 import com.networknt.chain.utility.Hash;
 import com.networknt.chain.utility.Numeric;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ECRecoverTest {
 
     public static final String PERSONAL_MESSAGE_PREFIX = "\u0019Taiji Signed Message:\n";
 
-    @Ignore
+    @Disabled
     @Test
     public void testRecoverAddressFromSignature() {
         //CHECKSTYLE:OFF

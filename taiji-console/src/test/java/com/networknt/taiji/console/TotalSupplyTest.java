@@ -1,7 +1,7 @@
 package com.networknt.taiji.console;
 
 import com.networknt.taiji.utility.Converter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TotalSupplyTest {
     @Test

@@ -11,3 +11,8 @@ Over the years, we are working on large-scale distributed light-4j platform with
 
 Another reason that we want to invest in blockchain is to use it as an event store for light-eventuate-4j event sourcing and CQRS framework. Currently, we are using a database as an event store and a change data capture (CDC) service to trailing the transaction log to guarantee at least once message delivery on Kafka. What if we can build a blockchain as an event store and then push the blocks to IPFS so that users can query, verify and replay the events whenever they want. It opens a new door to do business for enterprise customers. 
 
+### Build
+
+```
+./gradlew clean build shadowJar
+```

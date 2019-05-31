@@ -1,6 +1,7 @@
 package com.networknt.chain.utility;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,8 +10,8 @@ import static com.networknt.chain.utility.Collection.EMPTY_STRING_ARRAY;
 import static com.networknt.chain.utility.Collection.tail;
 import static com.networknt.chain.utility.Collection.create;
 import static com.networknt.chain.utility.Collection.join;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CollectionTest {
 
@@ -64,7 +65,7 @@ public class CollectionTest {
     }
 
     /**
-     * Fake object to test {@link Collection#join(List, String, Function)}.
+     * Fake object to test
      */
     private final class FakeSpec {
         private final String name;
