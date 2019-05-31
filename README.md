@@ -14,5 +14,8 @@ Another reason that we want to invest in blockchain is to use it as an event sto
 ### Build
 
 ```
-./gradlew clean build shadowJar
+./gradlew clean build shadowJar install
 ```
+
+shadowJar is to create Fatjar for taiji-console
+install is to publish to maven local
