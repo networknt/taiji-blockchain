@@ -1,6 +1,8 @@
 package com.networknt.taiji.crypto;
 
 import com.networknt.chain.utility.Numeric;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.security.SignatureException;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 import static java.lang.Math.abs;
 
 public class TransactionManager {
+    public static final Logger logger = LoggerFactory.getLogger(TransactionManager.class);
 
     public static SignedTransaction signTransaction(RawTransaction rawTransaction, Credentials credentials) {
         SignedTransaction signedTransaction = new SignedTransaction(rawTransaction.getCurrency());
@@ -80,8 +83,8 @@ public class TransactionManager {
         // as we are looping the entire list of credit ledgers.
         result.setDebitAmount(abs(balance));
         Fee fee = feeConfig.getCurrencies().get(result.getCurrency());
-        boolean feeExist = false;
         int feeInShell = fee.getInnerChain(); // assuming it is inner chain transaction by default
+        SignedLedgerEntry feeEntry = null;
         List<Map<String, Long>> credits = new ArrayList<>();
         List<Map<String, byte[]>> c = stx.getC();
         for(int i = 0; i < stx.getC().size(); i++) {
@@ -91,15 +94,17 @@ public class TransactionManager {
             SignedLedgerEntry sc = (SignedLedgerEntry) LedgerEntryDecoder.decode(Numeric.toHexString(signedLedger));
             // the second condition is to ensure not switch application fee to interchain fee. 
             if(!sc.toAddress.startsWith(bankId) && feeInShell < fee.getInterChain()) {
-                feeInShell = fee.getInterChain(); // at least one toAddress is not in chain.
+                feeInShell = fee.getInterChain(); // at least one toAddress is not in chain, use the interchain fee
+                if(logger.isDebugEnabled()) logger.debug("Credit address " + sc.toAddress + " is not the started wtiht the bankId " + bankId);
             }
             if(sc.value == 0) {
                 if(sc.data == null) {
                     result.setError("value is zero but there is no event data for address " + sc.toAddress);
                     return result;
                 } else {
-                    // this is a valid event entry.
+                    // this is a valid event entry, use the application fee which is the maximum.
                     feeInShell = fee.getApplication();
+                    if(logger.isDebugEnabled()) logger.debug("An application credit entry is detected, bump up fee to application level");
                 }
             }
             // validate the toAddress with checksum to prevent sending money to an invalid address.
@@ -121,11 +126,11 @@ public class TransactionManager {
             }
             // validate if the fee entry exists and amount is correct.
             if(sc.toAddress.equals(fee.getBankAddress())) {
-                if (sc.value != feeInShell) {
-                    result.setError("Incorrect fee " + sc.value + " and the home bank expect " + feeInShell);
-                    return result;
+                if(feeEntry == null) {
+                    feeEntry = sc;
                 } else {
-                    feeExist = true;
+                    result.setError("Two or more fee entries are found");
+                    return result;
                 }
             }
             // snapshot credit entry
@@ -135,15 +140,22 @@ public class TransactionManager {
 
             balance = balance + sc.value;
         }
+
         if(balance != 0) {
             result.setError("Debit and Credit entries are not balanced.");
             return result;
         }
-        if(!feeExist) {
+
+        if(feeEntry == null) {
             result.setError("Fee entry is missing");
             return result;
+        } else {
+            // there is one fee entry here.
+            if (feeEntry.value != feeInShell) {
+                result.setError("Incorrect fee " + feeEntry.value + " and the home bank expect " + feeInShell);
+                return result;
+            }
         }
-
         result.setCredits(credits);
         return result;
     }
