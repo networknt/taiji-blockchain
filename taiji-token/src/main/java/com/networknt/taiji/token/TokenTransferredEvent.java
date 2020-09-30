@@ -5,16 +5,17 @@
  */
 package com.networknt.taiji.token;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class TokenTransferredEvent extends org.apache.avro.specific.SpecificRecordBase implements TokenEvent {
-  private static final long serialVersionUID = 4629378955694106069L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenTransferredEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"nonce\",\"type\":\"long\"}]}},{\"name\":\"symbol\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"toAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"amount\",\"type\":\"long\"}]}");
+  private static final long serialVersionUID = -3554396529590271699L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenTransferredEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"nonce\",\"type\":\"long\"},{\"name\":\"derived\",\"type\":\"boolean\",\"doc\":\"indicate if the event is derived from event processor\",\"default\":false}]}},{\"name\":\"symbol\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"toAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"amount\",\"type\":\"long\"},{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"additional information in a JSON string, comment, etc\"},{\"name\":\"timestamp\",\"type\":\"long\",\"doc\":\"time the event is recorded on the blockchain\",\"default\":0}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -26,7 +27,16 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
       new BinaryMessageDecoder<TokenTransferredEvent>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<TokenTransferredEvent> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<TokenTransferredEvent> getDecoder() {
     return DECODER;
@@ -35,26 +45,40 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<TokenTransferredEvent> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<TokenTransferredEvent>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this TokenTransferredEvent to a ByteBuffer. */
+  /**
+   * Serializes this TokenTransferredEvent to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a TokenTransferredEvent from a ByteBuffer. */
+  /**
+   * Deserializes a TokenTransferredEvent from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a TokenTransferredEvent instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static TokenTransferredEvent fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public com.networknt.taiji.event.EventId EventId;
-  @Deprecated public java.lang.String symbol;
-  @Deprecated public java.lang.String toAddress;
-  @Deprecated public long amount;
+   private com.networknt.taiji.event.EventId EventId;
+   private java.lang.String symbol;
+   private java.lang.String toAddress;
+   private long amount;
+  /** additional information in a JSON string, comment, etc */
+   private java.lang.String value;
+  /** time the event is recorded on the blockchain */
+   private long timestamp;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -69,14 +93,19 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
    * @param symbol The new value for symbol
    * @param toAddress The new value for toAddress
    * @param amount The new value for amount
+   * @param value additional information in a JSON string, comment, etc
+   * @param timestamp time the event is recorded on the blockchain
    */
-  public TokenTransferredEvent(com.networknt.taiji.event.EventId EventId, java.lang.String symbol, java.lang.String toAddress, java.lang.Long amount) {
+  public TokenTransferredEvent(com.networknt.taiji.event.EventId EventId, java.lang.String symbol, java.lang.String toAddress, java.lang.Long amount, java.lang.String value, java.lang.Long timestamp) {
     this.EventId = EventId;
     this.symbol = symbol;
     this.toAddress = toAddress;
     this.amount = amount;
+    this.value = value;
+    this.timestamp = timestamp;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -85,6 +114,8 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
     case 1: return symbol;
     case 2: return toAddress;
     case 3: return amount;
+    case 4: return value;
+    case 5: return timestamp;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -94,9 +125,11 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: EventId = (com.networknt.taiji.event.EventId)value$; break;
-    case 1: symbol = (java.lang.String)value$; break;
-    case 2: toAddress = (java.lang.String)value$; break;
+    case 1: symbol = value$ != null ? value$.toString() : null; break;
+    case 2: toAddress = value$ != null ? value$.toString() : null; break;
     case 3: amount = (java.lang.Long)value$; break;
+    case 4: value = value$ != null ? value$.toString() : null; break;
+    case 5: timestamp = (java.lang.Long)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -108,6 +141,7 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
   public com.networknt.taiji.event.EventId getEventId() {
     return EventId;
   }
+
 
   /**
    * Sets the value of the 'EventId' field.
@@ -125,6 +159,7 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
     return symbol;
   }
 
+
   /**
    * Sets the value of the 'symbol' field.
    * @param value the value to set.
@@ -141,6 +176,7 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
     return toAddress;
   }
 
+
   /**
    * Sets the value of the 'toAddress' field.
    * @param value the value to set.
@@ -153,16 +189,53 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
    * Gets the value of the 'amount' field.
    * @return The value of the 'amount' field.
    */
-  public java.lang.Long getAmount() {
+  public long getAmount() {
     return amount;
   }
+
 
   /**
    * Sets the value of the 'amount' field.
    * @param value the value to set.
    */
-  public void setAmount(java.lang.Long value) {
+  public void setAmount(long value) {
     this.amount = value;
+  }
+
+  /**
+   * Gets the value of the 'value' field.
+   * @return additional information in a JSON string, comment, etc
+   */
+  public java.lang.String getValue() {
+    return value;
+  }
+
+
+  /**
+   * Sets the value of the 'value' field.
+   * additional information in a JSON string, comment, etc
+   * @param value the value to set.
+   */
+  public void setValue(java.lang.String value) {
+    this.value = value;
+  }
+
+  /**
+   * Gets the value of the 'timestamp' field.
+   * @return time the event is recorded on the blockchain
+   */
+  public long getTimestamp() {
+    return timestamp;
+  }
+
+
+  /**
+   * Sets the value of the 'timestamp' field.
+   * time the event is recorded on the blockchain
+   * @param value the value to set.
+   */
+  public void setTimestamp(long value) {
+    this.timestamp = value;
   }
 
   /**
@@ -179,7 +252,11 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
    * @return A new TokenTransferredEvent RecordBuilder
    */
   public static com.networknt.taiji.token.TokenTransferredEvent.Builder newBuilder(com.networknt.taiji.token.TokenTransferredEvent.Builder other) {
-    return new com.networknt.taiji.token.TokenTransferredEvent.Builder(other);
+    if (other == null) {
+      return new com.networknt.taiji.token.TokenTransferredEvent.Builder();
+    } else {
+      return new com.networknt.taiji.token.TokenTransferredEvent.Builder(other);
+    }
   }
 
   /**
@@ -188,12 +265,17 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
    * @return A new TokenTransferredEvent RecordBuilder
    */
   public static com.networknt.taiji.token.TokenTransferredEvent.Builder newBuilder(com.networknt.taiji.token.TokenTransferredEvent other) {
-    return new com.networknt.taiji.token.TokenTransferredEvent.Builder(other);
+    if (other == null) {
+      return new com.networknt.taiji.token.TokenTransferredEvent.Builder();
+    } else {
+      return new com.networknt.taiji.token.TokenTransferredEvent.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for TokenTransferredEvent instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<TokenTransferredEvent>
     implements org.apache.avro.data.RecordBuilder<TokenTransferredEvent> {
 
@@ -202,6 +284,10 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
     private java.lang.String symbol;
     private java.lang.String toAddress;
     private long amount;
+    /** additional information in a JSON string, comment, etc */
+    private java.lang.String value;
+    /** time the event is recorded on the blockchain */
+    private long timestamp;
 
     /** Creates a new Builder */
     private Builder() {
@@ -216,22 +302,30 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
       super(other);
       if (isValidValue(fields()[0], other.EventId)) {
         this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (other.hasEventIdBuilder()) {
         this.EventIdBuilder = com.networknt.taiji.event.EventId.newBuilder(other.getEventIdBuilder());
       }
       if (isValidValue(fields()[1], other.symbol)) {
         this.symbol = data().deepCopy(fields()[1].schema(), other.symbol);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.toAddress)) {
         this.toAddress = data().deepCopy(fields()[2].schema(), other.toAddress);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.amount)) {
         this.amount = data().deepCopy(fields()[3].schema(), other.amount);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
+      }
+      if (isValidValue(fields()[4], other.value)) {
+        this.value = data().deepCopy(fields()[4].schema(), other.value);
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
+      }
+      if (isValidValue(fields()[5], other.timestamp)) {
+        this.timestamp = data().deepCopy(fields()[5].schema(), other.timestamp);
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
     }
 
@@ -240,7 +334,7 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
      * @param other The existing instance to copy.
      */
     private Builder(com.networknt.taiji.token.TokenTransferredEvent other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.EventId)) {
         this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
         fieldSetFlags()[0] = true;
@@ -258,6 +352,14 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
         this.amount = data().deepCopy(fields()[3].schema(), other.amount);
         fieldSetFlags()[3] = true;
       }
+      if (isValidValue(fields()[4], other.value)) {
+        this.value = data().deepCopy(fields()[4].schema(), other.value);
+        fieldSetFlags()[4] = true;
+      }
+      if (isValidValue(fields()[5], other.timestamp)) {
+        this.timestamp = data().deepCopy(fields()[5].schema(), other.timestamp);
+        fieldSetFlags()[5] = true;
+      }
     }
 
     /**
@@ -267,6 +369,7 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
     public com.networknt.taiji.event.EventId getEventId() {
       return EventId;
     }
+
 
     /**
       * Sets the value of the 'EventId' field.
@@ -342,6 +445,7 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
       return symbol;
     }
 
+
     /**
       * Sets the value of the 'symbol' field.
       * @param value The value of 'symbol'.
@@ -381,6 +485,7 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
       return toAddress;
     }
 
+
     /**
       * Sets the value of the 'toAddress' field.
       * @param value The value of 'toAddress'.
@@ -416,9 +521,10 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
       * Gets the value of the 'amount' field.
       * @return The value.
       */
-    public java.lang.Long getAmount() {
+    public long getAmount() {
       return amount;
     }
+
 
     /**
       * Sets the value of the 'amount' field.
@@ -450,20 +556,116 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
       return this;
     }
 
+    /**
+      * Gets the value of the 'value' field.
+      * additional information in a JSON string, comment, etc
+      * @return The value.
+      */
+    public java.lang.String getValue() {
+      return value;
+    }
+
+
+    /**
+      * Sets the value of the 'value' field.
+      * additional information in a JSON string, comment, etc
+      * @param value The value of 'value'.
+      * @return This builder.
+      */
+    public com.networknt.taiji.token.TokenTransferredEvent.Builder setValue(java.lang.String value) {
+      validate(fields()[4], value);
+      this.value = value;
+      fieldSetFlags()[4] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'value' field has been set.
+      * additional information in a JSON string, comment, etc
+      * @return True if the 'value' field has been set, false otherwise.
+      */
+    public boolean hasValue() {
+      return fieldSetFlags()[4];
+    }
+
+
+    /**
+      * Clears the value of the 'value' field.
+      * additional information in a JSON string, comment, etc
+      * @return This builder.
+      */
+    public com.networknt.taiji.token.TokenTransferredEvent.Builder clearValue() {
+      value = null;
+      fieldSetFlags()[4] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'timestamp' field.
+      * time the event is recorded on the blockchain
+      * @return The value.
+      */
+    public long getTimestamp() {
+      return timestamp;
+    }
+
+
+    /**
+      * Sets the value of the 'timestamp' field.
+      * time the event is recorded on the blockchain
+      * @param value The value of 'timestamp'.
+      * @return This builder.
+      */
+    public com.networknt.taiji.token.TokenTransferredEvent.Builder setTimestamp(long value) {
+      validate(fields()[5], value);
+      this.timestamp = value;
+      fieldSetFlags()[5] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'timestamp' field has been set.
+      * time the event is recorded on the blockchain
+      * @return True if the 'timestamp' field has been set, false otherwise.
+      */
+    public boolean hasTimestamp() {
+      return fieldSetFlags()[5];
+    }
+
+
+    /**
+      * Clears the value of the 'timestamp' field.
+      * time the event is recorded on the blockchain
+      * @return This builder.
+      */
+    public com.networknt.taiji.token.TokenTransferredEvent.Builder clearTimestamp() {
+      fieldSetFlags()[5] = false;
+      return this;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public TokenTransferredEvent build() {
       try {
         TokenTransferredEvent record = new TokenTransferredEvent();
         if (EventIdBuilder != null) {
-          record.EventId = this.EventIdBuilder.build();
+          try {
+            record.EventId = this.EventIdBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("EventId"));
+            throw e;
+          }
         } else {
           record.EventId = fieldSetFlags()[0] ? this.EventId : (com.networknt.taiji.event.EventId) defaultValue(fields()[0]);
         }
         record.symbol = fieldSetFlags()[1] ? this.symbol : (java.lang.String) defaultValue(fields()[1]);
         record.toAddress = fieldSetFlags()[2] ? this.toAddress : (java.lang.String) defaultValue(fields()[2]);
         record.amount = fieldSetFlags()[3] ? this.amount : (java.lang.Long) defaultValue(fields()[3]);
+        record.value = fieldSetFlags()[4] ? this.value : (java.lang.String) defaultValue(fields()[4]);
+        record.timestamp = fieldSetFlags()[5] ? this.timestamp : (java.lang.Long) defaultValue(fields()[5]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -488,4 +690,89 @@ public class TokenTransferredEvent extends org.apache.avro.specific.SpecificReco
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    this.EventId.customEncode(out);
+
+    out.writeString(this.symbol);
+
+    out.writeString(this.toAddress);
+
+    out.writeLong(this.amount);
+
+    out.writeString(this.value);
+
+    out.writeLong(this.timestamp);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (this.EventId == null) {
+        this.EventId = new com.networknt.taiji.event.EventId();
+      }
+      this.EventId.customDecode(in);
+
+      this.symbol = in.readString();
+
+      this.toAddress = in.readString();
+
+      this.amount = in.readLong();
+
+      this.value = in.readString();
+
+      this.timestamp = in.readLong();
+
+    } else {
+      for (int i = 0; i < 6; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (this.EventId == null) {
+            this.EventId = new com.networknt.taiji.event.EventId();
+          }
+          this.EventId.customDecode(in);
+          break;
+
+        case 1:
+          this.symbol = in.readString();
+          break;
+
+        case 2:
+          this.toAddress = in.readString();
+          break;
+
+        case 3:
+          this.amount = in.readLong();
+          break;
+
+        case 4:
+          this.value = in.readString();
+          break;
+
+        case 5:
+          this.timestamp = in.readLong();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

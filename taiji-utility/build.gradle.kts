@@ -22,3 +22,8 @@ dependencies {
     val hamcrestVersion: String by project
     testImplementation("org.hamcrest", "hamcrest-library", hamcrestVersion)
 }
+
+
+tasks.test {
+    useJUnitPlatform()
+}

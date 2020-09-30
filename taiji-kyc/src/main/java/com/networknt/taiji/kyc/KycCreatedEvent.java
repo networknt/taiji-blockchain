@@ -5,12 +5,13 @@
  */
 package com.networknt.taiji.kyc;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase implements KycEvent {
   private static final long serialVersionUID = 1790598769988526563L;
@@ -26,7 +27,16 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       new BinaryMessageDecoder<KycCreatedEvent>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<KycCreatedEvent> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<KycCreatedEvent> getDecoder() {
     return DECODER;
@@ -35,49 +45,59 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<KycCreatedEvent> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<KycCreatedEvent>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this KycCreatedEvent to a ByteBuffer. */
+  /**
+   * Serializes this KycCreatedEvent to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a KycCreatedEvent from a ByteBuffer. */
+  /**
+   * Deserializes a KycCreatedEvent from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a KycCreatedEvent instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static KycCreatedEvent fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public com.networknt.taiji.event.EventId EventId;
+   private com.networknt.taiji.event.EventId EventId;
   /** the currency blockchain the token is associated to */
-  @Deprecated public java.lang.String currency;
+   private java.lang.String currency;
   /** KYC type, P for personal and B for business */
-  @Deprecated public com.networknt.taiji.kyc.KycType type;
+   private com.networknt.taiji.kyc.KycType type;
   /** unique identifier for the user or business */
-  @Deprecated public java.lang.String id;
+   private java.lang.String id;
   /** email address of the address owner or business contact */
-  @Deprecated public java.lang.String email;
+   private java.lang.String email;
   /** personal or business name */
-  @Deprecated public java.lang.String name;
+   private java.lang.String name;
   /** referral address, optional with default value null */
-  @Deprecated public java.lang.String referralAddress;
+   private java.lang.String referralAddress;
   /** public key for encryption */
-  @Deprecated public java.lang.String key;
+   private java.lang.String key;
   /** If the email is verified */
-  @Deprecated public boolean verified;
+   private boolean verified;
   /** tags to categorize the person or business */
-  @Deprecated public java.util.List<java.lang.String> tags;
+   private java.util.List<java.lang.String> tags;
   /** Description of person or business which can be full text searched */
-  @Deprecated public java.lang.String description;
+   private java.lang.String description;
   /** time the event is recorded on the blockchain */
-  @Deprecated public long timestamp;
+   private long timestamp;
   /** kafka partition offset */
-  @Deprecated public long offset;
+   private long offset;
   /** kafka partition id */
-  @Deprecated public int partition;
+   private int partition;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -120,6 +140,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     this.partition = partition;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -147,16 +168,16 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: EventId = (com.networknt.taiji.event.EventId)value$; break;
-    case 1: currency = (java.lang.String)value$; break;
+    case 1: currency = value$ != null ? value$.toString() : null; break;
     case 2: type = (com.networknt.taiji.kyc.KycType)value$; break;
-    case 3: id = (java.lang.String)value$; break;
-    case 4: email = (java.lang.String)value$; break;
-    case 5: name = (java.lang.String)value$; break;
-    case 6: referralAddress = (java.lang.String)value$; break;
-    case 7: key = (java.lang.String)value$; break;
+    case 3: id = value$ != null ? value$.toString() : null; break;
+    case 4: email = value$ != null ? value$.toString() : null; break;
+    case 5: name = value$ != null ? value$.toString() : null; break;
+    case 6: referralAddress = value$ != null ? value$.toString() : null; break;
+    case 7: key = value$ != null ? value$.toString() : null; break;
     case 8: verified = (java.lang.Boolean)value$; break;
     case 9: tags = (java.util.List<java.lang.String>)value$; break;
-    case 10: description = (java.lang.String)value$; break;
+    case 10: description = value$ != null ? value$.toString() : null; break;
     case 11: timestamp = (java.lang.Long)value$; break;
     case 12: offset = (java.lang.Long)value$; break;
     case 13: partition = (java.lang.Integer)value$; break;
@@ -171,6 +192,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
   public com.networknt.taiji.event.EventId getEventId() {
     return EventId;
   }
+
 
   /**
    * Sets the value of the 'EventId' field.
@@ -187,6 +209,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
   public java.lang.String getCurrency() {
     return currency;
   }
+
 
   /**
    * Sets the value of the 'currency' field.
@@ -205,6 +228,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     return type;
   }
 
+
   /**
    * Sets the value of the 'type' field.
    * KYC type, P for personal and B for business
@@ -221,6 +245,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
   public java.lang.String getId() {
     return id;
   }
+
 
   /**
    * Sets the value of the 'id' field.
@@ -239,6 +264,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     return email;
   }
 
+
   /**
    * Sets the value of the 'email' field.
    * email address of the address owner or business contact
@@ -255,6 +281,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
   public java.lang.String getName() {
     return name;
   }
+
 
   /**
    * Sets the value of the 'name' field.
@@ -273,6 +300,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     return referralAddress;
   }
 
+
   /**
    * Sets the value of the 'referralAddress' field.
    * referral address, optional with default value null
@@ -290,6 +318,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     return key;
   }
 
+
   /**
    * Sets the value of the 'key' field.
    * public key for encryption
@@ -303,16 +332,17 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
    * Gets the value of the 'verified' field.
    * @return If the email is verified
    */
-  public java.lang.Boolean getVerified() {
+  public boolean getVerified() {
     return verified;
   }
+
 
   /**
    * Sets the value of the 'verified' field.
    * If the email is verified
    * @param value the value to set.
    */
-  public void setVerified(java.lang.Boolean value) {
+  public void setVerified(boolean value) {
     this.verified = value;
   }
 
@@ -323,6 +353,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
   public java.util.List<java.lang.String> getTags() {
     return tags;
   }
+
 
   /**
    * Sets the value of the 'tags' field.
@@ -341,6 +372,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     return description;
   }
 
+
   /**
    * Sets the value of the 'description' field.
    * Description of person or business which can be full text searched
@@ -354,16 +386,17 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
    * Gets the value of the 'timestamp' field.
    * @return time the event is recorded on the blockchain
    */
-  public java.lang.Long getTimestamp() {
+  public long getTimestamp() {
     return timestamp;
   }
+
 
   /**
    * Sets the value of the 'timestamp' field.
    * time the event is recorded on the blockchain
    * @param value the value to set.
    */
-  public void setTimestamp(java.lang.Long value) {
+  public void setTimestamp(long value) {
     this.timestamp = value;
   }
 
@@ -371,16 +404,17 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
    * Gets the value of the 'offset' field.
    * @return kafka partition offset
    */
-  public java.lang.Long getOffset() {
+  public long getOffset() {
     return offset;
   }
+
 
   /**
    * Sets the value of the 'offset' field.
    * kafka partition offset
    * @param value the value to set.
    */
-  public void setOffset(java.lang.Long value) {
+  public void setOffset(long value) {
     this.offset = value;
   }
 
@@ -388,16 +422,17 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
    * Gets the value of the 'partition' field.
    * @return kafka partition id
    */
-  public java.lang.Integer getPartition() {
+  public int getPartition() {
     return partition;
   }
+
 
   /**
    * Sets the value of the 'partition' field.
    * kafka partition id
    * @param value the value to set.
    */
-  public void setPartition(java.lang.Integer value) {
+  public void setPartition(int value) {
     this.partition = value;
   }
 
@@ -415,7 +450,11 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
    * @return A new KycCreatedEvent RecordBuilder
    */
   public static com.networknt.taiji.kyc.KycCreatedEvent.Builder newBuilder(com.networknt.taiji.kyc.KycCreatedEvent.Builder other) {
-    return new com.networknt.taiji.kyc.KycCreatedEvent.Builder(other);
+    if (other == null) {
+      return new com.networknt.taiji.kyc.KycCreatedEvent.Builder();
+    } else {
+      return new com.networknt.taiji.kyc.KycCreatedEvent.Builder(other);
+    }
   }
 
   /**
@@ -424,12 +463,17 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
    * @return A new KycCreatedEvent RecordBuilder
    */
   public static com.networknt.taiji.kyc.KycCreatedEvent.Builder newBuilder(com.networknt.taiji.kyc.KycCreatedEvent other) {
-    return new com.networknt.taiji.kyc.KycCreatedEvent.Builder(other);
+    if (other == null) {
+      return new com.networknt.taiji.kyc.KycCreatedEvent.Builder();
+    } else {
+      return new com.networknt.taiji.kyc.KycCreatedEvent.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for KycCreatedEvent instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<KycCreatedEvent>
     implements org.apache.avro.data.RecordBuilder<KycCreatedEvent> {
 
@@ -475,62 +519,62 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       super(other);
       if (isValidValue(fields()[0], other.EventId)) {
         this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (other.hasEventIdBuilder()) {
         this.EventIdBuilder = com.networknt.taiji.event.EventId.newBuilder(other.getEventIdBuilder());
       }
       if (isValidValue(fields()[1], other.currency)) {
         this.currency = data().deepCopy(fields()[1].schema(), other.currency);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.type)) {
         this.type = data().deepCopy(fields()[2].schema(), other.type);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.id)) {
         this.id = data().deepCopy(fields()[3].schema(), other.id);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.email)) {
         this.email = data().deepCopy(fields()[4].schema(), other.email);
-        fieldSetFlags()[4] = true;
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
       if (isValidValue(fields()[5], other.name)) {
         this.name = data().deepCopy(fields()[5].schema(), other.name);
-        fieldSetFlags()[5] = true;
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
       if (isValidValue(fields()[6], other.referralAddress)) {
         this.referralAddress = data().deepCopy(fields()[6].schema(), other.referralAddress);
-        fieldSetFlags()[6] = true;
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
       if (isValidValue(fields()[7], other.key)) {
         this.key = data().deepCopy(fields()[7].schema(), other.key);
-        fieldSetFlags()[7] = true;
+        fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
       if (isValidValue(fields()[8], other.verified)) {
         this.verified = data().deepCopy(fields()[8].schema(), other.verified);
-        fieldSetFlags()[8] = true;
+        fieldSetFlags()[8] = other.fieldSetFlags()[8];
       }
       if (isValidValue(fields()[9], other.tags)) {
         this.tags = data().deepCopy(fields()[9].schema(), other.tags);
-        fieldSetFlags()[9] = true;
+        fieldSetFlags()[9] = other.fieldSetFlags()[9];
       }
       if (isValidValue(fields()[10], other.description)) {
         this.description = data().deepCopy(fields()[10].schema(), other.description);
-        fieldSetFlags()[10] = true;
+        fieldSetFlags()[10] = other.fieldSetFlags()[10];
       }
       if (isValidValue(fields()[11], other.timestamp)) {
         this.timestamp = data().deepCopy(fields()[11].schema(), other.timestamp);
-        fieldSetFlags()[11] = true;
+        fieldSetFlags()[11] = other.fieldSetFlags()[11];
       }
       if (isValidValue(fields()[12], other.offset)) {
         this.offset = data().deepCopy(fields()[12].schema(), other.offset);
-        fieldSetFlags()[12] = true;
+        fieldSetFlags()[12] = other.fieldSetFlags()[12];
       }
       if (isValidValue(fields()[13], other.partition)) {
         this.partition = data().deepCopy(fields()[13].schema(), other.partition);
-        fieldSetFlags()[13] = true;
+        fieldSetFlags()[13] = other.fieldSetFlags()[13];
       }
     }
 
@@ -539,7 +583,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
      * @param other The existing instance to copy.
      */
     private Builder(com.networknt.taiji.kyc.KycCreatedEvent other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.EventId)) {
         this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
         fieldSetFlags()[0] = true;
@@ -606,6 +650,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     public com.networknt.taiji.event.EventId getEventId() {
       return EventId;
     }
+
 
     /**
       * Sets the value of the 'EventId' field.
@@ -682,6 +727,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       return currency;
     }
 
+
     /**
       * Sets the value of the 'currency' field.
       * the currency blockchain the token is associated to
@@ -724,6 +770,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     public com.networknt.taiji.kyc.KycType getType() {
       return type;
     }
+
 
     /**
       * Sets the value of the 'type' field.
@@ -768,6 +815,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       return id;
     }
 
+
     /**
       * Sets the value of the 'id' field.
       * unique identifier for the user or business
@@ -810,6 +858,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     public java.lang.String getEmail() {
       return email;
     }
+
 
     /**
       * Sets the value of the 'email' field.
@@ -854,6 +903,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       return name;
     }
 
+
     /**
       * Sets the value of the 'name' field.
       * personal or business name
@@ -896,6 +946,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     public java.lang.String getReferralAddress() {
       return referralAddress;
     }
+
 
     /**
       * Sets the value of the 'referralAddress' field.
@@ -940,6 +991,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       return key;
     }
 
+
     /**
       * Sets the value of the 'key' field.
       * public key for encryption
@@ -979,9 +1031,10 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * If the email is verified
       * @return The value.
       */
-    public java.lang.Boolean getVerified() {
+    public boolean getVerified() {
       return verified;
     }
+
 
     /**
       * Sets the value of the 'verified' field.
@@ -1024,6 +1077,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     public java.util.List<java.lang.String> getTags() {
       return tags;
     }
+
 
     /**
       * Sets the value of the 'tags' field.
@@ -1068,6 +1122,7 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       return description;
     }
 
+
     /**
       * Sets the value of the 'description' field.
       * Description of person or business which can be full text searched
@@ -1107,9 +1162,10 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * time the event is recorded on the blockchain
       * @return The value.
       */
-    public java.lang.Long getTimestamp() {
+    public long getTimestamp() {
       return timestamp;
     }
+
 
     /**
       * Sets the value of the 'timestamp' field.
@@ -1149,9 +1205,10 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * kafka partition offset
       * @return The value.
       */
-    public java.lang.Long getOffset() {
+    public long getOffset() {
       return offset;
     }
+
 
     /**
       * Sets the value of the 'offset' field.
@@ -1191,9 +1248,10 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       * kafka partition id
       * @return The value.
       */
-    public java.lang.Integer getPartition() {
+    public int getPartition() {
       return partition;
     }
+
 
     /**
       * Sets the value of the 'partition' field.
@@ -1234,7 +1292,12 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
       try {
         KycCreatedEvent record = new KycCreatedEvent();
         if (EventIdBuilder != null) {
-          record.EventId = this.EventIdBuilder.build();
+          try {
+            record.EventId = this.EventIdBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("EventId"));
+            throw e;
+          }
         } else {
           record.EventId = fieldSetFlags()[0] ? this.EventId : (com.networknt.taiji.event.EventId) defaultValue(fields()[0]);
         }
@@ -1252,6 +1315,8 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
         record.offset = fieldSetFlags()[12] ? this.offset : (java.lang.Long) defaultValue(fields()[12]);
         record.partition = fieldSetFlags()[13] ? this.partition : (java.lang.Integer) defaultValue(fields()[13]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -1276,4 +1341,238 @@ public class KycCreatedEvent extends org.apache.avro.specific.SpecificRecordBase
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    this.EventId.customEncode(out);
+
+    out.writeString(this.currency);
+
+    out.writeEnum(this.type.ordinal());
+
+    out.writeString(this.id);
+
+    out.writeString(this.email);
+
+    out.writeString(this.name);
+
+    if (this.referralAddress == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.referralAddress);
+    }
+
+    out.writeString(this.key);
+
+    out.writeBoolean(this.verified);
+
+    if (this.tags == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      long size0 = this.tags.size();
+      out.writeArrayStart();
+      out.setItemCount(size0);
+      long actualSize0 = 0;
+      for (java.lang.String e0: this.tags) {
+        actualSize0++;
+        out.startItem();
+        out.writeString(e0);
+      }
+      out.writeArrayEnd();
+      if (actualSize0 != size0)
+        throw new java.util.ConcurrentModificationException("Array-size written was " + size0 + ", but element count was " + actualSize0 + ".");
+    }
+
+    if (this.description == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.description);
+    }
+
+    out.writeLong(this.timestamp);
+
+    out.writeLong(this.offset);
+
+    out.writeInt(this.partition);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (this.EventId == null) {
+        this.EventId = new com.networknt.taiji.event.EventId();
+      }
+      this.EventId.customDecode(in);
+
+      this.currency = in.readString();
+
+      this.type = com.networknt.taiji.kyc.KycType.values()[in.readEnum()];
+
+      this.id = in.readString();
+
+      this.email = in.readString();
+
+      this.name = in.readString();
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.referralAddress = null;
+      } else {
+        this.referralAddress = in.readString();
+      }
+
+      this.key = in.readString();
+
+      this.verified = in.readBoolean();
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.tags = null;
+      } else {
+        long size0 = in.readArrayStart();
+        java.util.List<java.lang.String> a0 = this.tags;
+        if (a0 == null) {
+          a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("tags").schema().getTypes().get(1));
+          this.tags = a0;
+        } else a0.clear();
+        SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
+        for ( ; 0 < size0; size0 = in.arrayNext()) {
+          for ( ; size0 != 0; size0--) {
+            java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+            e0 = in.readString();
+            a0.add(e0);
+          }
+        }
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.description = null;
+      } else {
+        this.description = in.readString();
+      }
+
+      this.timestamp = in.readLong();
+
+      this.offset = in.readLong();
+
+      this.partition = in.readInt();
+
+    } else {
+      for (int i = 0; i < 14; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (this.EventId == null) {
+            this.EventId = new com.networknt.taiji.event.EventId();
+          }
+          this.EventId.customDecode(in);
+          break;
+
+        case 1:
+          this.currency = in.readString();
+          break;
+
+        case 2:
+          this.type = com.networknt.taiji.kyc.KycType.values()[in.readEnum()];
+          break;
+
+        case 3:
+          this.id = in.readString();
+          break;
+
+        case 4:
+          this.email = in.readString();
+          break;
+
+        case 5:
+          this.name = in.readString();
+          break;
+
+        case 6:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.referralAddress = null;
+          } else {
+            this.referralAddress = in.readString();
+          }
+          break;
+
+        case 7:
+          this.key = in.readString();
+          break;
+
+        case 8:
+          this.verified = in.readBoolean();
+          break;
+
+        case 9:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.tags = null;
+          } else {
+            long size0 = in.readArrayStart();
+            java.util.List<java.lang.String> a0 = this.tags;
+            if (a0 == null) {
+              a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("tags").schema().getTypes().get(1));
+              this.tags = a0;
+            } else a0.clear();
+            SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
+            for ( ; 0 < size0; size0 = in.arrayNext()) {
+              for ( ; size0 != 0; size0--) {
+                java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+                e0 = in.readString();
+                a0.add(e0);
+              }
+            }
+          }
+          break;
+
+        case 10:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.description = null;
+          } else {
+            this.description = in.readString();
+          }
+          break;
+
+        case 11:
+          this.timestamp = in.readLong();
+          break;
+
+        case 12:
+          this.offset = in.readLong();
+          break;
+
+        case 13:
+          this.partition = in.readInt();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

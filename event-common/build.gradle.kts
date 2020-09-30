@@ -27,3 +27,7 @@ dependencies {
     testImplementation("org.hamcrest", "hamcrest-library", hamcrestVersion)
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+

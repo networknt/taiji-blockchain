@@ -19,6 +19,12 @@
             "name": "nonce",
             "type": "long",
             "doc": "the number of the transactions for the address"
+          },
+          {
+            "name": "derived",
+            "type": "boolean",
+            "default": false,
+            "doc": "indicate if the event is derived from event processor"
           }
         ]
       }
@@ -34,11 +40,6 @@
       "doc": "token address which is the unique identifier"
     },
     {
-      "name": "name",
-      "type": "string",
-      "doc": "name of the token"
-    },
-    {
       "name": "symbol",
       "type": "string",
       "doc": "token symbol which is one word capitalized"
@@ -52,6 +53,11 @@
       "name": "decimals",
       "type": "int",
       "doc": "number of decimals a token can be split"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "doc": "additional information in a JSON string, name, description, etc"
     },
     {
       "name": "timestamp",

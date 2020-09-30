@@ -5,16 +5,17 @@
  */
 package com.networknt.taiji.token;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBase implements TokenEvent {
-  private static final long serialVersionUID = -5788772716058985116L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenCreatedEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"owner address that create the token\"},{\"name\":\"nonce\",\"type\":\"long\",\"doc\":\"the number of the transactions for the address\"}]}},{\"name\":\"currency\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"the currency blockchain the token is associated to\"},{\"name\":\"entityAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"token address which is the unique identifier\"},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"name of the token\"},{\"name\":\"symbol\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"token symbol which is one word capitalized\"},{\"name\":\"totalSupply\",\"type\":\"long\",\"doc\":\"total supply of the token\"},{\"name\":\"decimals\",\"type\":\"int\",\"doc\":\"number of decimals a token can be split\"},{\"name\":\"timestamp\",\"type\":\"long\",\"doc\":\"time the event is recorded on the blockchain\",\"default\":0},{\"name\":\"offset\",\"type\":\"long\",\"doc\":\"kafka partition offset\",\"default\":0},{\"name\":\"partition\",\"type\":\"int\",\"doc\":\"kafka partition id\",\"default\":0}]}");
+  private static final long serialVersionUID = -2827547643959763992L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenCreatedEvent\",\"namespace\":\"com.networknt.taiji.token\",\"fields\":[{\"name\":\"EventId\",\"type\":{\"type\":\"record\",\"name\":\"EventId\",\"namespace\":\"com.networknt.taiji.event\",\"fields\":[{\"name\":\"address\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"owner address that create the token\"},{\"name\":\"nonce\",\"type\":\"long\",\"doc\":\"the number of the transactions for the address\"},{\"name\":\"derived\",\"type\":\"boolean\",\"doc\":\"indicate if the event is derived from event processor\",\"default\":false}]}},{\"name\":\"currency\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"the currency blockchain the token is associated to\"},{\"name\":\"entityAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"token address which is the unique identifier\"},{\"name\":\"symbol\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"token symbol which is one word capitalized\"},{\"name\":\"totalSupply\",\"type\":\"long\",\"doc\":\"total supply of the token\"},{\"name\":\"decimals\",\"type\":\"int\",\"doc\":\"number of decimals a token can be split\"},{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"additional information in a JSON string, name, description, etc\"},{\"name\":\"timestamp\",\"type\":\"long\",\"doc\":\"time the event is recorded on the blockchain\",\"default\":0},{\"name\":\"offset\",\"type\":\"long\",\"doc\":\"kafka partition offset\",\"default\":0},{\"name\":\"partition\",\"type\":\"int\",\"doc\":\"kafka partition id\",\"default\":0}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -26,7 +27,16 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       new BinaryMessageDecoder<TokenCreatedEvent>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<TokenCreatedEvent> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<TokenCreatedEvent> getDecoder() {
     return DECODER;
@@ -35,41 +45,51 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<TokenCreatedEvent> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<TokenCreatedEvent>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this TokenCreatedEvent to a ByteBuffer. */
+  /**
+   * Serializes this TokenCreatedEvent to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a TokenCreatedEvent from a ByteBuffer. */
+  /**
+   * Deserializes a TokenCreatedEvent from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a TokenCreatedEvent instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static TokenCreatedEvent fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public com.networknt.taiji.event.EventId EventId;
+   private com.networknt.taiji.event.EventId EventId;
   /** the currency blockchain the token is associated to */
-  @Deprecated public java.lang.String currency;
+   private java.lang.String currency;
   /** token address which is the unique identifier */
-  @Deprecated public java.lang.String entityAddress;
-  /** name of the token */
-  @Deprecated public java.lang.String name;
+   private java.lang.String entityAddress;
   /** token symbol which is one word capitalized */
-  @Deprecated public java.lang.String symbol;
+   private java.lang.String symbol;
   /** total supply of the token */
-  @Deprecated public long totalSupply;
+   private long totalSupply;
   /** number of decimals a token can be split */
-  @Deprecated public int decimals;
+   private int decimals;
+  /** additional information in a JSON string, name, description, etc */
+   private java.lang.String value;
   /** time the event is recorded on the blockchain */
-  @Deprecated public long timestamp;
+   private long timestamp;
   /** kafka partition offset */
-  @Deprecated public long offset;
+   private long offset;
   /** kafka partition id */
-  @Deprecated public int partition;
+   private int partition;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -83,27 +103,28 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
    * @param EventId The new value for EventId
    * @param currency the currency blockchain the token is associated to
    * @param entityAddress token address which is the unique identifier
-   * @param name name of the token
    * @param symbol token symbol which is one word capitalized
    * @param totalSupply total supply of the token
    * @param decimals number of decimals a token can be split
+   * @param value additional information in a JSON string, name, description, etc
    * @param timestamp time the event is recorded on the blockchain
    * @param offset kafka partition offset
    * @param partition kafka partition id
    */
-  public TokenCreatedEvent(com.networknt.taiji.event.EventId EventId, java.lang.String currency, java.lang.String entityAddress, java.lang.String name, java.lang.String symbol, java.lang.Long totalSupply, java.lang.Integer decimals, java.lang.Long timestamp, java.lang.Long offset, java.lang.Integer partition) {
+  public TokenCreatedEvent(com.networknt.taiji.event.EventId EventId, java.lang.String currency, java.lang.String entityAddress, java.lang.String symbol, java.lang.Long totalSupply, java.lang.Integer decimals, java.lang.String value, java.lang.Long timestamp, java.lang.Long offset, java.lang.Integer partition) {
     this.EventId = EventId;
     this.currency = currency;
     this.entityAddress = entityAddress;
-    this.name = name;
     this.symbol = symbol;
     this.totalSupply = totalSupply;
     this.decimals = decimals;
+    this.value = value;
     this.timestamp = timestamp;
     this.offset = offset;
     this.partition = partition;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -111,10 +132,10 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     case 0: return EventId;
     case 1: return currency;
     case 2: return entityAddress;
-    case 3: return name;
-    case 4: return symbol;
-    case 5: return totalSupply;
-    case 6: return decimals;
+    case 3: return symbol;
+    case 4: return totalSupply;
+    case 5: return decimals;
+    case 6: return value;
     case 7: return timestamp;
     case 8: return offset;
     case 9: return partition;
@@ -127,12 +148,12 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: EventId = (com.networknt.taiji.event.EventId)value$; break;
-    case 1: currency = (java.lang.String)value$; break;
-    case 2: entityAddress = (java.lang.String)value$; break;
-    case 3: name = (java.lang.String)value$; break;
-    case 4: symbol = (java.lang.String)value$; break;
-    case 5: totalSupply = (java.lang.Long)value$; break;
-    case 6: decimals = (java.lang.Integer)value$; break;
+    case 1: currency = value$ != null ? value$.toString() : null; break;
+    case 2: entityAddress = value$ != null ? value$.toString() : null; break;
+    case 3: symbol = value$ != null ? value$.toString() : null; break;
+    case 4: totalSupply = (java.lang.Long)value$; break;
+    case 5: decimals = (java.lang.Integer)value$; break;
+    case 6: value = value$ != null ? value$.toString() : null; break;
     case 7: timestamp = (java.lang.Long)value$; break;
     case 8: offset = (java.lang.Long)value$; break;
     case 9: partition = (java.lang.Integer)value$; break;
@@ -147,6 +168,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   public com.networknt.taiji.event.EventId getEventId() {
     return EventId;
   }
+
 
   /**
    * Sets the value of the 'EventId' field.
@@ -163,6 +185,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   public java.lang.String getCurrency() {
     return currency;
   }
+
 
   /**
    * Sets the value of the 'currency' field.
@@ -181,6 +204,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     return entityAddress;
   }
 
+
   /**
    * Sets the value of the 'entityAddress' field.
    * token address which is the unique identifier
@@ -191,29 +215,13 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
   }
 
   /**
-   * Gets the value of the 'name' field.
-   * @return name of the token
-   */
-  public java.lang.String getName() {
-    return name;
-  }
-
-  /**
-   * Sets the value of the 'name' field.
-   * name of the token
-   * @param value the value to set.
-   */
-  public void setName(java.lang.String value) {
-    this.name = value;
-  }
-
-  /**
    * Gets the value of the 'symbol' field.
    * @return token symbol which is one word capitalized
    */
   public java.lang.String getSymbol() {
     return symbol;
   }
+
 
   /**
    * Sets the value of the 'symbol' field.
@@ -228,16 +236,17 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Gets the value of the 'totalSupply' field.
    * @return total supply of the token
    */
-  public java.lang.Long getTotalSupply() {
+  public long getTotalSupply() {
     return totalSupply;
   }
+
 
   /**
    * Sets the value of the 'totalSupply' field.
    * total supply of the token
    * @param value the value to set.
    */
-  public void setTotalSupply(java.lang.Long value) {
+  public void setTotalSupply(long value) {
     this.totalSupply = value;
   }
 
@@ -245,33 +254,53 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Gets the value of the 'decimals' field.
    * @return number of decimals a token can be split
    */
-  public java.lang.Integer getDecimals() {
+  public int getDecimals() {
     return decimals;
   }
+
 
   /**
    * Sets the value of the 'decimals' field.
    * number of decimals a token can be split
    * @param value the value to set.
    */
-  public void setDecimals(java.lang.Integer value) {
+  public void setDecimals(int value) {
     this.decimals = value;
+  }
+
+  /**
+   * Gets the value of the 'value' field.
+   * @return additional information in a JSON string, name, description, etc
+   */
+  public java.lang.String getValue() {
+    return value;
+  }
+
+
+  /**
+   * Sets the value of the 'value' field.
+   * additional information in a JSON string, name, description, etc
+   * @param value the value to set.
+   */
+  public void setValue(java.lang.String value) {
+    this.value = value;
   }
 
   /**
    * Gets the value of the 'timestamp' field.
    * @return time the event is recorded on the blockchain
    */
-  public java.lang.Long getTimestamp() {
+  public long getTimestamp() {
     return timestamp;
   }
+
 
   /**
    * Sets the value of the 'timestamp' field.
    * time the event is recorded on the blockchain
    * @param value the value to set.
    */
-  public void setTimestamp(java.lang.Long value) {
+  public void setTimestamp(long value) {
     this.timestamp = value;
   }
 
@@ -279,16 +308,17 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Gets the value of the 'offset' field.
    * @return kafka partition offset
    */
-  public java.lang.Long getOffset() {
+  public long getOffset() {
     return offset;
   }
+
 
   /**
    * Sets the value of the 'offset' field.
    * kafka partition offset
    * @param value the value to set.
    */
-  public void setOffset(java.lang.Long value) {
+  public void setOffset(long value) {
     this.offset = value;
   }
 
@@ -296,16 +326,17 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Gets the value of the 'partition' field.
    * @return kafka partition id
    */
-  public java.lang.Integer getPartition() {
+  public int getPartition() {
     return partition;
   }
+
 
   /**
    * Sets the value of the 'partition' field.
    * kafka partition id
    * @param value the value to set.
    */
-  public void setPartition(java.lang.Integer value) {
+  public void setPartition(int value) {
     this.partition = value;
   }
 
@@ -323,7 +354,11 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
    * @return A new TokenCreatedEvent RecordBuilder
    */
   public static com.networknt.taiji.token.TokenCreatedEvent.Builder newBuilder(com.networknt.taiji.token.TokenCreatedEvent.Builder other) {
-    return new com.networknt.taiji.token.TokenCreatedEvent.Builder(other);
+    if (other == null) {
+      return new com.networknt.taiji.token.TokenCreatedEvent.Builder();
+    } else {
+      return new com.networknt.taiji.token.TokenCreatedEvent.Builder(other);
+    }
   }
 
   /**
@@ -332,12 +367,17 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
    * @return A new TokenCreatedEvent RecordBuilder
    */
   public static com.networknt.taiji.token.TokenCreatedEvent.Builder newBuilder(com.networknt.taiji.token.TokenCreatedEvent other) {
-    return new com.networknt.taiji.token.TokenCreatedEvent.Builder(other);
+    if (other == null) {
+      return new com.networknt.taiji.token.TokenCreatedEvent.Builder();
+    } else {
+      return new com.networknt.taiji.token.TokenCreatedEvent.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for TokenCreatedEvent instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<TokenCreatedEvent>
     implements org.apache.avro.data.RecordBuilder<TokenCreatedEvent> {
 
@@ -347,14 +387,14 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     private java.lang.String currency;
     /** token address which is the unique identifier */
     private java.lang.String entityAddress;
-    /** name of the token */
-    private java.lang.String name;
     /** token symbol which is one word capitalized */
     private java.lang.String symbol;
     /** total supply of the token */
     private long totalSupply;
     /** number of decimals a token can be split */
     private int decimals;
+    /** additional information in a JSON string, name, description, etc */
+    private java.lang.String value;
     /** time the event is recorded on the blockchain */
     private long timestamp;
     /** kafka partition offset */
@@ -375,46 +415,46 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       super(other);
       if (isValidValue(fields()[0], other.EventId)) {
         this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (other.hasEventIdBuilder()) {
         this.EventIdBuilder = com.networknt.taiji.event.EventId.newBuilder(other.getEventIdBuilder());
       }
       if (isValidValue(fields()[1], other.currency)) {
         this.currency = data().deepCopy(fields()[1].schema(), other.currency);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.entityAddress)) {
         this.entityAddress = data().deepCopy(fields()[2].schema(), other.entityAddress);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.name)) {
-        this.name = data().deepCopy(fields()[3].schema(), other.name);
-        fieldSetFlags()[3] = true;
+      if (isValidValue(fields()[3], other.symbol)) {
+        this.symbol = data().deepCopy(fields()[3].schema(), other.symbol);
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
-      if (isValidValue(fields()[4], other.symbol)) {
-        this.symbol = data().deepCopy(fields()[4].schema(), other.symbol);
-        fieldSetFlags()[4] = true;
+      if (isValidValue(fields()[4], other.totalSupply)) {
+        this.totalSupply = data().deepCopy(fields()[4].schema(), other.totalSupply);
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
-      if (isValidValue(fields()[5], other.totalSupply)) {
-        this.totalSupply = data().deepCopy(fields()[5].schema(), other.totalSupply);
-        fieldSetFlags()[5] = true;
+      if (isValidValue(fields()[5], other.decimals)) {
+        this.decimals = data().deepCopy(fields()[5].schema(), other.decimals);
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
-      if (isValidValue(fields()[6], other.decimals)) {
-        this.decimals = data().deepCopy(fields()[6].schema(), other.decimals);
-        fieldSetFlags()[6] = true;
+      if (isValidValue(fields()[6], other.value)) {
+        this.value = data().deepCopy(fields()[6].schema(), other.value);
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
       if (isValidValue(fields()[7], other.timestamp)) {
         this.timestamp = data().deepCopy(fields()[7].schema(), other.timestamp);
-        fieldSetFlags()[7] = true;
+        fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
       if (isValidValue(fields()[8], other.offset)) {
         this.offset = data().deepCopy(fields()[8].schema(), other.offset);
-        fieldSetFlags()[8] = true;
+        fieldSetFlags()[8] = other.fieldSetFlags()[8];
       }
       if (isValidValue(fields()[9], other.partition)) {
         this.partition = data().deepCopy(fields()[9].schema(), other.partition);
-        fieldSetFlags()[9] = true;
+        fieldSetFlags()[9] = other.fieldSetFlags()[9];
       }
     }
 
@@ -423,7 +463,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
      * @param other The existing instance to copy.
      */
     private Builder(com.networknt.taiji.token.TokenCreatedEvent other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.EventId)) {
         this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
         fieldSetFlags()[0] = true;
@@ -437,20 +477,20 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
         this.entityAddress = data().deepCopy(fields()[2].schema(), other.entityAddress);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.name)) {
-        this.name = data().deepCopy(fields()[3].schema(), other.name);
+      if (isValidValue(fields()[3], other.symbol)) {
+        this.symbol = data().deepCopy(fields()[3].schema(), other.symbol);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.symbol)) {
-        this.symbol = data().deepCopy(fields()[4].schema(), other.symbol);
+      if (isValidValue(fields()[4], other.totalSupply)) {
+        this.totalSupply = data().deepCopy(fields()[4].schema(), other.totalSupply);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.totalSupply)) {
-        this.totalSupply = data().deepCopy(fields()[5].schema(), other.totalSupply);
+      if (isValidValue(fields()[5], other.decimals)) {
+        this.decimals = data().deepCopy(fields()[5].schema(), other.decimals);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.decimals)) {
-        this.decimals = data().deepCopy(fields()[6].schema(), other.decimals);
+      if (isValidValue(fields()[6], other.value)) {
+        this.value = data().deepCopy(fields()[6].schema(), other.value);
         fieldSetFlags()[6] = true;
       }
       if (isValidValue(fields()[7], other.timestamp)) {
@@ -474,6 +514,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     public com.networknt.taiji.event.EventId getEventId() {
       return EventId;
     }
+
 
     /**
       * Sets the value of the 'EventId' field.
@@ -550,6 +591,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       return currency;
     }
 
+
     /**
       * Sets the value of the 'currency' field.
       * the currency blockchain the token is associated to
@@ -593,6 +635,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       return entityAddress;
     }
 
+
     /**
       * Sets the value of the 'entityAddress' field.
       * token address which is the unique identifier
@@ -628,49 +671,6 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     }
 
     /**
-      * Gets the value of the 'name' field.
-      * name of the token
-      * @return The value.
-      */
-    public java.lang.String getName() {
-      return name;
-    }
-
-    /**
-      * Sets the value of the 'name' field.
-      * name of the token
-      * @param value The value of 'name'.
-      * @return This builder.
-      */
-    public com.networknt.taiji.token.TokenCreatedEvent.Builder setName(java.lang.String value) {
-      validate(fields()[3], value);
-      this.name = value;
-      fieldSetFlags()[3] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'name' field has been set.
-      * name of the token
-      * @return True if the 'name' field has been set, false otherwise.
-      */
-    public boolean hasName() {
-      return fieldSetFlags()[3];
-    }
-
-
-    /**
-      * Clears the value of the 'name' field.
-      * name of the token
-      * @return This builder.
-      */
-    public com.networknt.taiji.token.TokenCreatedEvent.Builder clearName() {
-      name = null;
-      fieldSetFlags()[3] = false;
-      return this;
-    }
-
-    /**
       * Gets the value of the 'symbol' field.
       * token symbol which is one word capitalized
       * @return The value.
@@ -679,6 +679,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       return symbol;
     }
 
+
     /**
       * Sets the value of the 'symbol' field.
       * token symbol which is one word capitalized
@@ -686,9 +687,9 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder setSymbol(java.lang.String value) {
-      validate(fields()[4], value);
+      validate(fields()[3], value);
       this.symbol = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[3] = true;
       return this;
     }
 
@@ -698,7 +699,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'symbol' field has been set, false otherwise.
       */
     public boolean hasSymbol() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[3];
     }
 
 
@@ -709,7 +710,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder clearSymbol() {
       symbol = null;
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -718,9 +719,10 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * total supply of the token
       * @return The value.
       */
-    public java.lang.Long getTotalSupply() {
+    public long getTotalSupply() {
       return totalSupply;
     }
+
 
     /**
       * Sets the value of the 'totalSupply' field.
@@ -729,9 +731,9 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder setTotalSupply(long value) {
-      validate(fields()[5], value);
+      validate(fields()[4], value);
       this.totalSupply = value;
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[4] = true;
       return this;
     }
 
@@ -741,7 +743,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'totalSupply' field has been set, false otherwise.
       */
     public boolean hasTotalSupply() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[4];
     }
 
 
@@ -751,7 +753,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder clearTotalSupply() {
-      fieldSetFlags()[5] = false;
+      fieldSetFlags()[4] = false;
       return this;
     }
 
@@ -760,9 +762,10 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * number of decimals a token can be split
       * @return The value.
       */
-    public java.lang.Integer getDecimals() {
+    public int getDecimals() {
       return decimals;
     }
+
 
     /**
       * Sets the value of the 'decimals' field.
@@ -771,9 +774,9 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder setDecimals(int value) {
-      validate(fields()[6], value);
+      validate(fields()[5], value);
       this.decimals = value;
-      fieldSetFlags()[6] = true;
+      fieldSetFlags()[5] = true;
       return this;
     }
 
@@ -783,7 +786,7 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return True if the 'decimals' field has been set, false otherwise.
       */
     public boolean hasDecimals() {
-      return fieldSetFlags()[6];
+      return fieldSetFlags()[5];
     }
 
 
@@ -793,6 +796,50 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @return This builder.
       */
     public com.networknt.taiji.token.TokenCreatedEvent.Builder clearDecimals() {
+      fieldSetFlags()[5] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'value' field.
+      * additional information in a JSON string, name, description, etc
+      * @return The value.
+      */
+    public java.lang.String getValue() {
+      return value;
+    }
+
+
+    /**
+      * Sets the value of the 'value' field.
+      * additional information in a JSON string, name, description, etc
+      * @param value The value of 'value'.
+      * @return This builder.
+      */
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder setValue(java.lang.String value) {
+      validate(fields()[6], value);
+      this.value = value;
+      fieldSetFlags()[6] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'value' field has been set.
+      * additional information in a JSON string, name, description, etc
+      * @return True if the 'value' field has been set, false otherwise.
+      */
+    public boolean hasValue() {
+      return fieldSetFlags()[6];
+    }
+
+
+    /**
+      * Clears the value of the 'value' field.
+      * additional information in a JSON string, name, description, etc
+      * @return This builder.
+      */
+    public com.networknt.taiji.token.TokenCreatedEvent.Builder clearValue() {
+      value = null;
       fieldSetFlags()[6] = false;
       return this;
     }
@@ -802,9 +849,10 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * time the event is recorded on the blockchain
       * @return The value.
       */
-    public java.lang.Long getTimestamp() {
+    public long getTimestamp() {
       return timestamp;
     }
+
 
     /**
       * Sets the value of the 'timestamp' field.
@@ -844,9 +892,10 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * kafka partition offset
       * @return The value.
       */
-    public java.lang.Long getOffset() {
+    public long getOffset() {
       return offset;
     }
+
 
     /**
       * Sets the value of the 'offset' field.
@@ -886,9 +935,10 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       * kafka partition id
       * @return The value.
       */
-    public java.lang.Integer getPartition() {
+    public int getPartition() {
       return partition;
     }
+
 
     /**
       * Sets the value of the 'partition' field.
@@ -929,20 +979,27 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
       try {
         TokenCreatedEvent record = new TokenCreatedEvent();
         if (EventIdBuilder != null) {
-          record.EventId = this.EventIdBuilder.build();
+          try {
+            record.EventId = this.EventIdBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("EventId"));
+            throw e;
+          }
         } else {
           record.EventId = fieldSetFlags()[0] ? this.EventId : (com.networknt.taiji.event.EventId) defaultValue(fields()[0]);
         }
         record.currency = fieldSetFlags()[1] ? this.currency : (java.lang.String) defaultValue(fields()[1]);
         record.entityAddress = fieldSetFlags()[2] ? this.entityAddress : (java.lang.String) defaultValue(fields()[2]);
-        record.name = fieldSetFlags()[3] ? this.name : (java.lang.String) defaultValue(fields()[3]);
-        record.symbol = fieldSetFlags()[4] ? this.symbol : (java.lang.String) defaultValue(fields()[4]);
-        record.totalSupply = fieldSetFlags()[5] ? this.totalSupply : (java.lang.Long) defaultValue(fields()[5]);
-        record.decimals = fieldSetFlags()[6] ? this.decimals : (java.lang.Integer) defaultValue(fields()[6]);
+        record.symbol = fieldSetFlags()[3] ? this.symbol : (java.lang.String) defaultValue(fields()[3]);
+        record.totalSupply = fieldSetFlags()[4] ? this.totalSupply : (java.lang.Long) defaultValue(fields()[4]);
+        record.decimals = fieldSetFlags()[5] ? this.decimals : (java.lang.Integer) defaultValue(fields()[5]);
+        record.value = fieldSetFlags()[6] ? this.value : (java.lang.String) defaultValue(fields()[6]);
         record.timestamp = fieldSetFlags()[7] ? this.timestamp : (java.lang.Long) defaultValue(fields()[7]);
         record.offset = fieldSetFlags()[8] ? this.offset : (java.lang.Long) defaultValue(fields()[8]);
         record.partition = fieldSetFlags()[9] ? this.partition : (java.lang.Integer) defaultValue(fields()[9]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -967,4 +1024,121 @@ public class TokenCreatedEvent extends org.apache.avro.specific.SpecificRecordBa
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    this.EventId.customEncode(out);
+
+    out.writeString(this.currency);
+
+    out.writeString(this.entityAddress);
+
+    out.writeString(this.symbol);
+
+    out.writeLong(this.totalSupply);
+
+    out.writeInt(this.decimals);
+
+    out.writeString(this.value);
+
+    out.writeLong(this.timestamp);
+
+    out.writeLong(this.offset);
+
+    out.writeInt(this.partition);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (this.EventId == null) {
+        this.EventId = new com.networknt.taiji.event.EventId();
+      }
+      this.EventId.customDecode(in);
+
+      this.currency = in.readString();
+
+      this.entityAddress = in.readString();
+
+      this.symbol = in.readString();
+
+      this.totalSupply = in.readLong();
+
+      this.decimals = in.readInt();
+
+      this.value = in.readString();
+
+      this.timestamp = in.readLong();
+
+      this.offset = in.readLong();
+
+      this.partition = in.readInt();
+
+    } else {
+      for (int i = 0; i < 10; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (this.EventId == null) {
+            this.EventId = new com.networknt.taiji.event.EventId();
+          }
+          this.EventId.customDecode(in);
+          break;
+
+        case 1:
+          this.currency = in.readString();
+          break;
+
+        case 2:
+          this.entityAddress = in.readString();
+          break;
+
+        case 3:
+          this.symbol = in.readString();
+          break;
+
+        case 4:
+          this.totalSupply = in.readLong();
+          break;
+
+        case 5:
+          this.decimals = in.readInt();
+          break;
+
+        case 6:
+          this.value = in.readString();
+          break;
+
+        case 7:
+          this.timestamp = in.readLong();
+          break;
+
+        case 8:
+          this.offset = in.readLong();
+          break;
+
+        case 9:
+          this.partition = in.readInt();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

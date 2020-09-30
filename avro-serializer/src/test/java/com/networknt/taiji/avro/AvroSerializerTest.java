@@ -1,9 +1,13 @@
 package com.networknt.taiji.avro;
 
+import com.networknt.config.JsonMapper;
 import com.networknt.taiji.event.EventId;
 import com.networknt.taiji.token.TokenCreatedEvent;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AvroSerializerTest {
 
@@ -23,11 +27,13 @@ public class AvroSerializerTest {
                 .setAddress("000085DF3b608aF058482391681C3a04C437776C")
                 .setNonce(1L)
                 .build();
-
+        Map<String, Object> valueMap = new HashMap<>();
+        valueMap.put("name", "Light Token");
+        valueMap.put("description", "This is the first token created");
         TokenCreatedEvent event = TokenCreatedEvent.newBuilder()
                 .setEventId(eventId)
                 .setEntityAddress("0001a01963b09fe09DE62d83BD2B9A0c2b618D74")
-                .setName("Light Token")
+                .setValue(JsonMapper.toJson(valueMap))
                 .setSymbol("LIGHT")
                 .setTotalSupply(1000L)
                 .setDecimals(9)

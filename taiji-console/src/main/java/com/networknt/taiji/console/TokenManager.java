@@ -49,6 +49,19 @@ public class TokenManager {
         return ownerAddress;
     }
 
+    String getComment() {
+        String comment = console.readLine("What is the optional comment on the token transaction: ").trim();
+        return comment;
+    }
+
+    String getDescription() {
+        String description = console.readLine("What is the purpose/usage of the token: ").trim();
+        if(description.equals("")) {
+            exitError("You need to enter a description of the token.");
+        }
+        return description;
+    }
+
     String getTokenAddress() {
         String tokenAddress = console.readLine("What is the token address: ").trim();
         if(tokenAddress.equals("")) {

@@ -1,6 +1,7 @@
 package com.networknt.taiji.console;
 
 import com.networknt.chain.utility.Console;
+import com.networknt.config.JsonMapper;
 import com.networknt.monad.Result;
 import com.networknt.status.Status;
 import com.networknt.taiji.avro.AvroSerializer;
@@ -11,6 +12,7 @@ import com.networknt.taiji.token.TokenApprovedEvent;
 import com.networknt.taiji.token.TokenTransferredEvent;
 import com.networknt.taiji.utility.Converter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +42,7 @@ public class TokenTransfer extends TokenManager {
         String tokenAddress = getTokenAddress();
         String transferredAddress = getTransferredAddress();
         Long l = getTransferredAmount();
+        String comment = getComment();
 
         Result<Map<String, Object>> tokenInfoResult = TaijiClient.getTokenInfoByAddress(tokenAddress);
         Map<String, Object> tokenInfo = null;
@@ -51,6 +54,7 @@ public class TokenTransfer extends TokenManager {
         int decimals = (Integer)tokenInfo.get("decimals");
         long factor = Converter.power(10, decimals);
         long total = l * factor;
+        String symbol = (String)tokenInfo.get("symbol");
 
         // get number of transactions from the chain-reader to generate eventId.
         long nonce = 0;
@@ -65,8 +69,17 @@ public class TokenTransfer extends TokenManager {
                 .setAddress(ownerAddress)
                 .setNonce(nonce)
                 .build();
+        Map<String, Object> valueMap = new HashMap<>();
+        if(comment != null) valueMap.put("comment", comment);
 
-        TokenTransferredEvent tokenTransferredEvent = new TokenTransferredEvent(eventId, tokenAddress, transferredAddress, total);
+        TokenTransferredEvent tokenTransferredEvent = TokenTransferredEvent.newBuilder()
+                .setEventId(eventId)
+                .setSymbol(symbol)
+                .setToAddress(transferredAddress)
+                .setAmount(total)
+                .setValue(JsonMapper.toJson(valueMap))
+                .setTimestamp(System.currentTimeMillis())
+                .build();
 
         AvroSerializer serializer = new AvroSerializer();
         byte[] bytes = serializer.serialize(tokenTransferredEvent);

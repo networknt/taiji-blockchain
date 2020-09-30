@@ -5,12 +5,13 @@
  */
 package com.networknt.taiji.kyc;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBase implements KycEvent {
   private static final long serialVersionUID = -3737023998361051902L;
@@ -26,7 +27,16 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
       new BinaryMessageDecoder<KycVerifiedEvent>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<KycVerifiedEvent> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<KycVerifiedEvent> getDecoder() {
     return DECODER;
@@ -35,23 +45,33 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<KycVerifiedEvent> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<KycVerifiedEvent>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this KycVerifiedEvent to a ByteBuffer. */
+  /**
+   * Serializes this KycVerifiedEvent to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a KycVerifiedEvent from a ByteBuffer. */
+  /**
+   * Deserializes a KycVerifiedEvent from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a KycVerifiedEvent instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static KycVerifiedEvent fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public com.networknt.taiji.event.EventId EventId;
+   private com.networknt.taiji.event.EventId EventId;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -68,6 +88,7 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
     this.EventId = EventId;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -94,6 +115,7 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
     return EventId;
   }
 
+
   /**
    * Sets the value of the 'EventId' field.
    * @param value the value to set.
@@ -116,7 +138,11 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
    * @return A new KycVerifiedEvent RecordBuilder
    */
   public static com.networknt.taiji.kyc.KycVerifiedEvent.Builder newBuilder(com.networknt.taiji.kyc.KycVerifiedEvent.Builder other) {
-    return new com.networknt.taiji.kyc.KycVerifiedEvent.Builder(other);
+    if (other == null) {
+      return new com.networknt.taiji.kyc.KycVerifiedEvent.Builder();
+    } else {
+      return new com.networknt.taiji.kyc.KycVerifiedEvent.Builder(other);
+    }
   }
 
   /**
@@ -125,12 +151,17 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
    * @return A new KycVerifiedEvent RecordBuilder
    */
   public static com.networknt.taiji.kyc.KycVerifiedEvent.Builder newBuilder(com.networknt.taiji.kyc.KycVerifiedEvent other) {
-    return new com.networknt.taiji.kyc.KycVerifiedEvent.Builder(other);
+    if (other == null) {
+      return new com.networknt.taiji.kyc.KycVerifiedEvent.Builder();
+    } else {
+      return new com.networknt.taiji.kyc.KycVerifiedEvent.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for KycVerifiedEvent instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<KycVerifiedEvent>
     implements org.apache.avro.data.RecordBuilder<KycVerifiedEvent> {
 
@@ -150,7 +181,7 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
       super(other);
       if (isValidValue(fields()[0], other.EventId)) {
         this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (other.hasEventIdBuilder()) {
         this.EventIdBuilder = com.networknt.taiji.event.EventId.newBuilder(other.getEventIdBuilder());
@@ -162,7 +193,7 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
      * @param other The existing instance to copy.
      */
     private Builder(com.networknt.taiji.kyc.KycVerifiedEvent other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.EventId)) {
         this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
         fieldSetFlags()[0] = true;
@@ -177,6 +208,7 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
     public com.networknt.taiji.event.EventId getEventId() {
       return EventId;
     }
+
 
     /**
       * Sets the value of the 'EventId' field.
@@ -250,11 +282,18 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
       try {
         KycVerifiedEvent record = new KycVerifiedEvent();
         if (EventIdBuilder != null) {
-          record.EventId = this.EventIdBuilder.build();
+          try {
+            record.EventId = this.EventIdBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("EventId"));
+            throw e;
+          }
         } else {
           record.EventId = fieldSetFlags()[0] ? this.EventId : (com.networknt.taiji.event.EventId) defaultValue(fields()[0]);
         }
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -279,4 +318,49 @@ public class KycVerifiedEvent extends org.apache.avro.specific.SpecificRecordBas
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    this.EventId.customEncode(out);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (this.EventId == null) {
+        this.EventId = new com.networknt.taiji.event.EventId();
+      }
+      this.EventId.customDecode(in);
+
+    } else {
+      for (int i = 0; i < 1; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (this.EventId == null) {
+            this.EventId = new com.networknt.taiji.event.EventId();
+          }
+          this.EventId.customDecode(in);
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

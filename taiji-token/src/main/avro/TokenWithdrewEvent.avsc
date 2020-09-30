@@ -17,6 +17,12 @@
           {
             "name": "nonce",
             "type": "long"
+          },
+          {
+            "name": "derived",
+            "type": "boolean",
+            "default": false,
+            "doc": "indicate if the event is derived from event processor"
           }
         ]
       }
@@ -32,6 +38,17 @@
     {
       "name": "amount",
       "type": "long"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "doc": "additional information in a JSON string, comment, etc"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "default": 0,
+      "doc": "time the event is recorded on the blockchain"
     }
   ]
 }

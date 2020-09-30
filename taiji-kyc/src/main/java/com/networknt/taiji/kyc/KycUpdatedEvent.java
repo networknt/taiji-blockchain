@@ -5,12 +5,13 @@
  */
 package com.networknt.taiji.kyc;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase implements KycEvent {
   private static final long serialVersionUID = 6153618044902347725L;
@@ -26,7 +27,16 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
       new BinaryMessageDecoder<KycUpdatedEvent>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<KycUpdatedEvent> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<KycUpdatedEvent> getDecoder() {
     return DECODER;
@@ -35,29 +45,39 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<KycUpdatedEvent> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<KycUpdatedEvent>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this KycUpdatedEvent to a ByteBuffer. */
+  /**
+   * Serializes this KycUpdatedEvent to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a KycUpdatedEvent from a ByteBuffer. */
+  /**
+   * Deserializes a KycUpdatedEvent from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a KycUpdatedEvent instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static KycUpdatedEvent fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  @Deprecated public com.networknt.taiji.event.EventId EventId;
+   private com.networknt.taiji.event.EventId EventId;
   /** personal or business name */
-  @Deprecated public java.lang.String name;
+   private java.lang.String name;
   /** tags to categorize the person or business */
-  @Deprecated public java.util.List<java.lang.String> tags;
+   private java.util.List<java.lang.String> tags;
   /** Description of person or business which can be full text searched */
-  @Deprecated public java.lang.String description;
+   private java.lang.String description;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -80,6 +100,7 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
     this.description = description;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -97,9 +118,9 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: EventId = (com.networknt.taiji.event.EventId)value$; break;
-    case 1: name = (java.lang.String)value$; break;
+    case 1: name = value$ != null ? value$.toString() : null; break;
     case 2: tags = (java.util.List<java.lang.String>)value$; break;
-    case 3: description = (java.lang.String)value$; break;
+    case 3: description = value$ != null ? value$.toString() : null; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -111,6 +132,7 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
   public com.networknt.taiji.event.EventId getEventId() {
     return EventId;
   }
+
 
   /**
    * Sets the value of the 'EventId' field.
@@ -127,6 +149,7 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
   public java.lang.String getName() {
     return name;
   }
+
 
   /**
    * Sets the value of the 'name' field.
@@ -145,6 +168,7 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
     return tags;
   }
 
+
   /**
    * Sets the value of the 'tags' field.
    * tags to categorize the person or business
@@ -161,6 +185,7 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
   public java.lang.String getDescription() {
     return description;
   }
+
 
   /**
    * Sets the value of the 'description' field.
@@ -185,7 +210,11 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
    * @return A new KycUpdatedEvent RecordBuilder
    */
   public static com.networknt.taiji.kyc.KycUpdatedEvent.Builder newBuilder(com.networknt.taiji.kyc.KycUpdatedEvent.Builder other) {
-    return new com.networknt.taiji.kyc.KycUpdatedEvent.Builder(other);
+    if (other == null) {
+      return new com.networknt.taiji.kyc.KycUpdatedEvent.Builder();
+    } else {
+      return new com.networknt.taiji.kyc.KycUpdatedEvent.Builder(other);
+    }
   }
 
   /**
@@ -194,12 +223,17 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
    * @return A new KycUpdatedEvent RecordBuilder
    */
   public static com.networknt.taiji.kyc.KycUpdatedEvent.Builder newBuilder(com.networknt.taiji.kyc.KycUpdatedEvent other) {
-    return new com.networknt.taiji.kyc.KycUpdatedEvent.Builder(other);
+    if (other == null) {
+      return new com.networknt.taiji.kyc.KycUpdatedEvent.Builder();
+    } else {
+      return new com.networknt.taiji.kyc.KycUpdatedEvent.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for KycUpdatedEvent instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<KycUpdatedEvent>
     implements org.apache.avro.data.RecordBuilder<KycUpdatedEvent> {
 
@@ -225,22 +259,22 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
       super(other);
       if (isValidValue(fields()[0], other.EventId)) {
         this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (other.hasEventIdBuilder()) {
         this.EventIdBuilder = com.networknt.taiji.event.EventId.newBuilder(other.getEventIdBuilder());
       }
       if (isValidValue(fields()[1], other.name)) {
         this.name = data().deepCopy(fields()[1].schema(), other.name);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.tags)) {
         this.tags = data().deepCopy(fields()[2].schema(), other.tags);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.description)) {
         this.description = data().deepCopy(fields()[3].schema(), other.description);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
     }
 
@@ -249,7 +283,7 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
      * @param other The existing instance to copy.
      */
     private Builder(com.networknt.taiji.kyc.KycUpdatedEvent other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.EventId)) {
         this.EventId = data().deepCopy(fields()[0].schema(), other.EventId);
         fieldSetFlags()[0] = true;
@@ -276,6 +310,7 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
     public com.networknt.taiji.event.EventId getEventId() {
       return EventId;
     }
+
 
     /**
       * Sets the value of the 'EventId' field.
@@ -352,6 +387,7 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
       return name;
     }
 
+
     /**
       * Sets the value of the 'name' field.
       * personal or business name
@@ -394,6 +430,7 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
     public java.util.List<java.lang.String> getTags() {
       return tags;
     }
+
 
     /**
       * Sets the value of the 'tags' field.
@@ -438,6 +475,7 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
       return description;
     }
 
+
     /**
       * Sets the value of the 'description' field.
       * Description of person or business which can be full text searched
@@ -478,7 +516,12 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
       try {
         KycUpdatedEvent record = new KycUpdatedEvent();
         if (EventIdBuilder != null) {
-          record.EventId = this.EventIdBuilder.build();
+          try {
+            record.EventId = this.EventIdBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("EventId"));
+            throw e;
+          }
         } else {
           record.EventId = fieldSetFlags()[0] ? this.EventId : (com.networknt.taiji.event.EventId) defaultValue(fields()[0]);
         }
@@ -486,6 +529,8 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
         record.tags = fieldSetFlags()[2] ? this.tags : (java.util.List<java.lang.String>) defaultValue(fields()[2]);
         record.description = fieldSetFlags()[3] ? this.description : (java.lang.String) defaultValue(fields()[3]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -510,4 +555,142 @@ public class KycUpdatedEvent extends org.apache.avro.specific.SpecificRecordBase
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    this.EventId.customEncode(out);
+
+    out.writeString(this.name);
+
+    if (this.tags == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      long size0 = this.tags.size();
+      out.writeArrayStart();
+      out.setItemCount(size0);
+      long actualSize0 = 0;
+      for (java.lang.String e0: this.tags) {
+        actualSize0++;
+        out.startItem();
+        out.writeString(e0);
+      }
+      out.writeArrayEnd();
+      if (actualSize0 != size0)
+        throw new java.util.ConcurrentModificationException("Array-size written was " + size0 + ", but element count was " + actualSize0 + ".");
+    }
+
+    if (this.description == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.description);
+    }
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (this.EventId == null) {
+        this.EventId = new com.networknt.taiji.event.EventId();
+      }
+      this.EventId.customDecode(in);
+
+      this.name = in.readString();
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.tags = null;
+      } else {
+        long size0 = in.readArrayStart();
+        java.util.List<java.lang.String> a0 = this.tags;
+        if (a0 == null) {
+          a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("tags").schema().getTypes().get(1));
+          this.tags = a0;
+        } else a0.clear();
+        SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
+        for ( ; 0 < size0; size0 = in.arrayNext()) {
+          for ( ; size0 != 0; size0--) {
+            java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+            e0 = in.readString();
+            a0.add(e0);
+          }
+        }
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.description = null;
+      } else {
+        this.description = in.readString();
+      }
+
+    } else {
+      for (int i = 0; i < 4; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (this.EventId == null) {
+            this.EventId = new com.networknt.taiji.event.EventId();
+          }
+          this.EventId.customDecode(in);
+          break;
+
+        case 1:
+          this.name = in.readString();
+          break;
+
+        case 2:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.tags = null;
+          } else {
+            long size0 = in.readArrayStart();
+            java.util.List<java.lang.String> a0 = this.tags;
+            if (a0 == null) {
+              a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("tags").schema().getTypes().get(1));
+              this.tags = a0;
+            } else a0.clear();
+            SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
+            for ( ; 0 < size0; size0 = in.arrayNext()) {
+              for ( ; size0 != 0; size0--) {
+                java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+                e0 = in.readString();
+                a0.add(e0);
+              }
+            }
+          }
+          break;
+
+        case 3:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.description = null;
+          } else {
+            this.description = in.readString();
+          }
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

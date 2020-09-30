@@ -1,6 +1,7 @@
 package com.networknt.taiji.console;
 
 import com.networknt.chain.utility.Console;
+import com.networknt.config.JsonMapper;
 import com.networknt.monad.Result;
 import com.networknt.status.Status;
 import com.networknt.taiji.avro.AvroSerializer;
@@ -10,7 +11,9 @@ import com.networknt.taiji.event.EventId;
 import com.networknt.taiji.token.TokenCreatedEvent;
 import com.networknt.taiji.utility.Converter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.networknt.chain.utility.Console.exitError;
 
@@ -46,6 +49,7 @@ public class TokenCreator extends TokenManager {
         console.printf("Token address is generated (please write it down): " + tokenAddress + "\n");
         String name = getName();
         String symbol = getSymbol();
+        String description = getDescription();
         Long l = getTotal();
         Integer decimals = getDecimals();
         long factor = Converter.power(10, decimals);
@@ -64,12 +68,15 @@ public class TokenCreator extends TokenManager {
                 .setAddress(ownerAddress)
                 .setNonce(nonce)
                 .build();
+        Map<String, Object> valueMap = new HashMap<>();
+        valueMap.put("name", name);
+        valueMap.put("description", description);
 
         TokenCreatedEvent tokenCreatedEvent = TokenCreatedEvent.newBuilder()
             .setEventId(eventId)
             .setCurrency(currency)
             .setEntityAddress(tokenAddress)
-            .setName(name)
+            .setValue(JsonMapper.toJson(valueMap))
             .setSymbol(symbol)
             .setTotalSupply(total)
             .setDecimals(decimals)

@@ -1,6 +1,7 @@
 package com.networknt.taiji.console;
 
 import com.networknt.chain.utility.Console;
+import com.networknt.config.JsonMapper;
 import com.networknt.monad.Result;
 import com.networknt.status.Status;
 import com.networknt.taiji.avro.AvroSerializer;
@@ -11,6 +12,7 @@ import com.networknt.taiji.token.TokenApprovedEvent;
 import com.networknt.taiji.token.TokenWithdrewEvent;
 import com.networknt.taiji.utility.Converter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +43,8 @@ public class TokenWithdrawal extends TokenManager {
         String withdrawFromAddress = getWithdrawFromAddress();
 
         Long l = getWithdrawnAmount();
+        String comment = getComment();
+
         Result<Map<String, Object>> tokenInfoResult = TaijiClient.getTokenInfoByAddress(tokenAddress);
         Map<String, Object> tokenInfo = null;
         if(tokenInfoResult.isSuccess()) {
@@ -51,7 +55,7 @@ public class TokenWithdrawal extends TokenManager {
         int decimals = (Integer)tokenInfo.get("decimals");
         long factor = Converter.power(10, decimals);
         long total = l * factor;
-
+        String symbol = (String)tokenInfo.get("symbol");
         // get number of transactions from the chain-reader to generate eventId.
         long nonce = 0;
         Result<List<SignedLedgerEntry>> result = TaijiClient.getTransaction(ownerAddress, currency);
@@ -66,7 +70,16 @@ public class TokenWithdrawal extends TokenManager {
                 .setNonce(nonce)
                 .build();
 
-        TokenWithdrewEvent tokenWithdrewEvent = new TokenWithdrewEvent(eventId, tokenAddress, withdrawFromAddress, total);
+        Map<String, Object> valueMap = new HashMap<>();
+        if(comment != null) valueMap.put("comment", comment);
+        TokenWithdrewEvent tokenWithdrewEvent = TokenWithdrewEvent.newBuilder()
+                .setEventId(eventId)
+                .setSymbol(symbol)
+                .setFromAddress(withdrawFromAddress)
+                .setAmount(total)
+                .setValue(JsonMapper.toJson(valueMap))
+                .setTimestamp(System.currentTimeMillis())
+                .build();
 
         AvroSerializer serializer = new AvroSerializer();
         byte[] bytes = serializer.serialize(tokenWithdrewEvent);
