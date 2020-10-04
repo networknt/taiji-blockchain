@@ -58,13 +58,13 @@ public class TokenWithdrawal extends TokenManager {
         String symbol = (String)tokenInfo.get("symbol");
         // get number of transactions from the chain-reader to generate eventId.
         long nonce = 0;
-        Result<List<SignedLedgerEntry>> result = TaijiClient.getTransaction(ownerAddress, currency);
+        Result<String> result = TaijiClient.getTransaction(ownerAddress, currency, 0, 1); // get the last transaction
         if(result.isSuccess()) {
-            nonce = result.getResult().size();
+            List<Map<String, Object>> txs = JsonMapper.string2List(result.getResult());
+            nonce = (Long)txs.get(0).get("no") + 1;
         } else {
             exitError(result.getError().toString());
         }
-
         EventId eventId = EventId.newBuilder()
                 .setAddress(ownerAddress)
                 .setNonce(nonce)
