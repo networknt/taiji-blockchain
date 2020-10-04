@@ -18,13 +18,13 @@ dependencies {
     compile(project(":taiji-client"))
     compile(project(":taiji-utility"))
     compile(project(":taiji-token"))
-    compile(project(":avro-serializer"))
 
     val slf4jVersion: String by project
     compile("org.slf4j", "slf4j-api", slf4jVersion)
 
     val light4jVersion: String by project
     compile("com.networknt", "service", light4jVersion)
+    compile("com.networknt", "kafka-common", light4jVersion)
 
     val jacksonVersion: String by project
     compile("com.fasterxml.jackson.core", "jackson-databind", jacksonVersion)

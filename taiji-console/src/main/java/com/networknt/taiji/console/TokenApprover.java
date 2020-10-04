@@ -2,14 +2,13 @@ package com.networknt.taiji.console;
 
 import com.networknt.chain.utility.Console;
 import com.networknt.config.JsonMapper;
+import com.networknt.kafka.common.AvroSerializer;
 import com.networknt.monad.Result;
 import com.networknt.status.Status;
-import com.networknt.taiji.avro.AvroSerializer;
 import com.networknt.taiji.client.TaijiClient;
 import com.networknt.taiji.crypto.*;
 import com.networknt.taiji.event.EventId;
 import com.networknt.taiji.token.TokenApprovedEvent;
-import com.networknt.taiji.token.TokenCreatedEvent;
 import com.networknt.taiji.utility.Converter;
 
 import java.util.HashMap;

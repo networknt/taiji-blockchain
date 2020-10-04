@@ -5,7 +5,6 @@ import com.networknt.taiji.crypto.CipherException;
 import com.networknt.taiji.crypto.Credentials;
 import com.networknt.taiji.crypto.WalletUtils;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import static com.networknt.chain.utility.Console.exitError;
