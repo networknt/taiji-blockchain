@@ -186,8 +186,8 @@ public class TaijiClient {
      * @return Result<List<SignedLedgerEntry>> of currency and balance
      */
 
-    public static Result<List<SignedLedgerEntry>> getTransaction(String address, String currency) {
-        Result<List<SignedLedgerEntry>> result = null;
+    public static Result<String> getTransaction(String address, String currency, int offset, int limit) {
+        Result<String> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", readerServiceId, address.substring(0, 4), null);
         try {
@@ -197,7 +197,7 @@ public class TaijiClient {
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
             final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/transaction/" + address + "/" + currency);
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/transaction/" + address + "/" + currency + "?offset=" + offset + "&limit=" + limit);
             request.getRequestHeaders().put(Headers.HOST, "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             latch.await();
@@ -207,8 +207,7 @@ public class TaijiClient {
                 Status status = Config.getInstance().getMapper().readValue(body, Status.class);
                 result = Failure.of(status);
             } else {
-                List<SignedLedgerEntry> entries = Config.getInstance().getMapper().readValue(body, new TypeReference<List<SignedLedgerEntry>>() {});
-                result = Success.of(entries);
+                result = Success.of(body);
             }
         } catch (Exception e) {
             logger.error("Exception:", e);
