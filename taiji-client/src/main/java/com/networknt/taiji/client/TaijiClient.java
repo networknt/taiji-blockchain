@@ -383,7 +383,7 @@ public class TaijiClient {
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
             final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/account/" + address);
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/token/account/" + address);
             request.getRequestHeaders().put(Headers.HOST, "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             latch.await();
@@ -420,7 +420,7 @@ public class TaijiClient {
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
             final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/account/" + address + "/" + symbol);
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/token/account/" + address + "/" + symbol);
             request.getRequestHeaders().put(Headers.HOST, "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             latch.await();
@@ -457,7 +457,7 @@ public class TaijiClient {
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
             final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/transaction/" + address);
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/token/transaction/" + address);
             request.getRequestHeaders().put(Headers.HOST, "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             latch.await();
@@ -494,7 +494,7 @@ public class TaijiClient {
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
             final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/transaction/" + address + "/" + symbol);
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/token/transaction/" + address + "/" + symbol);
             request.getRequestHeaders().put(Headers.HOST, "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             latch.await();
