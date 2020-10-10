@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.xnio.OptionMap;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -169,6 +170,46 @@ public class TaijiClient {
                 Map<String, Long> currencyMap = map.entrySet().stream()
                         .collect(Collectors.toMap(Map.Entry::getKey, e -> Long.parseLong(StringUtils.substringBefore(e.getValue(), " "))));
                 result = Success.of(currencyMap);
+            }
+        } catch (Exception e) {
+            logger.error("Exception:", e);
+            Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
+            result = Failure.of(status);
+        }
+        return result;
+    }
+
+    /**
+     * Get the balance snapshots for a list of addresses from the chain-reader. This is mainly for the
+     * Android wallet that contains multiple addresses. During the startup, it will get all the snapshots
+     * for all addresses to show up in the overview page.
+     *
+     * @param addresses currency addresses
+     * @return Result<String>> of list of addresses with balances
+     */
+
+    public static Result<String> getSnapshots(ArrayList<String> addresses) {
+        Result<String> result = null;
+        // host name or IP address
+        String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
+        try {
+            // This is a connection that is shared by multiple requests and won't close until the app exits.
+            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            // Create one CountDownLatch that will be reset in the callback function
+            final CountDownLatch latch = new CountDownLatch(1);
+            // Create an AtomicReference object to receive ClientResponse from callback function
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/account?addresses=" + String.join(",", addresses));
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await();
+            int statusCode = reference.get().getResponseCode();
+            String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(statusCode != 200) {
+                Status status = Config.getInstance().getMapper().readValue(body, Status.class);
+                result = Failure.of(status);
+            } else {
+                result = Success.of(body);
             }
         } catch (Exception e) {
             logger.error("Exception:", e);
