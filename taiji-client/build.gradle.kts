@@ -17,7 +17,6 @@ dependencies {
     compile("com.networknt", "client", light4jVersion)
     compile("com.networknt", "cluster", light4jVersion)
     compile("com.networknt", "balance", light4jVersion)
-    compile("com.networknt", "consul", light4jVersion)
     compile("com.networknt", "monad-result", light4jVersion)
 
     val jacksonVersion: String by project
