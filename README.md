@@ -13,6 +13,8 @@ Another reason that we want to invest in blockchain is to use it as an event sto
 
 ### Build
 
+In order to support Android, we need to build this project in Java 8 until Java 11 is supported on Android. 
+
 ```
 ./gradlew clean build shadowJar install
 ```
