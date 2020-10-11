@@ -189,6 +189,20 @@ public class TaijiClient {
      */
 
     public static Result<String> getSnapshots(ArrayList<String> addresses) {
+        String s = String.join(",", addresses);
+        return getSnapshots(s);
+    }
+
+    /**
+     * Get the balance snapshots for a list of addresses from the chain-reader. This is mainly for the
+     * Android wallet that contains multiple addresses. During the startup, it will get all the snapshots
+     * for all addresses to show up in the overview page.
+     *
+     * @param addresses currency addresses concat with comma
+     * @return Result<String>> of list of addresses with balances
+     */
+
+    public static Result<String> getSnapshots(String addresses) {
         Result<String> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
@@ -199,7 +213,7 @@ public class TaijiClient {
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
             final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/account?addresses=" + String.join(",", addresses));
+            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/account?addresses=" + addresses);
             request.getRequestHeaders().put(Headers.HOST, "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             latch.await();

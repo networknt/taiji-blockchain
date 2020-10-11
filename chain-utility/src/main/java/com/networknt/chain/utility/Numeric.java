@@ -1,7 +1,5 @@
 package com.networknt.chain.utility;
 
-import com.networknt.utility.StringUtils;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -75,7 +73,7 @@ public final class Numeric {
     }
 
     public static boolean containsHexPrefix(String input) {
-        return !StringUtils.isEmpty(input) && input.length() > 1
+        return input != null && input.length() > 1
                 && input.charAt(0) == '0' && input.charAt(1) == 'x';
     }
 
@@ -115,7 +113,7 @@ public final class Numeric {
     public static String toHexStringWithPrefixSafe(BigInteger value) {
         String result = toHexStringNoPrefix(value);
         if (result.length() < 2) {
-            result = StringUtils.repeat('0', 1) + result;
+            result = Strings.zeros(1) + result;
         }
         return HEX_PREFIX + result;
     }
@@ -136,7 +134,7 @@ public final class Numeric {
         }
 
         if (length < size) {
-            result = StringUtils.repeat('0', size - length) + result;
+            result = Strings.zeros(size - length) + result;
         }
 
         if (withPrefix) {

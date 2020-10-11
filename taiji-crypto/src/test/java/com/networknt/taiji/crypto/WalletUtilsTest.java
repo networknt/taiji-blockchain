@@ -1,7 +1,6 @@
 package com.networknt.taiji.crypto;
 
 import com.networknt.chain.utility.Numeric;
-import com.networknt.config.Config;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -63,14 +62,6 @@ public class WalletUtilsTest {
         Credentials credentials = WalletUtils.loadCredentials(
                 PASSWORD, new File(tempDir, fileName));
 
-        assertEquals(credentials, CREDENTIALS);
-    }
-
-    @Test
-    public void testLoadCredentialsFromStream() throws Exception {
-        Credentials credentials = WalletUtils.loadCredentials(
-                PASSWORD,
-                Config.getInstance().getInputStreamFromFile("ef678007D18427E6022059Dbc264f27507CD1ffC.json"));
         assertEquals(credentials, CREDENTIALS);
     }
 

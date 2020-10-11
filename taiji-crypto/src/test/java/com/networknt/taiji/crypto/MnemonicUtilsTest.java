@@ -1,6 +1,5 @@
 package com.networknt.taiji.crypto;
 
-import com.networknt.config.Config;
 import org.bouncycastle.util.encoders.Hex;
 import org.junit.jupiter.api.Test;
 

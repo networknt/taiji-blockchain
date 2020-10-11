@@ -2,7 +2,7 @@ package com.networknt.taiji.crypto;
 
 import com.networknt.chain.utility.Hash;
 import com.networknt.chain.utility.Numeric;
-import com.networknt.utility.StringUtils;
+import com.networknt.chain.utility.Strings;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,7 +93,7 @@ public class Keys {
         String publicKeyNoPrefix = Numeric.cleanHexPrefix(publicKey);
 
         if (publicKeyNoPrefix.length() < PUBLIC_KEY_LENGTH_IN_HEX) {
-            publicKeyNoPrefix = StringUtils.repeat('0',
+            publicKeyNoPrefix = Strings.repeat('0',
                     PUBLIC_KEY_LENGTH_IN_HEX - publicKeyNoPrefix.length())
                     + publicKeyNoPrefix;
         }

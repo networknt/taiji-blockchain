@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import static com.networknt.chain.utility.Console.exitError;
+import static com.networknt.config.Config.LIGHT_4J_CONFIG_DIR;
 
 public class WalletManager {
     final IODevice console;
@@ -56,7 +57,7 @@ public class WalletManager {
     }
 
     String getDestinationDir() {
-        String defaultDir = WalletUtils.getDefaultKeyDirectory();
+        String defaultDir = getDefaultKeyDirectory();
         String destinationDir = console.readLine(
                 "Please enter a destination directory location [" + defaultDir + "]: ");
         if (destinationDir.equals("")) {
@@ -135,4 +136,7 @@ public class WalletManager {
         }
     }
 
+    public static String getDefaultKeyDirectory() {
+        return System.getProperty(LIGHT_4J_CONFIG_DIR);
+    }
 }

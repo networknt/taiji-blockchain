@@ -10,9 +10,6 @@ import java.io.InputStream;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 
-import static com.networknt.chain.utility.Hash.sha256;
-import static com.networknt.config.Config.LIGHT_4J_CONFIG_DIR;
-import static com.networknt.taiji.crypto.Keys.ADDRESS_LENGTH_IN_HEX;
 import static com.networknt.taiji.crypto.Keys.PRIVATE_KEY_LENGTH_IN_HEX;
 
 
@@ -80,10 +77,6 @@ public class WalletUtils {
 
     private static String getWalletFileName(WalletFile walletFile) {
         return walletFile.getAddress() + ".json";
-    }
-
-    public static String getDefaultKeyDirectory() {
-        return System.getProperty(LIGHT_4J_CONFIG_DIR);
     }
 
     public static boolean isValidPrivateKey(String privateKey) {

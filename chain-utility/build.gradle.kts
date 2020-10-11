@@ -7,9 +7,6 @@ dependencies {
     val slf4jVersion: String by project
     compile("org.slf4j", "slf4j-api", slf4jVersion)
 
-    val light4jVersion: String by project
-    compile("com.networknt", "utility", light4jVersion)
-
     val jacksonVersion: String by project
     compile("com.fasterxml.jackson.core", "jackson-databind", jacksonVersion)
 

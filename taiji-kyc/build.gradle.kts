@@ -5,13 +5,9 @@ plugins {
 
 dependencies {
     compile(project(":event-common"))
-    compile(project(":event-handler"))
 
     val slf4jVersion: String by project
     compile("org.slf4j", "slf4j-api", slf4jVersion)
-
-    val light4jVersion: String by project
-    compile("com.networknt", "service", light4jVersion)
 
     val jacksonVersion: String by project
     compile("com.fasterxml.jackson.core", "jackson-databind", jacksonVersion)
