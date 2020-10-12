@@ -19,6 +19,10 @@ public class Converter {
         return number/unit.getShellFactor();
     }
 
+    public static double fromShellToDouble(String number, Unit unit) { return fromShellToDouble(new Long(number), unit); }
+
+    public static double fromShellToDouble(long number, Unit unit) { return (double)number/(double)unit.getShellFactor(); }
+
     public static long toShell(String number, Unit unit) {
         return toShell(new Long(number), unit);
     }

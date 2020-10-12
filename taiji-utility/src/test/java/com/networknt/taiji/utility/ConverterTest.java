@@ -1,5 +1,6 @@
 package com.networknt.taiji.utility;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -36,6 +37,33 @@ public class ConverterTest {
                 is(new Long("92233720")));
         assertThat(Converter.fromShell(maxLongValue, Converter.Unit.MTAIJI),
                 is(new Long("92233")));
+    }
+
+    @Test
+    public void testFromShellToDouble() {
+        double c = Converter.fromShellToDouble(maxLongString, Converter.Unit.SHELL);
+        double r = new Double("9223372036854775807");
+        Assertions.assertTrue(Math.abs(c - r) <= 0.0000001);
+
+        c = Converter.fromShellToDouble(maxLongString, Converter.Unit.KSHELL);
+        r = new Double("9223372036854775.807");
+        Assertions.assertTrue(Math.abs(c - r) <= 0.0000001);
+
+        c = Converter.fromShellToDouble(maxLongString, Converter.Unit.MSHELL);
+        r = new Double("9223372036854.775807");
+        Assertions.assertTrue(Math.abs(c - r) <= 0.0000001);
+
+        c = Converter.fromShellToDouble(maxLongString, Converter.Unit.TAIJI);
+        r = new Double("92233720368.54775807");
+        Assertions.assertTrue(Math.abs(c - r) <= 0.0000001);
+
+        c = Converter.fromShellToDouble(maxLongString, Converter.Unit.KTAIJI);
+        r = new Double("92233720.36854775807");
+        Assertions.assertTrue(Math.abs(c - r) <= 0.0000001);
+
+        c = Converter.fromShellToDouble(maxLongString, Converter.Unit.MTAIJI);
+        r = new Double("92233.72036854775807");
+        Assertions.assertTrue(Math.abs(c - r) <= 0.0000001);
     }
 
     @Test
