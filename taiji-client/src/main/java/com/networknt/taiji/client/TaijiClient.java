@@ -10,7 +10,6 @@ import com.networknt.monad.Success;
 import com.networknt.service.SingletonServiceFactory;
 import com.networknt.status.Status;
 import com.networknt.taiji.crypto.Fee;
-import com.networknt.taiji.crypto.SignedLedgerEntry;
 import com.networknt.taiji.crypto.SignedTransaction;
 import com.networknt.config.JsonMapper;
 import com.networknt.utility.StringUtils;
@@ -30,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -148,7 +146,7 @@ public class TaijiClient {
     public static Result<Map<String, Long>> getSnapshot(String address) {
         Result<Map<String, Long>> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", readerServiceId, address.substring(0, 4), null);
+        String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
         try {
             // This is a connection that is shared by multiple requests and won't close until the app exits.
             ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
@@ -244,7 +242,7 @@ public class TaijiClient {
     public static Result<String> getTransaction(String address, String currency, int offset, int limit) {
         Result<String> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", readerServiceId, address.substring(0, 4), null);
+        String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
         try {
             // This is a connection that is shared by multiple requests and won't close until the app exits.
             ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
@@ -281,7 +279,7 @@ public class TaijiClient {
     public static Result<Fee> getFee(String address, String currency) {
         Result<Fee> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", readerServiceId, address.substring(0, 4), null);
+        String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
         try {
             // This is a connection that is shared by multiple requests and won't close until the app exits.
             ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
