@@ -2,6 +2,8 @@ package com.networknt.taiji.crypto;
 
 import com.networknt.chain.utility.Numeric;
 
+import java.util.Arrays;
+
 /**
  * This is a generic ledger entry for both credit and debit. Both side have the
  * same entry which is linked to two different accounts/addresses. In the ledger,
@@ -70,5 +72,16 @@ public class LedgerEntry {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "LedgerEntry{" +
+                "id=" + id +
+                ", time=" + time +
+                ", toAddress='" + toAddress + '\'' +
+                ", value=" + value +
+                ", data=" + Arrays.toString(data) +
+                '}';
     }
 }

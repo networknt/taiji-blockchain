@@ -65,12 +65,13 @@ public class TaijiClient {
         Status status = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", writerServiceId, bankId, null);
-        if(logger.isDebugEnabled()) logger.debug("BankId = " + bankId + " apiHost = " + apiHost);
+        if(logger.isTraceEnabled()) logger.trace("BankId = " + bankId + " apiHost = " + apiHost);
+        ClientConnection connection = null;
         try {
             String requestBody = Config.getInstance().getMapper().writeValueAsString(stx);
-            if(logger.isDebugEnabled()) logger.debug("requestBody = " + requestBody);
+            if(logger.isTraceEnabled()) logger.trace("requestBody = " + requestBody);
             // This is a connection that is shared by multiple requests and won't close until the app exits.
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -83,6 +84,7 @@ public class TaijiClient {
             latch.await();
             int statusCode = reference.get().getResponseCode();
             String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(logger.isTraceEnabled())  logger.trace("statusCode = " + statusCode + " body = " + body);
             if(statusCode != 200) {
                 status = Config.getInstance().getMapper().readValue(body, Status.class);
             } else {
@@ -91,6 +93,8 @@ public class TaijiClient {
         } catch (Exception e) {
             logger.error("Exception:", e);
             status = new Status(GENERIC_EXCEPTION, e.getMessage());
+        } finally {
+            client.returnConnection(connection);
         }
         return status;
     }
@@ -106,12 +110,12 @@ public class TaijiClient {
         Status status = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", writerServiceId, bankId, null);
-
+        ClientConnection connection = null;
         try {
             String requestBody = Config.getInstance().getMapper().writeValueAsString(stxs);
             logger.debug("requestBody = " + requestBody);
             // This is a connection that is shared by multiple requests and won't close until the app exits.
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -132,6 +136,8 @@ public class TaijiClient {
         } catch (Exception e) {
             logger.error("Exception:", e);
             status = new Status(GENERIC_EXCEPTION, e.getMessage());
+        } finally {
+            client.returnConnection(connection);
         }
         return status;
     }
@@ -147,9 +153,10 @@ public class TaijiClient {
         Result<Map<String, Long>> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
+        ClientConnection connection = null;
         try {
             // This is a connection that is shared by multiple requests and won't close until the app exits.
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -173,6 +180,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -204,9 +213,10 @@ public class TaijiClient {
         Result<String> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
+        ClientConnection connection = null;
         try {
             // This is a connection that is shared by multiple requests and won't close until the app exits.
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -227,6 +237,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -243,9 +255,10 @@ public class TaijiClient {
         Result<String> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
+        ClientConnection connection = null;
         try {
             // This is a connection that is shared by multiple requests and won't close until the app exits.
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -266,6 +279,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -280,9 +295,11 @@ public class TaijiClient {
         Result<Fee> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
+        if(logger.isTraceEnabled()) logger.trace("address = " + address + " currency = " + currency + " apiHost = " + apiHost);
+        ClientConnection connection = null;
         try {
             // This is a connection that is shared by multiple requests and won't close until the app exits.
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -293,17 +310,21 @@ public class TaijiClient {
             latch.await();
             int statusCode = reference.get().getResponseCode();
             String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+            if(logger.isTraceEnabled()) logger.trace("statusCode = " + statusCode + " body = " + body);
             if(statusCode != 200) {
                 Status status = Config.getInstance().getMapper().readValue(body, Status.class);
                 result = Failure.of(status);
             } else {
                 Fee fee = Config.getInstance().getMapper().readValue(body, Fee.class);
+                if(logger.isTraceEnabled()) logger.trace("fee = " + fee);
                 result = Success.of(fee);
             }
         } catch (Exception e) {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -319,8 +340,9 @@ public class TaijiClient {
         Result<List<Map<String, Object>>> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -342,6 +364,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -356,8 +380,9 @@ public class TaijiClient {
         Result<Map<String, Object>> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -379,6 +404,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -393,8 +420,9 @@ public class TaijiClient {
         Result<Map<String, Object>> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -416,6 +444,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -430,8 +460,9 @@ public class TaijiClient {
         Result<Map<String, Object>> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -453,6 +484,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -467,8 +500,9 @@ public class TaijiClient {
         Result<Map<String, Object>> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -490,6 +524,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -504,8 +540,9 @@ public class TaijiClient {
         Result<List<Map<String, Object>>> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -527,6 +564,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -541,8 +580,9 @@ public class TaijiClient {
         Result<List<Map<String, Object>>> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -564,6 +604,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -578,8 +620,9 @@ public class TaijiClient {
         Result<String> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", kycServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -600,6 +643,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -614,8 +659,9 @@ public class TaijiClient {
         Result<String> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", kycServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -636,6 +682,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -650,8 +698,9 @@ public class TaijiClient {
         Result<String> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", kycServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -672,6 +721,8 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
@@ -686,8 +737,9 @@ public class TaijiClient {
         Result<String> result = null;
         // host name or IP address
         String apiHost = cluster.serviceToUrl("https", kycServiceId, null, null);
+        ClientConnection connection = null;
         try {
-            ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             // Create one CountDownLatch that will be reset in the callback function
             final CountDownLatch latch = new CountDownLatch(1);
             // Create an AtomicReference object to receive ClientResponse from callback function
@@ -708,8 +760,9 @@ public class TaijiClient {
             logger.error("Exception:", e);
             Status status = new Status(GENERIC_EXCEPTION, e.getMessage());
             result = Failure.of(status);
+        } finally {
+            client.returnConnection(connection);
         }
         return result;
     }
-
 }
