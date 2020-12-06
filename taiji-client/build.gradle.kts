@@ -7,6 +7,7 @@ plugins {
 dependencies {
     compile(project(":taiji-core"))
     compile(project(":taiji-crypto"))
+    compile(project(":taiji-utility"))
     compile(project(":event-common"))
 
     val slf4jVersion: String by project

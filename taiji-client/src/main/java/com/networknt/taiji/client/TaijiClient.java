@@ -12,6 +12,7 @@ import com.networknt.status.Status;
 import com.networknt.taiji.crypto.Fee;
 import com.networknt.taiji.crypto.SignedTransaction;
 import com.networknt.config.JsonMapper;
+import com.networknt.taiji.utility.AddressUtil;
 import com.networknt.utility.StringUtils;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
@@ -152,7 +153,7 @@ public class TaijiClient {
     public static Result<Map<String, Long>> getSnapshot(String address) {
         Result<Map<String, Long>> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
+        String apiHost = cluster.serviceToUrl("https", readerServiceId, AddressUtil.addressToBankId(address), null);
         ClientConnection connection = null;
         try {
             // This is a connection that is shared by multiple requests and won't close until the app exits.
@@ -254,7 +255,7 @@ public class TaijiClient {
     public static Result<String> getTransaction(String address, String currency, int offset, int limit) {
         Result<String> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
+        String apiHost = cluster.serviceToUrl("https", readerServiceId, AddressUtil.addressToBankId(address), null);
         ClientConnection connection = null;
         try {
             // This is a connection that is shared by multiple requests and won't close until the app exits.
@@ -294,7 +295,7 @@ public class TaijiClient {
     public static Result<Fee> getFee(String address, String currency) {
         Result<Fee> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", readerServiceId, null, null);
+        String apiHost = cluster.serviceToUrl("https", readerServiceId, AddressUtil.addressToBankId(address), null);
         if(logger.isTraceEnabled()) logger.trace("address = " + address + " currency = " + currency + " apiHost = " + apiHost);
         ClientConnection connection = null;
         try {
@@ -419,7 +420,7 @@ public class TaijiClient {
     public static Result<Map<String, Object>> getTokenInfoByAddress(String address) {
         Result<Map<String, Object>> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, AddressUtil.addressToBankId(address), null);
         ClientConnection connection = null;
         try {
             connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
@@ -459,7 +460,7 @@ public class TaijiClient {
     public static Result<Map<String, Object>> getTokenAccountByAddress(String address) {
         Result<Map<String, Object>> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, AddressUtil.addressToBankId(address), null);
         ClientConnection connection = null;
         try {
             connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
@@ -499,7 +500,7 @@ public class TaijiClient {
     public static Result<Map<String, Object>> getTokenAccountByAddressSymbol(String address, String symbol) {
         Result<Map<String, Object>> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, AddressUtil.addressToBankId(address), null);
         ClientConnection connection = null;
         try {
             connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
@@ -539,7 +540,7 @@ public class TaijiClient {
     public static Result<List<Map<String, Object>>> getTokenTransactionByAddress(String address) {
         Result<List<Map<String, Object>>> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, AddressUtil.addressToBankId(address), null);
         ClientConnection connection = null;
         try {
             connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
@@ -579,7 +580,7 @@ public class TaijiClient {
     public static Result<List<Map<String, Object>>> getTokenTransactionByAddressSymbol(String address, String symbol) {
         Result<List<Map<String, Object>>> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", tokenServiceId, null, null);
+        String apiHost = cluster.serviceToUrl("https", tokenServiceId, AddressUtil.addressToBankId(address), null);
         ClientConnection connection = null;
         try {
             connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
@@ -697,7 +698,7 @@ public class TaijiClient {
     public static Result<String> getKycByAddress(String address) {
         Result<String> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", kycServiceId, null, null);
+        String apiHost = cluster.serviceToUrl("https", kycServiceId, AddressUtil.addressToBankId(address), null);
         ClientConnection connection = null;
         try {
             connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
@@ -736,7 +737,7 @@ public class TaijiClient {
     public static Result<String> getKycEventsByAddress(String address) {
         Result<String> result = null;
         // host name or IP address
-        String apiHost = cluster.serviceToUrl("https", kycServiceId, null, null);
+        String apiHost = cluster.serviceToUrl("https", kycServiceId, AddressUtil.addressToBankId(address), null);
         ClientConnection connection = null;
         try {
             connection = client.borrowConnection(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();

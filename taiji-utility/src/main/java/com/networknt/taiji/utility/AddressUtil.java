@@ -12,4 +12,12 @@ public class AddressUtil {
             return false;
         }
     }
+
+    public static String addressToBankId(String address) {
+        String bankId = null;
+        if(address != null && address.length() > 4) {
+            bankId = address.substring(0, 4);
+        }
+        return bankId;
+    }
 }
